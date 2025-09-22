@@ -1,19 +1,23 @@
-import express from 'express';
-import cors from 'cors';
-import testRoutes from './routes/test.routes.js';
-import dotenv from 'dotenv';
 
-dotenv.config();
-
+const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3001;
+const mysql = require("mysql");
 
-app.use(cors());
-app.use(express.json());
+const db = mysql.createConnection({
+  host:"localhost",
+  user:"root",
+  password:"",
+  database:"interfacultades"
+})
 
-app.use('/api/test', testRoutes);
+app.listen(3001,()=>{
+  console.log("Corriendo en el puerto 3001")
+})
 
-app.listen(PORT, () => {
-  console.log(`Servidor backend escuchando en el puerto ${PORT}`);
-});
-//servidos principal express
+db.connect(function(error){
+  if(error){
+    throw error; 
+  } else {
+    console.log("Conexion a la base de datos de Interfacultades exitosa");
+  }
+})
