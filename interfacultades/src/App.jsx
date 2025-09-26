@@ -4,6 +4,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg';
 import { ROUTES } from './const/routes';
 import Home from './Pages/Home';
+import Register from './Pages/Register';
+//import Login from './Pages/Login';
 import './App.css'
 
 function App() {
@@ -12,7 +14,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path={ROUTES.home} element={<Home />} />
+        <Route path={ROUTES.register} element={<Register />} />
+        {/* <Route path={ROUTES.login} element={<Login />} /> */}
       </Routes>
     </BrowserRouter>
   )
