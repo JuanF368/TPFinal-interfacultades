@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 
 app.use(cors());
 app.use(express.json());
@@ -27,16 +28,22 @@ db.connect(function(error){
 })
 
 //endpoint el registro
-app.post("/crearUsuario", (req, res) => {
+app.post("/crearUsuario", async (req, res) => {
   const {nombre, apellido, email, contrasenia} = req.body;
+  
+  try{
+    const hashesPassword = await bcrypt.hash(contrasenia, 10);
 
-  const sql = "INSERT INTO usuario (usnombre, usapellido, usmail, uspass, idrol) VALUES (?, ?, ?, ?, ?)";
-  db.query(sql, [nombre, apellido, email, contrasenia, 1], (err, result) => {
-    if(err){
-      console.log(err);
-    }else{
-      res.send("Usuario registrado con exito");
-    }
-  });
+    const sql = "INSERT INTO usuario (usnombre, usapellido, usmail, uspass, idrol) VALUES (?, ?, ?, ?, ?)";
+    db.query(sql, [nombre, apellido, email, hashesPassword, 1], (err, result) => {
+      if(err){
+        console.log(err);
+      }else{
+        res.send("Usuario registrado con exito");
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
