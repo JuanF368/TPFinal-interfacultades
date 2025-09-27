@@ -1,15 +1,16 @@
-import mysql from 'mysql2/promise';
-import dotenv from 'dotenv';
+const mysql = require('mysql2');
 
-dotenv.config();
-
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'interfacultades',
 });
-
-export default pool;
+db.connect((error)=>{
+  if(error){
+    console.log('Error al conectar la base de datos: ', error);
+  }
+})
+module.exports = db;
 
 //conexion a la bd 
