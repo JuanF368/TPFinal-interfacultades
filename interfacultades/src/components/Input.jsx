@@ -10,7 +10,7 @@ const Input = ({name, value, type, onChange, placeHolder}) => {
                 type={type}
                 onChange={onChange}
                 placeholder={placeHolder}
-                className="w-full px-4 py-2 border rounded-sm shadow-sm focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-2 border border-gray-400 rounded-sm shadow-sm focus:ring-blue-500 focus:outline-none focus:ring-2"
             />
         </div>
     )

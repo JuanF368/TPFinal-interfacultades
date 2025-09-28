@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import Input from '../components/Input';
 
 const Login = () => {
      
@@ -40,8 +41,8 @@ const Login = () => {
         <div className='bg-blue-900 flex items-center justify-center min-h-screen'> 
             <form onSubmit={handdleLogin} className='bg-white p-8 rounded shadow-md w-80'>  
                 <h2 className='text-center font-semibold text-gray-800 mb-8'> Login </h2>
-                <input placeholder='Correo electronico' onChange={(event) => setusmail(event.target.value)} className='w-full p-2 border border-gray-400 rounded mb-5 focus:outline-none focus:ring-2 focus:ring-blue-500' type='text' />
-                <input placeholder='Contraseña' onChange={ (event) => setUsPass(event.target.value)} className='w-full p-2 border border-gray-400 rounded  mb-5 focus:outline-none focus:ring-2 focus:ring-blue-500' type='password'/>
+                <Input name='usmail' value={usmail} type='email' onChange={(event) => setusmail(event.target.value)} placeHolder='Correo electronico' />
+                <Input name='uspass' value={uspass} type='password' onChange={(event) => setUsPass(event.target.value)} placeHolder='Contraseña'/>
                 <button className='w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 ' type='submit' > Login </button>
                 <button className='w-full bg-green-500 my-5 text-white py-2 rounded hover:bg-green-600 ' onClick={registro} type='button'> Registrarse </button>
             </form>

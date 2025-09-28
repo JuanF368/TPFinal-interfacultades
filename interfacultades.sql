@@ -1,5 +1,6 @@
 -- Active: 1717691537877@@127.0.0.1@3306@interfacultades
-CREATE DATABASE interfacultades; 
+CREATE DATABASE interfacultades;
+
 USE interfacultades;
 
 CREATE TABLE rol (
@@ -17,8 +18,8 @@ CREATE TABLE menurol (
     `idmenurol` INT AUTO_INCREMENT PRIMARY KEY,
     `idmenu` INT NOT NULL,
     `idrol` INT NOT NULL,
-    FOREIGN KEY (idmenu) REFERENCES menu(idmenu),
-    FOREIGN KEY (idrol) REFERENCES rol(idrol)
+    FOREIGN KEY (idmenu) REFERENCES menu (idmenu),
+    FOREIGN KEY (idrol) REFERENCES rol (idrol)
 );
 
 CREATE TABLE usuario (
@@ -26,10 +27,12 @@ CREATE TABLE usuario (
     `usnombre` VARCHAR(50) NOT NULL,
     `usapellido` VARCHAR(50) NOT NULL,
     `usmail` VARCHAR(80) NOT NULL,
-    `uspass` VARCHAR(50) NOT NULL,
+    `uspass` VARCHAR(255) NOT NULL,
     `idrol` INT NOT NULL,
-    FOREIGN KEY (idrol) REFERENCES rol(idrol)
+    FOREIGN KEY (idrol) REFERENCES rol (idrol)
 );
+--se puede modificar directamente en el phpmyadmin con este comando:
+--ALTER TABLE usuario MODIFY COLUMN uspass VARCHAR(255);
 
 CREATE TABLE publicacion (
     `idpublicacion` INT AUTO_INCREMENT PRIMARY KEY,
@@ -38,7 +41,7 @@ CREATE TABLE publicacion (
     `fecha` DATE NOT NULL,
     `imagen` VARCHAR(100) NOT NULL,
     `idusuario` INT NOT NULL,
-    FOREIGN KEY (idusuario) REFERENCES usuario(idusuario)
+    FOREIGN KEY (idusuario) REFERENCES usuario (idusuario)
 );
 
 CREATE TABLE facultad (
@@ -51,7 +54,7 @@ CREATE TABLE facultad (
 CREATE TABLE equipo (
     `idequipo` INT AUTO_INCREMENT PRIMARY KEY,
     `idFacultad` INT NOT NULL,
-    FOREIGN KEY (idFacultad) REFERENCES Facultad(idFacultad)
+    FOREIGN KEY (idFacultad) REFERENCES Facultad (idFacultad)
 );
 
 CREATE TABLE disciplina (
@@ -76,9 +79,9 @@ CREATE TABLE inscripcion (
     `DNI` VARCHAR(20) NOT NULL,
     `carrera` VARCHAR(50) NOT NULL,
     `fechaNac` DATE NOT NULL,
-    FOREIGN KEY (idUsuario) REFERENCES usuario(idusuario),
-    FOREIGN KEY (idDisciplina) REFERENCES Disciplina(idDisciplina),
-    FOREIGN KEY (idconvocatoria) REFERENCES Convocatoria(idconvocatoria)
+    FOREIGN KEY (idUsuario) REFERENCES usuario (idusuario),
+    FOREIGN KEY (idDisciplina) REFERENCES Disciplina (idDisciplina),
+    FOREIGN KEY (idconvocatoria) REFERENCES Convocatoria (idconvocatoria)
 );
 
 CREATE TABLE jugadorEquipo (
@@ -86,9 +89,9 @@ CREATE TABLE jugadorEquipo (
     `idinscripcion` INT NOT NULL,
     `idDisciplina` INT NOT NULL,
     `idequipo` INT NOT NULL,
-    FOREIGN KEY (idinscripcion) REFERENCES inscripcion(idinscripcion),
-    FOREIGN KEY (idDisciplina) REFERENCES Disciplina(idDisciplina),
-    FOREIGN KEY (idequipo) REFERENCES equipo(idequipo)
+    FOREIGN KEY (idinscripcion) REFERENCES inscripcion (idinscripcion),
+    FOREIGN KEY (idDisciplina) REFERENCES Disciplina (idDisciplina),
+    FOREIGN KEY (idequipo) REFERENCES equipo (idequipo)
 );
 
 CREATE TABLE partido (
@@ -101,7 +104,7 @@ CREATE TABLE partido (
     `hora` TIME NOT NULL,
     `lugar` VARCHAR(50) NOT NULL,
     `idDisciplina` INT NOT NULL,
-    FOREIGN KEY (idequipo1) REFERENCES equipo(idequipo),
-    FOREIGN KEY (idequipo2) REFERENCES equipo(idequipo),
-    FOREIGN KEY (idDisciplina) REFERENCES Disciplina(idDisciplina)
+    FOREIGN KEY (idequipo1) REFERENCES equipo (idequipo),
+    FOREIGN KEY (idequipo2) REFERENCES equipo (idequipo),
+    FOREIGN KEY (idDisciplina) REFERENCES Disciplina (idDisciplina)
 );

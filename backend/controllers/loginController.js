@@ -1,26 +1,34 @@
 const db = require('../db');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
 module.exports.login = (req, res) =>{ 
 
     const {usmail, uspass} = req.body; 
-    const consulta = 'SELECT * FROM  usuario WHERE usmail = ? AND uspass = ?'; 
-    try {
-        db.query(consulta, [usmail, uspass], (err, result)=>{
-            if(err){
-                res.send(err);
-            }
-            if (result.length > 0){
-                const token = jwt.sign({usmail}, "Stack", {
-                    expiresIn:'15m'
-                }) 
-                console.log(result); 
-                res.send({token});
-            } else {
-                console.log('wrong user');
-                res.send({message: 'wrong user'});
-            }
-        })
-    } catch(e){
+    const consulta = 'SELECT * FROM  usuario WHERE usmail = ?'; 
+    db.query(consulta, [usmail], async (err, result)=>{
+        if(err){
+            res.send(err);
+        }
+        if(result.length === 0){
+            res.send({message: 'Usuario no encontrado'});
+        }
 
-    }
-}
+        const usuario = result[0];
+
+        try{
+            const comparacion = await bcrypt.compare(uspass, usuario.uspass);
+            if(!comparacion){
+                res.send({message: 'Usuario o contraseña incorrectos'});
+            }
+            const token = jwt.sign({usmail}, "Stack", {
+                expiresIn:'15m'
+            });
+            res.send({token, message: 'Login exitoso'});
+        } catch (error) {
+            console.error(error);
+            res.status(500).send({message: 'Error en el servidor'});
+        }
+
+    });
+};
