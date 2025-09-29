@@ -45,7 +45,8 @@ const Register = () => {
         })
         .then(response => {
             console.log("Usuario creado", response.data);
-             navigate('/', { state: { mensaje: `¡Bienvenido ${formData.nombre}, te registraste con exito!` } });
+             //navigate('/', { state: { mensaje: `¡Bienvenido ${formData.nombre}, te registraste con exito!` } });
+             navigate('/login'); //para que se tenga que loguear obligatoriamente para el token
         })
         .catch(error => {
             console.error("Error al crear usuario", error);
@@ -53,7 +54,7 @@ const Register = () => {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-200 to-blue-600">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#3A64BA] to-[#243E73]">
             <RegisterForm 
                 formData={formData}
                 onChange={handleChange}

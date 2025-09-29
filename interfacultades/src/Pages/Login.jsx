@@ -38,13 +38,13 @@ const Login = () => {
         })
     } 
     return( 
-        <div className='bg-blue-900 flex items-center justify-center min-h-screen'> 
-            <form onSubmit={handdleLogin} className='bg-white p-8 rounded shadow-md w-80'>  
-                <h2 className='text-center font-semibold text-gray-800 mb-8'> Login </h2>
+        <div className='flex items-center justify-center min-h-screen bg-gradient-to-br from-[#3A64BA] to-[#243E73]'>
+            <form onSubmit={handdleLogin} className='bg-white p-8 rounded-xl shadow-md w-full max-w-md'>  
+                <h2 className='text-2xl text-center font-bold text-[#243E73] mb-8'> Login </h2>
                 <Input name='usmail' value={usmail} type='email' onChange={(event) => setusmail(event.target.value)} placeHolder='Correo electronico' />
                 <Input name='uspass' value={uspass} type='password' onChange={(event) => setUsPass(event.target.value)} placeHolder='Contraseña'/>
-                <button className='w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700 ' type='submit' > Login </button>
-                <button className='w-full bg-green-500 my-5 text-white py-2 rounded hover:bg-green-600 ' onClick={registro} type='button'> Registrarse </button>
+                <button className='w-full bg-[#243E73] text-white py-2 rounded hover:bg-[#3A64BA] transition duration-300 cursor-pointer' type='submit' > Login </button>
+                <button className='w-full bg-green-700 my-5 text-white py-2 rounded hover:bg-green-600 transition duration-300 cursor-pointer' onClick={registro} type='button'> Registrarse </button>
             </form>
         </div>
     ); 

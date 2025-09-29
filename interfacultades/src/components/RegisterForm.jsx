@@ -4,8 +4,8 @@ import Axios from "axios";
 
 const RegisterForm = ({ formData, onChange, onSubmit }) => {
     return(
-        <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
-            <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">
+        <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+            <h2 className="text-2xl font-bold text-center text-[#243E73] mb-8">
                 Crear cuenta
             </h2>
             <form onSubmit={onSubmit}>
@@ -46,7 +46,7 @@ const RegisterForm = ({ formData, onChange, onSubmit }) => {
                 />
                 <button
                     type="submit"
-                    className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300"
+                    className="bg-[#243E73] text-white py-2 px-4 rounded hover:bg-[#3A64BA] transition duration-300 cursor-pointer"
                 >
                     Registrarse
                 </button>
