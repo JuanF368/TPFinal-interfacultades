@@ -28,7 +28,7 @@ const Login = () => {
         .then(result =>{
             if(result.token){
                 localStorage.setItem('token', result.token)
-                navigate('/');
+                navigate('/', { state: { mensaje: '¡Bienvenido!' } });
             } else {
                 alert('Login incorrecto');
             }

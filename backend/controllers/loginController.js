@@ -8,10 +8,10 @@ module.exports.login = (req, res) =>{
     const consulta = 'SELECT * FROM  usuario WHERE usmail = ?'; 
     db.query(consulta, [usmail], async (err, result)=>{
         if(err){
-            res.send(err);
+            return res.send(err);
         }
         if(result.length === 0){
-            res.send({message: 'Usuario no encontrado'});
+            return res.send({message: 'Usuario no encontrado'});
         }
 
         const usuario = result[0];
@@ -19,15 +19,15 @@ module.exports.login = (req, res) =>{
         try{
             const comparacion = await bcrypt.compare(uspass, usuario.uspass);
             if(!comparacion){
-                res.send({message: 'Usuario o contraseña incorrectos'});
+                return res.send({message: 'Usuario o contraseña incorrectos'});
             }
             const token = jwt.sign({usmail}, "Stack", {
                 expiresIn:'15m'
             });
-            res.send({token, message: 'Login exitoso'});
+            return res.send({token, message: 'Login exitoso'});
         } catch (error) {
             console.error(error);
-            res.status(500).send({message: 'Error en el servidor'});
+            return res.status(500).send({message: 'Error en el servidor'});
         }
 
     });

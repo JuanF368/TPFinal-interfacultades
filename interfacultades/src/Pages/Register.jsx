@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import RegisterForm from "../components/RegisterForm"
 import Axios from "axios";
+import { useNavigate } from "react-router";
 
 const Register = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre: "",
         apellido: "",
@@ -43,6 +45,7 @@ const Register = () => {
         })
         .then(response => {
             console.log("Usuario creado", response.data);
+             navigate('/', { state: { mensaje: `¡Bienvenido ${formData.nombre}, te registraste con exito!` } });
         })
         .catch(error => {
             console.error("Error al crear usuario", error);
