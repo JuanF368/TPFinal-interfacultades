@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import Input from "./Input";
 import Axios from "axios";
 
-const RegisterForm = ({ formData, onChange, onSubmit }) => {
+const RegisterForm = ({ formData, onChange, onSubmit, error }) => {
     return(
         <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
             <h2 className="text-2xl font-bold text-center text-[#243E73] mb-8">
                 Crear cuenta
             </h2>
+            {error && (
+                <div className="mb-4 p-3 text-sm text-red-700 bg-red-100 border border-red-300 rounded-lg">
+                    {error}
+                </div>
+            )}
             <form onSubmit={onSubmit}>
                 <Input
                     name="nombre"

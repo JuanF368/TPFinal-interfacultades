@@ -12,24 +12,26 @@ const Register = () => {
         contrasenia: "",
         confirmarContrasenia: ""
     });
+    const [error, setError] = useState('');
 
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
+        setError("");
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if(formData.contrasenia !== formData.confirmarContrasenia) {
-            console.log("Las contraseñas o coinciden");
+            setError("Las contraseñas no coinciden.");
             return;
         }
 
         if(!formData.nombre || !formData.apellido || !formData.email || !formData.contrasenia){
-            console.log("Por favor, complete todos los campos");
+            setError("Complete todos los campos.");
             return;
         }
 
@@ -59,6 +61,7 @@ const Register = () => {
                 formData={formData}
                 onChange={handleChange}
                 onSubmit={handleSubmit}
+                error={error}
             />
         </div>
     )
