@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import Input from "./Input";
-import Axios from "axios";
 
 const RegisterForm = ({ formData, onChange, onSubmit, error }) => {
     return(
@@ -13,7 +12,7 @@ const RegisterForm = ({ formData, onChange, onSubmit, error }) => {
                     {error}
                 </div>
             )}
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} noValidate>
                 <Input
                     name="nombre"
                     value={formData.nombre}

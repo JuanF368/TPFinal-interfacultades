@@ -25,13 +25,24 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(formData.contrasenia !== formData.confirmarContrasenia) {
-            setError("Las contraseñas no coinciden.");
+        if(!formData.nombre || !formData.apellido || !formData.email || !formData.contrasenia){
+            setError("Complete todos los campos.");
+            return;
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!emailRegex.test(formData.email)) {
+            setError("Ingrese un email válido.");
             return;
         }
 
-        if(!formData.nombre || !formData.apellido || !formData.email || !formData.contrasenia){
-            setError("Complete todos los campos.");
+        if (formData.contrasenia.length < 8) {
+            setError("La contraseña debe tener al menos 8 caracteres.");
+            return;
+        }
+
+        if(formData.contrasenia !== formData.confirmarContrasenia) {
+            setError("Las contraseñas no coinciden.");
             return;
         }
 
