@@ -21,7 +21,7 @@ module.exports.login = (req, res) =>{
             if(!comparacion){
                 return res.send({message: 'Usuario o contraseña incorrectos'});
             }
-            const token = jwt.sign({usmail}, "Stack", {
+            const token = jwt.sign({idusuario: usuario.idusuario, usmail:usuario.usmail}, "Stack", {
                 expiresIn:'15m'
             });
             return res.send({token, message: 'Login exitoso'});

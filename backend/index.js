@@ -12,4 +12,4 @@ app.use('/', routes);
 app.listen(3001,()=>{
   console.log("Corriendo en el puerto 3001")
 })
-
+app.use('/uploads', express.static('uploads'));

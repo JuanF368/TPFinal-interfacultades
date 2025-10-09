@@ -19,11 +19,8 @@ module.exports = {
       },
       fecha: {
         type: Sequelize.DATE,
-        allowNull: false
-      },
-      imagen: {
-        type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       idusuario: {
         type: Sequelize.INTEGER,

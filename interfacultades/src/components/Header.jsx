@@ -32,7 +32,7 @@ const Header = () => {
                         </>
                     ) : (
                         <>
-                         {/*<FaUserCircle size={28} className="text-white cursor-pointer" /> */}
+                         <FaUserCircle size={28} className="text-white cursor-pointer" /> 
                         <button
                             onClick={() => setMostrarConfirmacion(true)} 
                             className="text-white hover:text-red-500"

@@ -10,6 +10,7 @@ import Publicaciones from './Pages/Publicaciones';
 import Partidos from './Pages/Partidos';
 import MainLayout from './layouts/MainLayout';
 import AuthLayout from './layouts/AuthLayout';
+import PublicacionForm from "./components/PublicacionForm";
 import './App.css'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path={ROUTES.home} element={<Home />} />
         <Route path={ROUTES.publicaciones} element={<Publicaciones />} />
         <Route path={ROUTES.partidos} element={<Partidos />} />
+        <Route path={ROUTES.crearPublicacion} element={<PublicacionForm />} />
         </Route>
       </Routes>
     </BrowserRouter>
