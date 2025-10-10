@@ -1,6 +1,7 @@
 import React, { useState }  from "react";
 import { useNavigate } from "react-router";
-import { FaHome, FaFutbol, FaBars, FaNewspaper} from 'react-icons/fa';
+import { FaHome, FaFutbol, FaBars, FaNewspaper, FaClipboardCheck} from 'react-icons/fa';
+import { FcRules } from 'react-icons/fc';
 import { IoCloseSharp } from 'react-icons/io5';
 const SideBar = () => {
     const [abierto, setAbierto] = useState(false);
@@ -39,6 +40,12 @@ const SideBar = () => {
                             <FaFutbol size={24}/>
                             <span className={`ml-4 md:block ${abierto ? "block" : "hidden"}`}> 
                                 Partidos
+                            </span>
+                        </li>
+                        <li onClick={() => irAPagina("/reglamentos")} className="flex items-center p-4 hover:bg-[#2b4c8e] cursor-pointer">
+                            <FaClipboardCheck size={24}/>
+                            <span className={`ml-4 md:block ${abierto ? "block" : "hidden"}`}> 
+                                Reglamentos
                             </span>
                         </li>
                     </ul>
