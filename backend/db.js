@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+/*const mysql = require('mysql2');
 
 const db = mysql.createConnection({
   host: 'localhost',
@@ -11,6 +11,6 @@ db.connect((error)=>{
     console.log('Error al conectar la base de datos: ', error);
   }
 })
-module.exports = db;
+module.exports = db;*/
 
 //conexion a la bd 
