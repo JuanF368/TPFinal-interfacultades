@@ -10,6 +10,7 @@ import Reglamentos from './Pages/Reglamentos';
 import MainLayout from './layouts/MainLayout';
 import AuthLayout from './layouts/AuthLayout';
 import PublicacionForm from "./components/PublicacionForm";
+import Perfil from "./Pages/Perfil";
 import './App.css'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path={ROUTES.partidos} element={<Partidos />} />
         <Route path={ROUTES.crearPublicacion} element={<PublicacionForm />} />
         <Route path={ROUTES.reglamentos} element={<Reglamentos />} />
+        <Route path={ROUTES.perfil} element={<Perfil/>} />
         </Route>
       </Routes>
     </BrowserRouter>

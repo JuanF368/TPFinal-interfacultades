@@ -1,12 +1,12 @@
-import jwt_decode from 'jwt-decode'; 
+import { jwtDecode } from 'jwt-decode'; 
 
 export const usuarioActual = () => {
     const token = localStorage.getItem('token');
     try {
-        return jwt_decode(token);
+        return jwtDecode(token);
     } catch (err){
         return null;
     }
 }
  
-export const isAuthenticated = () => !!getCurrentUser();
+export const isAuthenticated = () => !!usuarioActual();

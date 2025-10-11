@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import { FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router";
+import CartelConfirmacion from "./CartelConfirmacion";
 
 const Header = () => {
     const [estaLogueado, setEstaLogueado] = useState(false);
@@ -32,7 +33,7 @@ const Header = () => {
                         </>
                     ) : (
                         <>
-                         <FaUserCircle size={28} className="text-white cursor-pointer" /> 
+                         <FaUserCircle size={28} className="text-white cursor-pointer" onClick={() => navigate("/perfil")}/> 
                         <button
                             onClick={() => setMostrarConfirmacion(true)} 
                             className="text-white hover:text-red-500"
@@ -45,23 +46,8 @@ const Header = () => {
                 </div>
             </div>
             {mostrarConfirmacion && (
-            <div className="fixed inset-0 flex items-center justify-center bg-[rgba(128,128,128,0.5)] z-50">
-                <div className="bg-white rounded-xl shadow-lg p-6 w-80 text-center">
-                <h2 className="text-lg font-semibold mb-4">
-                    ¿Seguro que quiere cerrar sesion?
-                </h2>
-                <div className="flex justify-center gap-4">
-                    <button onClick={handleLogout}
-                    className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-                    Si, salir
-                    </button>
-                    <button onClick={() => setMostrarConfirmacion(false)}
-                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400" >
-                    Cancelar
-                    </button>
-                </div>
-                </div>
-            </div>
+                <CartelConfirmacion mensaje={"Seguro de cerrar sesion?" }
+                confirmar={handleLogout} cancelar={() =>setMostrarConfirmacion(false)} /> 
             )}
             
         </header>

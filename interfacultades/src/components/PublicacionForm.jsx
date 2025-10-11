@@ -36,7 +36,7 @@ const PublicacionForm = () => {
             <input type='file' className="w-full text-gray-600" multiple onChange={e => {const files = Array.from(e.target.files);
             setImagenes(files) }}/>
             <div className="text-right">
-                <button className="bg-[#243E73] hover:bg-[#2b4c8e] text-white font-semibold py-2 px-4 rounded transition duration-200">Publicar</button>
+                <button className="bg-[#E94D1A] hover:bg-[#c74116] text-white font-semibold py-2 px-4 rounded transition duration-200">Publicar</button>
             </div>
         </form>
         </div>

@@ -41,7 +41,7 @@ const Publicaciones = () => {
         )}
         { user && (
           <button onClick={() => navigate("/crearPublicacion")}
-          className="fixed bottom-4 right-4 bg-[#243E73] hover:bg-[#2b4c8e] text-white font-bold py-3 px-5 rounded-lg shadow-lg z-50">Nueva Publicacion</button>
+          className="fixed bottom-4 right-4 bg-[#E94D1A] hover:bg-[#c74116] text-white font-bold py-3 px-5 rounded-lg shadow-lg z-50">Nueva Publicacion</button>
         )}
       </div>
       

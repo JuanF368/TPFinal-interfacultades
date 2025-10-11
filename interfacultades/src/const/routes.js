@@ -5,5 +5,6 @@ export const ROUTES = {
     publicaciones: "/publicaciones", 
     partidos: "/partidos",
     crearPublicacion: "/crearPublicacion",
-    reglamentos: "/reglamentos"
+    reglamentos: "/reglamentos",
+    perfil: "/perfil" 
 };
