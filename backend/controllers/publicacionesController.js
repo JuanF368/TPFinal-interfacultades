@@ -9,7 +9,7 @@ const publicaciones = async (req, res ) => {
     const results = await Publicacion.findAll({
       include: [
         { model: Usuario, attributes: ['usnombre', 'usapellido'] },
-        { model: Imagen, attributes: ['url'] }
+        { model: Imagen, attributes: ['idimagen', 'url'] }
       ],
       order: [['fecha', 'DESC']],
       limit,
@@ -19,7 +19,7 @@ const publicaciones = async (req, res ) => {
     const publicaciones = results.map(pub => ({
       ...pub.toJSON(),
       nombreUsuario: `${pub.Usuario?.usnombre ?? ''} ${pub.Usuario?.usapellido ?? ''}`.trim(),
-      imagenes: pub.Imagens?.map(img => img.url) ?? []
+      imagenes: pub.Imagens?.map(img => ({ idimagen: img.idimagen, url:img.url})) ?? []
     }));
     res.status(200).json(publicaciones);
   } catch (err) {

@@ -19,7 +19,7 @@ router.post('/crearPublicacion', verificarToken, upload.array('imagenes', 5), cr
 router.get('/disciplina', obtenerDisciplinas);
 router.get('/perfil/publicaciones', verificarToken, publicacionesUsuario); 
 router.delete('/perfil/publicaciones/:id', verificarToken, eliminarPublicacion); 
-router.put('/perfil/publicaciones/:id', verificarToken, editarPublicacion);
+router.put('/perfil/publicaciones/:id', verificarToken,  upload.array('imagenes', 5), editarPublicacion);
 router.get('/galeria', obtenerGaleria);
 router.post('/galeria', verificarToken, upload.single('imagen'), subirFoto); //upload.single para 1 sola img
 

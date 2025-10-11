@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {usuarioActual} from "../utils/auth";
 import CartaPublicacion from "../components/CartaPublicacion";
 import CartelConfirmacion from "../components/CartelConfirmacion";
+import PublicacionForm from "../components/PublicacionForm";
 
 const Perfil = () => {
   const [seccion, setSeccion] = useState("perfil");
@@ -9,6 +10,7 @@ const Perfil = () => {
   const usuario = usuarioActual();
   const [confirmacion, setConfirmacion] = useState(false);
   const [accion, setAccion] = useState(() => ()=>{});
+  const [editando, setEditando] = useState(null); 
 
   useEffect(() => {
     if (seccion === "publicaciones") {
@@ -43,16 +45,25 @@ const Perfil = () => {
   };
 
   const editarPublicacion = (idPublicacion) => {
-    alert(`en proceso... ${idPublicacion}`);
+    const publi = publicaciones.find((p) => p.idpublicacion === idPublicacion);
+    if (publi) {
+      setEditando(publi);
+    }
+  };
+
+  const cancelarEdicion = () => {
+    setEditando(null);
   };
 
   return (
     <div className="p-4 text-left">
       <div className="flex font-bold space-x-4 text-gray-400 border-b-2 border-gray-300 mb-3">
-        <button onClick={() => setSeccion("perfil")}
-        className={`${seccion === "perfil" ? "font-bold text-[#E94D1A] border-b-2" : ""}`}> Perfil </button>
-        <button onClick={() => setSeccion("publicaciones")}
-        className={`${seccion === "publicaciones" ? "font-bold  text-[#E94D1A] border-b-2" : ""}`} > Mis publicaciones </button>
+        <button onClick={() => {setSeccion("perfil"); setEditando(null); }}
+          className={`${seccion === "perfil" ? "font-bold text-[#E94D1A] border-b-2" : ""}`}>Perfil
+        </button>
+        <button onClick={() => {setSeccion("publicaciones"); setEditando(null);}}
+          className={`${seccion === "publicaciones" ? "font-bold  text-[#E94D1A] border-b-2" : ""}`}> Mis publicaciones
+        </button>
       </div>
 
       <div>
@@ -64,13 +75,20 @@ const Perfil = () => {
 
         {seccion === "publicaciones" && (
           <div>
-            {publicaciones.length === 0 ? (
+            {editando ? (
+              <div>
+                <PublicacionForm modo="editar" publicacion={editando} exito={async () => {
+                await obtenerPublicaciones();
+                setEditando(null);
+              }}/>
+              </div>
+            ) : publicaciones.length === 0 ? (
               <p>No hay publicaciones</p>
             ) : (
-              publicaciones.map((pub) => (
-                <CartaPublicacion key={pub.idpublicacion} publicacion={pub}
-                  editar={() => editarPublicacion(pub.idpublicacion)}
-                  eliminar={() => { setAccion(() => () => eliminarPublicacion(pub.idpublicacion));
+              publicaciones.map((publi) => (
+                <CartaPublicacion key={publi.idpublicacion} publicacion={publi}
+                  editar={() => editarPublicacion(publi.idpublicacion)}
+                  eliminar={() => { setAccion(() => () => eliminarPublicacion(publi.idpublicacion));
                   setConfirmacion(true);
                 }}
                 />

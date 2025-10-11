@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import CartaPublicacion from "../components/CartaPublicacion";
+import PublicacionForm from "../components/PublicacionForm";
 
 const Publicaciones = () => {
   const [publicaciones, setPublicaciones] = useState([]);
-  const navigate = useNavigate();
   const user = localStorage.getItem('token')
+  const [nuevo, setNuevo] = useState(false);
   const obtenerPublicaciones = async () => {
     try {
       const res = await fetch("http://localhost:3001/publicaciones");
@@ -32,17 +32,23 @@ const Publicaciones = () => {
       <div className="w-full mx-auto bg-blue-50 p-6 rounded-2xl ">
         <h1 className="font-bold mb-4">Publicaciones</h1>
         <hr className="mb-6"/>
-        {publicaciones.length === 0 ? (
-          <p>No hay publicaciones</p>
+       {nuevo ? (
+          <PublicacionForm modo="crear" exito={() => {setNuevo(false);
+          obtenerPublicaciones();}} />
         ) : (
-          publicaciones.map((pub) => (
-            <CartaPublicacion key={pub.idpublicacion} publicacion={pub} />
-          ))
+          publicaciones.length === 0 ? (
+            <p>No hay publicaciones</p>
+          ) : (
+            publicaciones.map((pub) => (
+              <CartaPublicacion key={pub.idpublicacion} publicacion={pub} />
+            ))
+          )
         )}
-        { user && (
-          <button onClick={() => navigate("/crearPublicacion")}
-          className="fixed bottom-4 right-4 bg-[#E94D1A] hover:bg-[#c74116] text-white font-bold py-3 px-5 rounded-lg shadow-lg z-50">Nueva Publicacion</button>
-        )}
+        { user && !nuevo && (
+        <button onClick={() => setNuevo(true)}
+          className="fixed bottom-6 right-6 bg-[#E94D1A] text-white px-5 py-3 rounded-md shadow-lg hover:bg-[#c03d12] ">
+          Nueva Publicacion </button>
+      )}
       </div>
       
     </div>
