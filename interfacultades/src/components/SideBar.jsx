@@ -1,7 +1,7 @@
 import React, { useState }  from "react";
 import { useNavigate } from "react-router";
 import { FaHome, FaFutbol, FaBars, FaNewspaper, FaClipboardCheck} from 'react-icons/fa';
-import { FcRules } from 'react-icons/fc';
+import { IoMdPhotos } from 'react-icons/io';
 import { IoCloseSharp } from 'react-icons/io5';
 const SideBar = () => {
     const [abierto, setAbierto] = useState(false);
@@ -46,6 +46,12 @@ const SideBar = () => {
                             <FaClipboardCheck size={24}/>
                             <span className={`ml-4 md:block ${abierto ? "block" : "hidden"}`}> 
                                 Reglamentos
+                            </span>
+                        </li>
+                        <li onClick={() => irAPagina("/galeria")} className="flex items-center p-4 hover:bg-[#2b4c8e] cursor-pointer">
+                            <IoMdPhotos size={24}/>
+                            <span className={`ml-4 md:block ${abierto ? "block" : "hidden"}`}> 
+                                Galería
                             </span>
                         </li>
                     </ul>
