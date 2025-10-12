@@ -12,6 +12,7 @@ import MainLayout from './layouts/MainLayout';
 import AuthLayout from './layouts/AuthLayout';
 import Perfil from "./Pages/Perfil";
 import './App.css'
+import RutaProtegida from './components/RutaProtegida';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -29,7 +30,9 @@ function App() {
         <Route path={ROUTES.partidos} element={<Partidos />} />
         <Route path={ROUTES.reglamentos} element={<Reglamentos />} />
         <Route path={ROUTES.galeria} element={<Galeria />} />
-        <Route path={ROUTES.perfil} element={<Perfil/>} />
+        < Route element={<RutaProtegida/>}> 
+          <Route path={ROUTES.perfil} element={<Perfil/>} />
+        </Route>
         </Route>
       </Routes>
     </BrowserRouter>
