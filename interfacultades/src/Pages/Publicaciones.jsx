@@ -34,7 +34,7 @@ const Publicaciones = () => {
         <hr className="mb-6"/>
        {nuevo ? (
           <PublicacionForm modo="crear" exito={() => {setNuevo(false);
-          obtenerPublicaciones();}} />
+          obtenerPublicaciones();}} setNuevo={setNuevo} />
         ) : (
           publicaciones.length === 0 ? (
             <p>No hay publicaciones</p>
@@ -46,7 +46,7 @@ const Publicaciones = () => {
         )}
         { user && !nuevo && (
         <button onClick={() => setNuevo(true)}
-          className="fixed bottom-6 right-6 bg-[#E94D1A] text-white px-5 py-3 rounded-md shadow-lg hover:bg-[#c03d12] ">
+          className="fixed bottom-6 right-6 bg-[#E94D1A] text-white px-5 py-3 rounded-md shadow-lg hover:bg-[#c03d12] cursor-pointer">
           Nueva Publicacion </button>
       )}
       </div>

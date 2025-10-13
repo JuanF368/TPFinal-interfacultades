@@ -21,7 +21,7 @@ const Reglamentos = () => {
     return (
         <div className="p-6">
             <h1 className="text-3xl font-bold mb-6 text-center">Reglamentos oficiales</h1>
-            <h3 className="text-gray-500">Juegos Intercaultades UNCo {new Date().getFullYear()}</h3>
+            <h3 className="text-gray-500">Juegos Interfacultades UNCo {new Date().getFullYear()}</h3>
 
             <div className="grid grid-cold-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {disciplinas.map((disc) => (

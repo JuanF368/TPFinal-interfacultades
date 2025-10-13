@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"; 
 import { TbXboxX } from 'react-icons/tb';
 
-const PublicacionForm = ({publicacion =null, modo = 'crear', exito}) => {
+const PublicacionForm = ({publicacion =null, modo = 'crear', exito, setNuevo}) => {
     const [titulo, setTitulo] = useState(''); 
     const [contenido, setContenido] = useState(''); 
     const [imagenes, setImagenes] = useState([]); 
@@ -74,8 +74,14 @@ const PublicacionForm = ({publicacion =null, modo = 'crear', exito}) => {
             <label className="text-left block mb-3 font-medium text-gray-700"> Imagenes </label>
             <input type='file' className="w-full text-gray-600" multiple onChange={e => {const files = Array.from(e.target.files);
             setImagenes(files) }}/>
-            <div className="text-right">
-               <button className="bg-[#E94D1A] hover:bg-[#c74116] text-white font-semibold py-2 px-4 rounded">
+            <div className="flex justify-between mt-6">
+                <button
+                    className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
+                    onClick={() => setNuevo(false)}
+                >
+                    Cancelar
+                </button>
+               <button className="mt-4 bg-[#E94D1A] hover:bg-[#c74116] text-white font-semibold py-2 px-4 rounded cursor-pointer">
                 {modo === 'editar' ? 'Guardar Cambios' : 'Publicar'}</button>
             </div>
         </form>

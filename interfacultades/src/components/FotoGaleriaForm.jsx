@@ -51,14 +51,14 @@ const FotoGaleriaForm = ({ setNuevo, exito }) => {
                 />
                 <div className="flex justify-between mt-6">
                     <button
-                        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                        className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 cursor-pointer"
                         onClick={() => setNuevo(false)}
                         >
                         Cancelar
                     </button>
                     <button
                         type="submit"
-                        className="mt-4 bg-[#E94D1A] hover:bg-[#c74116] text-white font-semibold px-4 py-2 rounded"
+                        className="mt-4 bg-[#E94D1A] hover:bg-[#c74116] text-white font-semibold px-4 py-2 rounded cursor-pointer"
                     >
                         Subir Imagen
                     </button>

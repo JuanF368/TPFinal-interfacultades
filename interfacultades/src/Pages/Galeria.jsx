@@ -54,7 +54,7 @@ const Galeria = () => {
             )}
             { user && !nuevo && (
                 <button onClick={() => setNuevo(true)}
-                    className='fixed bottom-20 right-6 bg-[#E94D1A] text-white px-5 py-3 rounded-md shadow-lg hover:bg-[#c03d12] '>
+                    className='fixed bottom-6 right-6 bg-[#E94D1A] text-white px-5 py-3 rounded-md shadow-lg hover:bg-[#c03d12] cursor-pointer'>
                     Nueva Imagen
                 </button>
             )}
