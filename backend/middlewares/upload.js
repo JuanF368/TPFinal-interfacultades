@@ -12,7 +12,14 @@ const storage = multer.diskStorage({
     cb(null, uploadDir); 
   },
   filename: (req, file, cb) => {
-    const nombre = Date.now() + '-' + file.originalname;
+    const originalPath = path.join(uploadDir, file.originalname);
+    if(fs.existsSync(originalPath)){
+      console.log(`La imagen ${file.originalname} ya existe en la carpeta uploads.`);
+      file.existing = true;
+      file.filename = file.originalname;
+      return cb(null, file.originalname);
+    }
+    const nombre = file.originalname;
     cb(null, nombre);
   }
 });

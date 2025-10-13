@@ -17,16 +17,6 @@ const crearUsuario = async (req, res) => {
     });
 
     res.send("Usuario registrado con exito");
-    /*
-    const sql = "INSERT INTO usuario (usnombre, usapellido, usmail, uspass, idrol) VALUES (?, ?, ?, ?, ?)";
-    db.query(sql, [nombre, apellido, email, hashesPassword, 1], (err, result) => {
-      if(err){
-        console.log(err);
-      }else{
-        res.send("Usuario registrado con exito");
-      }
-    });
-    */
   } catch (error) {
     console.log(error);
   }

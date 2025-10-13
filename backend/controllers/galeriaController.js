@@ -16,9 +16,10 @@ const subirFoto = async (req, res) => {
             return res.status(400).json({ error: 'No se envio ninguna imagen' });
         }
         console.log(req.file);
+        const nombreArchivo = req.file.existing ? req.file.originalname : req.file.filename;
         const nueva = await Galeria.create({
             nombre: req.body.nombre,
-            ruta: `/uploads/${req.file.filename}`
+            ruta: `/uploads/${nombreArchivo}`
         });
         res.json(nueva);
     }catch (error){
