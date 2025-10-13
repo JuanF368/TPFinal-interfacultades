@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CartaPublicacion from "../components/CartaPublicacion";
 import PublicacionForm from "../components/PublicacionForm";
+import { toast } from "react-toastify";
 
 const Publicaciones = () => {
   const [publicaciones, setPublicaciones] = useState([]);
@@ -34,6 +35,7 @@ const Publicaciones = () => {
         <hr className="mb-6"/>
        {nuevo ? (
           <PublicacionForm modo="crear" exito={() => {setNuevo(false);
+          toast.success("Publicacion creada con exito!");
           obtenerPublicaciones();}} setNuevo={setNuevo} />
         ) : (
           publicaciones.length === 0 ? (

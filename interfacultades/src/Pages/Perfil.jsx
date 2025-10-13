@@ -3,6 +3,7 @@ import {usuarioActual} from "../utils/auth";
 import CartaPublicacion from "../components/CartaPublicacion";
 import CartelConfirmacion from "../components/CartelConfirmacion";
 import PublicacionForm from "../components/PublicacionForm";
+import { toast } from "react-toastify"; 
 
 const Perfil = () => {
   const [seccion, setSeccion] = useState("perfil");
@@ -79,6 +80,7 @@ const Perfil = () => {
               <div>
                 <PublicacionForm modo="editar" publicacion={editando} exito={async () => {
                 await obtenerPublicaciones();
+                toast.success("Publicacion editada con exito!");
                 setEditando(null);
               }}/>
               </div>
@@ -99,6 +101,7 @@ const Perfil = () => {
                 mensaje="Seguro de eliminar la publicacion?"
                 confirmar={() => {
                   accion();
+                  toast.success('Publicacion eliminada con exito!');
                   setConfirmacion(false);
                 }}
                 cancelar={() => setConfirmacion(false)}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import FotoGaleriaForm from '../components/FotoGaleriaForm';
+import { toast } from "react-toastify";
 
 const Galeria = () => {
     const [imagenes, setImagenes] = useState([]);
@@ -29,6 +30,7 @@ const Galeria = () => {
                     setNuevo={setNuevo} 
                     exito={() => {
                         setNuevo(false);
+                        toast.success("Imagen agregada con exito!");
                         getImagenes();
                     }}
                 />

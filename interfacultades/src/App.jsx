@@ -13,11 +13,14 @@ import AuthLayout from './layouts/AuthLayout';
 import Perfil from "./Pages/Perfil";
 import './App.css'
 import RutaProtegida from './components/RutaProtegida';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
+    <>
+  
     <BrowserRouter>
       <Routes>
         <Route element={<AuthLayout/>}>
@@ -37,6 +40,8 @@ function App() {
       </Routes>
     </BrowserRouter>
     
+    <ToastContainer/>
+    </>
   )
 }
 
