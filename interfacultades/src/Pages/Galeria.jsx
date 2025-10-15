@@ -69,10 +69,8 @@ const Galeria = () => {
                                         setIndiceActual(index);
                                     }}
                                 >
-                                    <img src={`http://localhost:3001${img.ruta}`} alt={img.nombre} className='w-full h-48 object-cover'/>
-                                    <div className='p-2 text-center text-sm font-medium text-gray-700'>
-                                        {img.nombre}
-                                    </div>
+                                    <img src={`http://localhost:3001${img.ruta}`} alt={img.nombre} className='w-full h-48 object-cover rounded-sm'/>
+                                    
                                 </div>
                             ))}
                         </div>

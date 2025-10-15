@@ -18,7 +18,7 @@ module.exports.login = async (req, res) =>{
         }
 
         const token = jwt.sign({idusuario: usuario.idusuario, usmail:usuario.usmail}, "Stack", {
-            expiresIn:'15m'
+            expiresIn:'60m'
         });
         return res.send({token, message: 'Login exitoso'});
     } catch (error) {

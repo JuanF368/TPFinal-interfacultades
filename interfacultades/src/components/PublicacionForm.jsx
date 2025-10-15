@@ -64,8 +64,8 @@ const PublicacionForm = ({publicacion =null, modo = 'crear', exito, setNuevo}) =
                 <div className="flex flex-wrap gap-3 mb-2">
                 {imagenesExistentes.map((img, idx) => (
                     <div key={img.idimagen || img.url ||idx} className="relative">
-                    <img src={`http://localhost:3001${img.url}`} className="w-24 h-24 object-cover border rounded"/>
-                    <TbXboxX onClick={() => handleEliminarExistente(img.idimagen)} style={{ position: "absolute" , top:0 , right:0} } />
+                    <img src={`http://localhost:3001${img.url}`} className="w-100 h-60 object-cover border rounded"/>
+                    <TbXboxX onClick={() => handleEliminarExistente(img.idimagen)} style={{ position: "absolute" , top:0 , right:0, fontSize: "2rem", stroke:"white", fill:"black", strokeWidth:"2"}} />
                     </div>
                 ))}
                 </div>

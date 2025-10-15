@@ -82,7 +82,9 @@ const Perfil = () => {
                 await obtenerPublicaciones();
                 toast.success("Publicacion editada con exito!");
                 setEditando(null);
-              }}/>
+              }}
+                setNuevo={setEditando}
+                />
               </div>
             ) : publicaciones.length === 0 ? (
               <p>No hay publicaciones</p>
