@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
-import { FaSignOutAlt, FaUserCircle } from "react-icons/fa";
+import { FaSignOutAlt, FaUserCircle, FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router";
 import CartelConfirmacion from "./CartelConfirmacion";
+import { IoCloseSharp } from 'react-icons/io5';
 
-const Header = () => {
+const Header = ({abierto, setAbierto}) => {
     const [estaLogueado, setEstaLogueado] = useState(false);
     const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
     const navigate = useNavigate();
@@ -22,10 +23,16 @@ const Header = () => {
     };
 
     return(
-        <header className="sticky top-0 left-0 right-0 bg-[#243E73] z-50 ">
-            <div className="max-w-7xl mx-auto flex items-center px-6 py-3">
-                
-                <div className="flex space-x-4 items-center ml-auto">
+        <header className="text-white h-16 fixed top-0 left-0 w-full bg-[#243E73] z-50 shadow ">
+            <div className="w-full flex items-center justify-between px-6 h-full">
+                <div className="flex items-center space-x-4">
+                    <button onClick={() => setAbierto(!abierto)}
+                        className="text-white hover:text-gray-300">
+                        {abierto ? <IoCloseSharp size={28}/> : <FaBars size={28}/>}
+                    </button>
+                    <h1 className="text-2xl font-bold">Interfacultades</h1>
+                </div>
+                <div className="flex space-x-4 items-center">
                     {!estaLogueado ? (
                         <>
                             <Button text = "Registrarse" url="/register" />
