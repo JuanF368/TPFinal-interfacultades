@@ -7,6 +7,8 @@ const Publicaciones = () => {
   const [publicaciones, setPublicaciones] = useState([]);
   const user = localStorage.getItem('token')
   const [nuevo, setNuevo] = useState(false);
+  const [estaEditando, setEstaEditando] = useState(false);
+
   const obtenerPublicaciones = async () => {
     try {
       const res = await fetch("http://localhost:3001/publicaciones");
@@ -30,7 +32,8 @@ const Publicaciones = () => {
   return (
     <div className="w-full px-4 py-6 text-left">
       <h1 className="text-2xl sm:text-3xl font-bold mb-6">Publicaciones</h1>
-      <div className="w-full mx-auto bg-blue-50 p-6 rounded-2xl ">
+      <div className="flex flex-col lg:flex-row gap-6"> 
+        <div className="flex-1 bg-blue-50 p-6 rounded-2xl ">
         <h1 className="font-bold mb-4">Publicaciones</h1>
         <hr className="mb-6"/>
        {nuevo ? (
@@ -41,8 +44,8 @@ const Publicaciones = () => {
           publicaciones.length === 0 ? (
             <p>No hay publicaciones</p>
           ) : (
-            publicaciones.map((pub) => (
-              <CartaPublicacion key={pub.idpublicacion} publicacion={pub} />
+            !estaEditando && publicaciones.map((pub) => (
+              <CartaPublicacion key={pub.idpublicacion} publicacion={pub} cambio={obtenerPublicaciones} setEstaEditando={setEstaEditando}/>
             ))
           )
         )}
@@ -52,7 +55,10 @@ const Publicaciones = () => {
           Nueva Publicacion </button>
       )}
       </div>
-      
+      <div className="w-full lg:w-96 bg-gray-100 p-6 rounded-2xl"> 
+        <h2  className="font-bold mb-4"> Espacio para futuras cosas (ej:tops - filtrado)</h2>
+      </div>
+    </div>
     </div>
   );
 };
