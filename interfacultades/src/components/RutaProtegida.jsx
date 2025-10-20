@@ -1,9 +1,13 @@
 import { Navigate, Outlet } from "react-router";
-import { isAuthenticated } from "../utils/auth";
+import { isAuthenticated, usuarioActual } from "../utils/auth";
 
-const RutaProtegida = () => {
+const RutaProtegida = ({roles}) => {
+    const usuario = usuarioActual();
     if (!isAuthenticated()) {
         return <Navigate to="/login" replace />;
+    }
+    if(roles && !roles.includes(usuario.rodescripcion)){
+        return <Navigate to="/" replace />;
     }
     return <Outlet/>
 }

@@ -1,5 +1,5 @@
 //const db = require('../db');
-const { Usuario } = require('../models');
+const { Usuario, Rol } = require('../models');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -8,7 +8,10 @@ module.exports.login = async (req, res) =>{
     const {usmail, uspass} = req.body; 
 
     try{
-        const usuario = await Usuario.findOne({ where: { usmail } });
+        const usuario = await Usuario.findOne({
+            where: { usmail },
+            include: [{ model: Rol, as: 'rol'}]
+        });
         if(!usuario){
             return res.send({message: 'Usuario no encontrado'});
         }
@@ -17,7 +20,7 @@ module.exports.login = async (req, res) =>{
             return res.send({message: 'Usuario o contraseña incorrectos'});
         }
 
-        const token = jwt.sign({idusuario: usuario.idusuario, usmail:usuario.usmail}, "Stack", {
+        const token = jwt.sign({idusuario: usuario.idusuario, usmail:usuario.usmail, idrol:usuario.idrol, rodescripcion: usuario.rol.rodescripcion}, "Stack", {
             expiresIn:'60m'
         });
         return res.send({token, message: 'Login exitoso'});

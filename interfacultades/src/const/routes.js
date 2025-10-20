@@ -7,4 +7,7 @@ export const ROUTES = {
     reglamentos: "/reglamentos",
     perfil: "/perfil",
     galeria: "/galeria",
+    resultados: "/resultados", //profe
+    usuarios: "/usuarios", //admin
+    misPartidos: "/misPartidos", //jugador   rutas de prueba
 };

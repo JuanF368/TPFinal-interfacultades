@@ -11,6 +11,9 @@ import Galeria from './Pages/Galeria';
 import MainLayout from './layouts/MainLayout';
 import AuthLayout from './layouts/AuthLayout';
 import Perfil from "./Pages/Perfil";
+import PruebaRolProfe from "./Pages/PruebaRolProfe";
+import PruebaRolJugador from "./Pages/PruebaRolJugador";
+import PruebaRolAdmin from "./Pages/Usuarios";
 import './App.css'
 import RutaProtegida from './components/RutaProtegida';
 import { ToastContainer } from 'react-toastify';
@@ -33,8 +36,17 @@ function App() {
         <Route path={ROUTES.partidos} element={<Partidos />} />
         <Route path={ROUTES.reglamentos} element={<Reglamentos />} />
         <Route path={ROUTES.galeria} element={<Galeria />} />
-        < Route element={<RutaProtegida/>}> 
+        < Route element={<RutaProtegida/>}> {/* todos los usuarios logueados */}
           <Route path={ROUTES.perfil} element={<Perfil/>} />
+        </Route>
+        <Route element={<RutaProtegida roles={['profesor']}/>} >  {/**rutas de prueba, a cambiar */}
+          <Route path={ROUTES.resultados} element={<PruebaRolProfe/>} />
+        </Route>
+         <Route element={<RutaProtegida roles={['jugador']}/>} >  
+          <Route path={ROUTES.misPartidos} element={<PruebaRolJugador/>} />
+        </Route>
+         <Route element={<RutaProtegida roles={['admin']}/>} >  
+          <Route path={ROUTES.usuarios} element={<PruebaRolAdmin/>} />
         </Route>
         </Route>
       </Routes>

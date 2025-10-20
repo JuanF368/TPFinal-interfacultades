@@ -26,11 +26,22 @@ module.exports = (sequelize, DataTypes) => {
         idrol:{
             type: DataTypes.INTEGER,
             allowNull: false,
-            defaultValue: 1 //cambiar a futuro cuando definamos roles
+            references: {
+                model: 'rol',
+                key: 'idrol'
+            }
         }
     }, {
         tableName: 'usuario',
         timestamps: false
     });
+
+    Usuario.associate = (models) => {
+        Usuario.belongsTo(models.Rol, {
+            foreignKey: 'idrol',
+            as: 'rol'
+        });
+    };
+    
     return Usuario;
 };
