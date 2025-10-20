@@ -10,4 +10,5 @@ export const ROUTES = {
     resultados: "/resultados", //profe
     usuarios: "/usuarios", //admin
     misPartidos: "/misPartidos", //jugador   rutas de prueba
+    convocatoria: "/convocatoria",
 };

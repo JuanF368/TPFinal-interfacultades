@@ -1,10 +1,13 @@
 import React, { useState }  from "react";
 import { useNavigate } from "react-router";
-import { FaHome, FaFutbol, FaNewspaper, FaClipboardCheck} from 'react-icons/fa';
+import { FaHome, FaFutbol, FaNewspaper, FaClipboardCheck, FaUsers, FaBullhorn} from 'react-icons/fa';
 import { IoMdPhotos } from 'react-icons/io';
+import { isAuthenticated, usuarioActual } from "../utils/auth";
 const SideBar = ({abierto}) => {
     const navigate = useNavigate(); 
-    
+    const logueado = isAuthenticated();
+    const usuario = usuarioActual();
+
     const irAPagina = (path) => {
         navigate(path);
     };
@@ -44,6 +47,27 @@ const SideBar = ({abierto}) => {
                                 Galería
                             </span>}
                         </li>
+                        { logueado &&(
+                            <> 
+                            {usuario?.rodescripcion === "admin" && (
+                                <>
+                                <li onClick={() => irAPagina("/usuarios")} className="flex items-center p-4 hover:bg-[#2b4c8e] cursor-pointer">
+                                    <FaUsers size={24}/>
+                                     {abierto && <span className="ml-3">
+                                        Administrar Usuarios
+                                    </span>}
+                                </li>
+                                <li onClick={() => irAPagina("/convocatoria")} className="flex items-center p-4 hover:bg-[#2b4c8e] cursor-pointer">
+                                    <FaBullhorn size={24}/>
+                                    {abierto && <span className="ml-3">
+                                        Convocatoria
+                                    </span>}
+                                </li>
+                                </>
+                            )}
+                            
+                            </>
+                        )}
                     </ul>
                 </nav>
             </div>

@@ -1,7 +1,7 @@
 import React from "react";
 
-const PruebaRolAdmin = () => {
-    return <h1> PruebaRolAdmin </h1>
+const Usuarios = () => {
+    return <h1> administracion de Usuarios </h1>
 }; 
 
-export default PruebaRolAdmin; 
+export default Usuarios; 

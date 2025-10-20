@@ -13,7 +13,8 @@ import AuthLayout from './layouts/AuthLayout';
 import Perfil from "./Pages/Perfil";
 import PruebaRolProfe from "./Pages/PruebaRolProfe";
 import PruebaRolJugador from "./Pages/PruebaRolJugador";
-import PruebaRolAdmin from "./Pages/Usuarios";
+import Usuarios from "./Pages/Usuarios";
+import Convocatoria from './Pages/Convocatoria';
 import './App.css'
 import RutaProtegida from './components/RutaProtegida';
 import { ToastContainer } from 'react-toastify';
@@ -46,7 +47,8 @@ function App() {
           <Route path={ROUTES.misPartidos} element={<PruebaRolJugador/>} />
         </Route>
          <Route element={<RutaProtegida roles={['admin']}/>} >  
-          <Route path={ROUTES.usuarios} element={<PruebaRolAdmin/>} />
+          <Route path={ROUTES.usuarios} element={<Usuarios/>} />
+          <Route path={ROUTES.convocatoria} element={<Convocatoria/>}/>
         </Route>
         </Route>
       </Routes>
