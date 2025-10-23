@@ -20,5 +20,9 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false
     });
 
+    Disciplina.associate = (models) => {
+        Disciplina.hasMany(models.Partido, { foreignKey: 'iddisciplina', as: 'partidos' });
+    }
+
     return Disciplina;
 };
