@@ -11,7 +11,7 @@ Ingresa al menu
 →  Se muestra la opcion de filtrado (por universidad, deporte, fecha, horario) 
 
 */
-export const obtenerResultados = async (req, res) => {
+const obtenerResultados = async (req, res) => {
     try {
         const { iddisciplina, fecha, idfacultad } = req.query;
 
@@ -21,7 +21,7 @@ export const obtenerResultados = async (req, res) => {
         if(fecha) wherePartido.fecha = fecha;
         if(idfacultad) {
             const idFac = parseInt(idfacultad, 10);
-            wherePartifo[Op.or] = [
+            wherePartido[Op.or] = [
                 where(col('equipo1.idfacultad'), idFac),
                 where(col('equipo2.idfacultad'), idFac)
             ];
@@ -50,12 +50,16 @@ export const obtenerResultados = async (req, res) => {
                 ['hora', 'DESC']
             ]
         });
+
+        res.json(partidos);
     }catch (error) {
         console.error('Error al obtener resultados:', error);
         res.status(500).json({ message: 'Error al obtener resultados' });
     }
 };
 
-export const actualizarResultados = async (req, res) => {
+const actualizarResultados = async (req, res) => {
     
 }
+
+module.exports = { obtenerResultados, actualizarResultados };
