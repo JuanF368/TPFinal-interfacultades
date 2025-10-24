@@ -1,6 +1,5 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('convocatoria', {
@@ -9,16 +8,33 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
       },
-      fechafin: {
+      inicioUnidades: {
         type: Sequelize.DATE,
         allowNull: false
       },
-      fechainicio: {
+      finUnidades: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      inicioInscripcion: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      finInscripcion: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      inicioJuegos: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      finJuegos: {
         type: Sequelize.DATE,
         allowNull: false
       }
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('convocatoria');
   }

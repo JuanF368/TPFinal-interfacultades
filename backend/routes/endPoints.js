@@ -11,6 +11,7 @@ const { obtenerDisciplinas } = require('../controllers/disciplinasController');
 const { publicacionesUsuario, eliminarPublicacion, editarPublicacion } = require('../controllers/perfilController'); 
 const { obtenerGaleria, subirFoto } = require('../controllers/galeriaController');
 const { obtenerResultados, actualizarResultados } = require('../controllers/partidoController');
+const convocatoriaRoutes = require('./convocatoriaRoutes'); 
 
 router.get('/ping', ping);
 router.post('/login', login);
@@ -25,5 +26,6 @@ router.get('/galeria', obtenerGaleria);
 router.post('/galeria', verificarToken, upload.single('imagen'), subirFoto); //upload.single para 1 sola img
 router.get('/resultados', obtenerResultados);
 router.put('/resultados/:id', verificarToken, actualizarResultados);
+router.use('/convocatoria', convocatoriaRoutes); 
 
 module.exports = router;
