@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import CartaPartido from "../components/CartaPartido";
+import PartidoForm from "../components/PartidoForm";
 
 
 const Partidos = () => {
     const [partidos, setPartidos] = useState([]);
     const [facultades, setFacultades] = useState([]);
     const [disciplinas, setDisciplinas] = useState([]);
+    const [editandoPartido, setEditandoPartido] = useState(null);
     const [filtros, setFiltros] = useState({
         idfacultad: '',
         iddisciplina: '',
@@ -71,7 +74,7 @@ const Partidos = () => {
                     name="idfacultad"
                     value={filtros.idfacultad}
                     onChange={handleFiltroChange}
-                    className="border rounded p-2"
+                    className="border rounded p-2 cursor-pointer"
                 >
                     <option value="">Todas las facultades</option>
                     {facultades.map(fac => (
@@ -83,7 +86,7 @@ const Partidos = () => {
                     name="iddisciplina"
                     value={filtros.iddisciplina}
                     onChange={handleFiltroChange}
-                    className="border rounded p-2"
+                    className="border rounded p-2 cursor-pointer"
                 >
                     <option value="">Todas las disciplinas</option>
                     {disciplinas.map(dis => (
@@ -96,12 +99,12 @@ const Partidos = () => {
                     name="fecha"
                     value={filtros.fecha}
                     onChange={handleFiltroChange}
-                    className="border rounded p-2"
+                    className="border rounded p-2 cursor-pointer"
                 />
 
                 <button
                     onClick={handleFiltrar}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
                 >
                     Filtrar
                 </button>
@@ -110,30 +113,24 @@ const Partidos = () => {
                 {partidos.length === 0 ? (
                     <p>No hay partidos que mostrar.</p>
                 ) : (
-                    partidos.map(p => (
-                        <div key= {p.idpartido} className="border rounded-lg p-4 shadow hover:shadow-lg transition">
-                            <div className="flex justify-between mb-2 text-gray-600">
-                                <span>{p.fecha}</span>
-                                <span>{p.hora}</span>
-                            </div>
-                            <div className="text-xl font-semibold mb-1">{p.disciplina.nombre}</div>
-                            <div className="text-gray-700 mb-2">{p.lugar}</div>
-                            <div className="flex items-center justify-between">
-                                <div className="text-center">
-                                    <div className="font-bold">{p.equipo1.facultad.siglas}</div>
-                                    <div className="text-lg">{p.resequipo1 ?? '-'}</div>
-                                </div>
-                                <div className="text-lg font-bold"> vs </div>
-                                <div className="text-center">
-                                    <div className="font-bold">{p.equipo2.facultad.siglas}</div>
-                                    <div className="text-lg">{p.resequipo2 ?? '-'}</div>
-                                </div>
-                            </div>
-                        </div>
+                    partidos.map((p) => (
+                        <CartaPartido key={p.idpartido} partido={p} onEditar={setEditandoPartido} />
                     ))
                 )}
 
             </div>
+
+            {editandoPartido && (
+                <PartidoForm
+                    partido={editandoPartido}
+                    exito={() => {
+                        setEditandoPartido(null);
+                        cargarPartidos();
+                    }}
+                    cancelar={() => setEditandoPartido(null)}
+                />
+            )}
+
         </div>
     );
 }; 

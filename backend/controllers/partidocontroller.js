@@ -59,7 +59,26 @@ const obtenerResultados = async (req, res) => {
 };
 
 const actualizarResultados = async (req, res) => {
-    
+    try {
+        const { id } = req.params;
+        const { resequipo1, resequipo2 } = req.body;
+
+        const partido = await Partido.findByPk(id);
+
+        if(!partido) {
+            return res.status(404).json({ message: 'Partido no encontrado' });
+        }
+
+        partido.resequipo1 = resequipo1;
+        partido.resequipo2 = resequipo2;
+        await partido.save();
+
+        res.json({ message: 'Resultados actualizados correctamente', partido });
+
+    }catch (error) {
+        console.error('Error al actualizar resultados:', error);
+        res.status(500).json({ message: 'Error al actualizar resultados' });
+    }
 }
 
 module.exports = { obtenerResultados, actualizarResultados };

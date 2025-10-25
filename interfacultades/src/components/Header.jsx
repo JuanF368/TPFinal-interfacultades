@@ -23,14 +23,16 @@ const Header = ({abierto, setAbierto}) => {
     };
 
     return(
-        <header className="text-white h-16 fixed top-0 left-0 w-full bg-[#243E73] z-50 shadow ">
+        <header className="text-white h-auto fixed top-0 left-0 w-full bg-[#243E73] z-50 shadow ">
             <div className="w-full flex items-center justify-between px-6 h-full">
                 <div className="flex items-center space-x-4">
                     <button onClick={() => setAbierto(!abierto)}
-                        className="text-white hover:text-gray-300">
+                        className="text-white hover:text-gray-300 cursor-pointer">
                         {abierto ? <IoCloseSharp size={28}/> : <FaBars size={28}/>}
                     </button>
-                    <h1 className="text-2xl font-bold">Interfacultades</h1>
+                    <div className="cursor-pointer" onClick={() => navigate("/")}>
+                        <img src="/logos/logo-interfacultades.png" alt="logo-interfacultades" className="h-20 ml-4" />
+                    </div>
                 </div>
                 <div className="flex space-x-4 items-center">
                     {!estaLogueado ? (
