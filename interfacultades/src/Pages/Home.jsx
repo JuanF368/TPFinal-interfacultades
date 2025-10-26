@@ -50,6 +50,7 @@ const Home = () => {
       <main className='flex-1 container mx-auto px-4 py-6'>
         <h1 className="text-4xl font-bold">Página Principal</h1>
         <p className="mt-4 text-lg">Esta es la página principal de nuestra aplicación.</p>
+        <p className="mt-4 text-lg">Prueba para ver si el cambio de rama funciona.</p>
       </main>
 
       <div className='bg-white py-8 shadow-inner mt-16'> 
