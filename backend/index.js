@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const routes = require('./routes/endPoints')
 const db = require('./models')
+require ('./soap/soapServer');
 
 app.use(cors({
   origin: ['http://localhost:5173'], 
@@ -10,6 +11,9 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use('/', routes); 
+
+const soapWrapper = require('./routes/soapWrapper');
+app.use('/api/soap', soapWrapper);
 
 db.sequelize.sync({ alter: false })
   .then(() => {
