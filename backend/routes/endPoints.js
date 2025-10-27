@@ -8,7 +8,7 @@ const { ping } = require('../controllers/pingController');
 const { login }= require('../controllers/loginController');
 const { publicaciones, crearPublicacion } = require('../controllers/publicacionesController');
 const { obtenerDisciplinas } = require('../controllers/disciplinasController');
-const { publicacionesUsuario, eliminarPublicacion, editarPublicacion } = require('../controllers/perfilController'); 
+const { perfilUsuario, editarPerfil, publicacionesUsuario, eliminarPublicacion, editarPublicacion } = require('../controllers/perfilController'); 
 const { obtenerGaleria, subirFoto } = require('../controllers/galeriaController');
 const { obtenerResultados, actualizarResultados } = require('../controllers/partidocontroller');
 const convocatoriaRoutes = require('./convocatoriaRoutes'); 
@@ -20,6 +20,8 @@ router.post('/crearUsuario', crearUsuario);
 router.get('/publicaciones', publicaciones);
 router.post('/crearPublicacion', verificarToken, upload.array('imagenes', 5), crearPublicacion); //upload para cant de img
 router.get('/disciplina', obtenerDisciplinas);
+router.get('/perfil', verificarToken, perfilUsuario); 
+router.put('/perfil/editar', verificarToken, editarPerfil); 
 router.get('/perfil/publicaciones', verificarToken, publicacionesUsuario); 
 router.delete('/perfil/publicaciones/:id', verificarToken, eliminarPublicacion); 
 router.put('/perfil/publicaciones/:id', verificarToken,  upload.array('imagenes', 5), editarPublicacion);

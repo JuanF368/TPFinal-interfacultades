@@ -1,6 +1,49 @@
 //const db = require('../db');
 
-const { Publicacion, Imagen } = require('../models'); 
+const { Publicacion, Imagen, Usuario, Rol } = require('../models'); 
+const bcrypt = require('bcrypt');
+
+const perfilUsuario = async(req, res) =>{
+  try {
+    const idUsuario = req.user.idusuario; 
+    const usuario = await Usuario.findByPk(idUsuario, { attributes: ['usnombre', 'usapellido', 'usmail'],
+    include: [{ model: Rol, as: 'rol', attributes: ['rodescripcion'] }]
+  }); 
+    if(!usuario) { 
+      return res.status(404).json({ error: 'No existe el usuario' });
+    }
+    res.json({usnombre: usuario.usnombre,usapellido: usuario.usapellido, usmail: usuario.usmail,rol: usuario.rol?.rodescripcion});
+  } catch(error) {
+      console.log('Error al encontrar al usuario: ', error); 
+      return res.status(500).json({error: 'Error al encontrar al usuario'}); 
+  }
+}
+
+const editarPerfil = async(req, res) =>{
+  try {
+    const idUsuario = req.user.idusuario; 
+    const { usnombre, usapellido, usmail, uspass} = req.body; 
+    const usuario = await Usuario.findByPk(idUsuario); 
+    if(!usuario){
+      return res.status(404).json({ error: 'No existe el usuario' });
+    }
+    
+    usuario.usnombre = usnombre || usuario.usnombre; 
+    usuario.usapellido = usapellido || usuario.usapellido; 
+    usuario.usmail = usmail || usuario.usmail; 
+    if (uspass && uspass.trim() !== '') {
+      const hashedPassword = await bcrypt.hash(uspass, 10);
+      usuario.uspass = hashedPassword;
+    }
+
+    await usuario.save(); 
+    res.json({mensaje: 'Perfil actualizado correctamente'});
+  } catch(error){
+    console.log('Error al editar el usuario: ', error); 
+    return res.status(500).json({error: 'Error al editar el usuario'}); 
+  }
+ 
+}
 
 const publicacionesUsuario = async(req, res) =>{
     try {
@@ -86,4 +129,4 @@ const editarPublicacion = async (req, res) => {
   }
 };
 
-module.exports = {publicacionesUsuario, eliminarPublicacion, editarPublicacion};
+module.exports = {perfilUsuario, editarPerfil, publicacionesUsuario, eliminarPublicacion, editarPublicacion};
