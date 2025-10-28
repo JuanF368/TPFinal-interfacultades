@@ -1,4 +1,4 @@
-const { Facultad } = require('../models');
+const { Facultad, Disciplina } = require('../models');
 
 const facultadesService = {
     FacultadService: {
@@ -12,7 +12,7 @@ const facultadesService = {
                         siglas: f.siglas,
                         puntos: f.puntos
                     }));
-                    return { facultades: result };
+                    return result ;
                 } catch (error) {
                     console.error('Error al obtener facultades:', error);
                     throw new Error('Error al obtener facultades');
@@ -25,6 +25,20 @@ const facultadesService = {
                 } catch (error) {
                     console.error('Error al obtener facultad por sigla:', error);
                     throw new Error('Error al obtener facultad por sigla');
+                }
+            },
+            async getDisciplinas(){
+                try {
+                    const disciplinas = await Disciplina.findAll();
+                    const result = disciplinas.map(d => ({
+                        iddisciplina: d.iddisciplina,
+                        nombre: d.nombre,
+                        reglamento: d.reglamento
+                    }));
+                    return result;
+                } catch (error) {
+                    console.error('Error al obtener disciplinas:', error);
+                    throw new Error('Error al obtener disciplinas');
                 }
             }
         }

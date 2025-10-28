@@ -15,4 +15,15 @@ router.get('/facultades', async (req, res) => {
     }
 });
 
+router.get('/disciplinas', async (req, res) => {
+    try{
+        const client = await soap.createClientAsync(soapUrl);
+        const [result] = await client.getDisciplinasAsync({});
+        res.json(result);
+    } catch (error) {
+        console.error('Error en wrapper getDisciplinas:', error);
+        res.status(500).json({ error: 'Error al llamar al servicio SOAP (getDisciplinas)' });
+    }
+})
+
 module.exports = router;

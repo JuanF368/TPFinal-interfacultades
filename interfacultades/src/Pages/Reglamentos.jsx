@@ -8,7 +8,7 @@ const Reglamentos = () => {
 
     const getDisciplinas = async () => {
         try {
-            const res = await fetch("http://localhost:3001/disciplina");
+            const res = await fetch("http://localhost:3001/api/soap/disciplinas");
             const data = await res.json();
             setDisciplinas(data);
         } catch (error) {
