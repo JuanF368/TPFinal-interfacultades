@@ -8,7 +8,7 @@ const { crearUsuario } = require('../controllers/registroController');
 const { ping } = require('../controllers/pingController');
 const { login }= require('../controllers/loginController');
 const { publicaciones, crearPublicacion } = require('../controllers/publicacionesController');
-const { obtenerDisciplinas } = require('../controllers/disciplinasController');
+const { obtenerDisciplinas, /*actualizarDisciplina */ } = require('../controllers/disciplinasController');
 const { perfilUsuario, editarPerfil, publicacionesUsuario, eliminarPublicacion, editarPublicacion } = require('../controllers/perfilController'); 
 const { obtenerGaleria, subirFoto } = require('../controllers/galeriaController');
 const { obtenerResultados, actualizarResultados } = require('../controllers/partidocontroller');
@@ -30,9 +30,10 @@ router.put('/perfil/publicaciones/:id', verificarToken,  upload.array('imagenes'
 router.get('/galeria', obtenerGaleria);
 router.post('/galeria', verificarToken, upload.single('imagen'), subirFoto); //upload.single para 1 sola img
 router.get('/resultados', obtenerResultados);
-router.put('/resultados/:id', verificarToken, actualizarResultados);
+router.put('/resultados/:id', verificarToken, verificarRol(['profesor']), actualizarResultados);
 router.get('/usuarios', verificarToken, verificarRol(['administrador', 'profesor']), listarUsuarios);
 router.put('/usuarios/actualizar/:id', verificarToken,  verificarRol(['administrador', 'profesor']), actualizarRolUsuario); 
+//router.put('/disciplina/:id', verificarToken, verificarRol(['administrador', 'profesor']), actualizarDisciplina)
 
 router.use('/convocatoria',verificarToken, verificarRol(['administrador']), convocatoriaRoutes); 
 router.get('/facultades', obtenerFacultades);

@@ -1,6 +1,8 @@
 import React from "react";
+import { usuarioActual, isAuthenticated } from "../utils/auth";
 
 const CartaPartido = ({ partido, onEditar }) => {
+    const user = usuarioActual();
     return (
         <div className="border rounded-lg p-4 shadow hover:shadow-lg transition relative bg-white">
             <div className="flex justify-between mb-2 text-gray-600">
@@ -21,13 +23,15 @@ const CartaPartido = ({ partido, onEditar }) => {
                     <span className="text-2xl font-extrabold">{partido.resequipo2 !== null ? partido.resequipo2 : '-'}</span>
                 </div>
             </div>
-
+            {user?.rodescripcion === "profesor" && (
             <button
                 onClick={() => onEditar(partido)}
                 className="bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600 cursor-pointer"
             >
                 Actualizar resultados
             </button>
+            )}
+            
         </div>
     )
 }
