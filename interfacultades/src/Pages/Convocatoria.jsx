@@ -6,11 +6,13 @@ const Convocatoria = () => {
     const [convocatoria, setConvocatoria] = useState(null);
     const [edicion, setEdicion] = useState(false); 
     const [estado, setEstado] = useState(""); 
-
+    const token = localStorage.getItem("token"); 
     useEffect(() => {
         const obtenerConvocatoria = async() => {
             try {
-                const res = await fetch('http://localhost:3001/convocatoria/estado');
+                const res = await fetch('http://localhost:3001/convocatoria/estado', {
+                    headers: {"Authorization": `Bearer ${token}`}
+                });
                 if (!res.ok){
                     console.warn("No hay convocatoria activa"); 
                     setConvocatoria(null);

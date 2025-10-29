@@ -47,8 +47,10 @@ function App() {
           <Route path={ROUTES.misPartidos} element={<PruebaRolJugador/>} />
         </Route>
          <Route element={<RutaProtegida roles={['admin']}/>} >  
-          <Route path={ROUTES.usuarios} element={<Usuarios/>} />
           <Route path={ROUTES.convocatoria} element={<Convocatoria/>}/>
+        </Route>
+        <Route element={<RutaProtegida roles={['admin', 'profesor']}/>} >  
+          <Route path={ROUTES.usuarios} element={<Usuarios/>} />
         </Route>
         </Route>
       </Routes>
