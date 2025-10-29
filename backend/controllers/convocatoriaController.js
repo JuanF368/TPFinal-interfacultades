@@ -1,4 +1,5 @@
-const { Convocatoria } = require('../models'); 
+const { where } = require('sequelize');
+const { Convocatoria, Usuario, Rol } = require('../models'); 
 
 const crearConvocatoria = async(req, res) => {
     try{
@@ -53,6 +54,16 @@ const estadoConvocatoria = async(req, res) =>{
             estado = 'juegos en curso';
         } else if (hoy > finJuegos) {
             estado = 'finalizado';
+        }
+
+        if(estado === "finalizado") {
+            const rolJugador = await Rol.findOne({where: {rodescripcion: 'jugador'}}); 
+            const rolUsuario = await Rol.findOne({where:{rodescripcion: 'usuario'}}); 
+            if(rolJugador && rolUsuario){
+                await  Usuario.update({idrol:rolUsuario.idrol}, {where: {idrol: rolJugador.idrol}}); 
+                console.log("Cambio de roles realizado"); 
+            } 
+
         }
 
         return res.status(200).json({estado, convocatoria}); 

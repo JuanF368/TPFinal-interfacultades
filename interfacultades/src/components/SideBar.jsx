@@ -49,7 +49,7 @@ const SideBar = ({abierto}) => {
                         </li>
                         { logueado &&(
                             <> 
-                            {(usuario?.rodescripcion === "admin" || usuario?.rodescripcion ==="profesor") && (
+                            {(usuario?.rodescripcion === "administrador" || usuario?.rodescripcion ==="profesor") && (
                                 <>
                                 <li onClick={() => irAPagina("/usuarios")} className="flex items-center p-4 hover:bg-[#2b4c8e] cursor-pointer">
                                     <FaUsers size={24}/>
@@ -59,7 +59,7 @@ const SideBar = ({abierto}) => {
                                 </li>
                                 </>
                             )}
-                            { usuario?.rodescripcion ==="admin" && ( 
+                            { usuario?.rodescripcion ==="administrador" && ( 
                                 <>
                                 <li onClick={() => irAPagina("/convocatoria")} className="flex items-center p-4 hover:bg-[#2b4c8e] cursor-pointer">
                                     <FaBullhorn size={24}/>

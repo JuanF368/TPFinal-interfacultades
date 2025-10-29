@@ -31,10 +31,10 @@ router.get('/galeria', obtenerGaleria);
 router.post('/galeria', verificarToken, upload.single('imagen'), subirFoto); //upload.single para 1 sola img
 router.get('/resultados', obtenerResultados);
 router.put('/resultados/:id', verificarToken, actualizarResultados);
-router.get('/usuarios', verificarToken, verificarRol(['admin', 'profesor']), listarUsuarios);
-router.put('/usuarios/actualizar/:id', verificarToken,  verificarRol(['admin', 'profesor']), actualizarRolUsuario); 
+router.get('/usuarios', verificarToken, verificarRol(['administrador', 'profesor']), listarUsuarios);
+router.put('/usuarios/actualizar/:id', verificarToken,  verificarRol(['administrador', 'profesor']), actualizarRolUsuario); 
 
-router.use('/convocatoria',verificarToken, verificarRol(['admin']), convocatoriaRoutes); 
+router.use('/convocatoria',verificarToken, verificarRol(['administrador']), convocatoriaRoutes); 
 router.get('/facultades', obtenerFacultades);
 
 module.exports = router;

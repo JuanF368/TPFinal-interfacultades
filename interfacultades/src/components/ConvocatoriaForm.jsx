@@ -7,6 +7,7 @@ const ConvocatoriaForm = ({ modo, convocatoria, onActualizada}) => {
     const [formData, setFormData] = useState(
     convocatoria || Object.fromEntries(Object.keys(etiquetasConvocatoria).map(key => [key, ""]))
     );
+    const token = localStorage.getItem("token"); 
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
@@ -20,7 +21,7 @@ const ConvocatoriaForm = ({ modo, convocatoria, onActualizada}) => {
             const method = modo === "editar" ? "PUT" : "POST"; 
 
             const res = await fetch(url, { 
-                method, headers:{"Content-Type": "application/json" }, body: JSON.stringify(formData),
+                method, headers:{"Content-Type": "application/json", 'Authorization': `Bearer ${token}` }, body: JSON.stringify(formData),
             }); 
             const data = await res.json(); 
             if (res.ok){
