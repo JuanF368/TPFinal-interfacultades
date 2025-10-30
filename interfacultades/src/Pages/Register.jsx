@@ -62,6 +62,10 @@ const Register = () => {
              navigate('/login'); //para que se tenga que loguear obligatoriamente para el token
         })
         .catch(error => {
+            if (error.response?.data?.error) {
+                setError(error.response.data.error);
+                return; 
+            }
             console.error("Error al crear usuario", error);
         });
     }

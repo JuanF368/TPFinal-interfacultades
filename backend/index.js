@@ -4,6 +4,7 @@ const app = express();
 const routes = require('./routes/endPoints')
 const db = require('./models')
 require ('./soap/soapServer');
+require('dotenv').config();
 
 app.use(cors({
   origin: ['http://localhost:5173'], 
