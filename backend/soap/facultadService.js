@@ -1,4 +1,6 @@
-const { Facultad, Disciplina } = require('../models');
+const { Facultad, Disciplina, Partido, Equipo } = require('../models');
+
+const { Op, where, col } = require('sequelize');
 
 const facultadesService = {
     FacultadService: {
@@ -39,6 +41,53 @@ const facultadesService = {
                 } catch (error) {
                     console.error('Error al obtener disciplinas:', error);
                     throw new Error('Error al obtener disciplinas');
+                }
+            },
+            async getPartidos({ filtros }) {
+                try {
+                    const wherePartido = {};
+                    let facultadFilter = undefined;
+                    if (filtros) {
+                        if (filtros.iddisciplina) wherePartido.iddisciplina = filtros.iddisciplina;
+                        if (filtros.fecha) wherePartido.fecha = filtros.fecha;
+                        if (filtros.idfacultad){
+                            const idFac = parseInt(filtros.idfacultad);
+                            facultadFilter = {
+                                [Op.or]: [
+                                    where(col('equipo1.idfacultad'), idFac),
+                                    where(col('equipo2.idfacultad'), idFac)
+                                ]
+                            };
+                        }
+                    }
+
+                    const partidos = await Partido.findAll({
+                        where: facultadFilter ? { ...wherePartido, ...facultadFilter } : wherePartido,
+                        include: [
+                            { model: Equipo, as: "equipo1", include: [ { model: Facultad, as: "facultad" } ] },
+                            { model: Equipo, as: "equipo2", include: [ { model: Facultad, as: "facultad" } ] },
+                            { model: Disciplina, as: "disciplina" }
+                        ],
+                        order: [ ['fecha', 'DESC'], ['hora', 'DESC'] ]
+                    });
+
+                    return { return: JSON.stringify(partidos) };
+
+                } catch (error) {
+                    console.error('Error al obtener partidos:', error);
+                    throw new Error('Error al obtener partidos');
+                }
+            },
+            async actualizarResultado({ idpartido, resequipo1, resequipo2 }){
+                try{
+                    await Partido.update(
+                        { resequipo1, resequipo2 },
+                        { where: { idpartido } }
+                    );
+                    return { return: 'Resultado actualizado correctamente' };
+                } catch (error) {
+                    console.error('Error al actualizar resultado:', error);
+                    throw new Error('Error al actualizar resultado');
                 }
             }
         }

@@ -32,6 +32,24 @@
         <part name="disciplinas" element="tns:DisciplinaList"/>
     </message>
 
+    <message name="getPartidosRequest">
+        <part name="filtros" type="xsd:string"/>
+    </message>
+
+    <message name="getPartidosResponse">
+        <part name="return" element="tns:PartidoList"/>
+    </message>
+
+    <message name="actualizarResultadoRequest">
+        <part name="idpartido" type="xsd:int"/>
+        <part name="resequipo1" type="xsd:int"/>
+        <part name="resequipo2" type="xsd:int"/>
+    </message>
+
+    <message name="actualizarResultadoResponse">
+        <part name="return" type="xsd:string"/>
+    </message>
+
     <!-- ===================== PORT TYPE ===================== -->
     <portType name="FacultadServicePortType">
         <operation name="getFacultades">
@@ -49,6 +67,14 @@
         <operation name="getDisciplinas">
             <input message="tns:getDisciplinasRequest"/>
             <output message="tns:getDisciplinasResponse"/>
+        </operation>
+        <operation name="getPartidos">
+            <input message="tns:getPartidosRequest"/>
+            <output message="tns:getPartidosResponse"/>
+        </operation>
+        <operation name="actualizarResultado">
+            <input message="tns:actualizarResultadoRequest"/>
+            <output message="tns:actualizarResultadoResponse"/>
         </operation>
     </portType>
 
@@ -70,6 +96,18 @@
         
         <operation name="getDisciplinas">
             <soap:operation soapAction="getDisciplinas"/>
+            <input><soap:body use="literal" namespace="http://www.example.org/FacultadService"/></input>
+            <output><soap:body use="literal" namespace="http://www.example.org/FacultadService"/></output>
+        </operation>
+
+        <operation name="getPartidos">
+            <soap:operation soapAction="getPartidos"/>
+            <input><soap:body use="literal" namespace="http://www.example.org/FacultadService"/></input>
+            <output><soap:body use="literal" namespace="http://www.example.org/FacultadService"/></output>
+        </operation>
+
+        <operation name="actualizarResultado">
+            <soap:operation soapAction="actualizarResultado"/>
             <input><soap:body use="literal" namespace="http://www.example.org/FacultadService"/></input>
             <output><soap:body use="literal" namespace="http://www.example.org/FacultadService"/></output>
         </operation>
@@ -113,6 +151,40 @@
                         <xsd:element name="iddisciplina" type="xsd:int"/>
                         <xsd:element name="nombre" type="xsd:string"/>
                         <xsd:element name="reglamento" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="DisciplinaList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="disciplina" type="tns:Disciplina" maxOccurs="unbounded"/>
+                    </xsd:sequence>                
+                </xsd:complexType>
+            </xsd:element>
+
+            <!-- PARTIDO -->
+
+            <xsd:element name="Partido">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="idpartido" type="xsd:int"/>
+                        <xsd:element name="idequipo1" type="xsd:int"/>
+                        <xsd:element name="idequipo2" type="xsd:int"/>
+                        <xsd:element name="resequipo1" type="xsd:int"/>
+                        <xsd:element name="resequipo2" type="xsd:int"/>
+                        <xsd:element name="fecha" type="xsd:string"/>
+                        <xsd:element name="hora" type="xsd:string"/>
+                        <xsd:element name="lugar" type="xsd:string"/>
+                        <xsd:element name="iddisciplina" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="PartidoList">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="partido" type="tns:Partido" maxOccurs="unbounded"/>
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>

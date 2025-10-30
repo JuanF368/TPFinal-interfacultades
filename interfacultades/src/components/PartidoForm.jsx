@@ -8,7 +8,7 @@ const PartidoForm = ({ partido, exito, cancelar }) => {
         try {
             const token = localStorage.getItem("token");
 
-            const res = await fetch(`http://localhost:3001/resultados/${partido.idpartido}`, {
+            const res = await fetch(`http://localhost:3001/api/soap/partidos/${partido.idpartido}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify({ resequipo1, resequipo2 }),
