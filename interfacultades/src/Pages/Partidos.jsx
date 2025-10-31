@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CartaPartido from "../components/CartaPartido";
 import PartidoForm from "../components/PartidoForm";
+import HolidaysWidget from "../components/HolidaysWidget";
 
 
 const Partidos = () => {
@@ -68,7 +69,7 @@ const Partidos = () => {
     return (
         <div className="p-6">
             <h1 className="text-3xl font-bold mb-6">Partidos</h1>
-
+            <HolidaysWidget />
             <div className="flex flex-wrap gap-4 mb-6">
                 <select
                     name="idfacultad"
