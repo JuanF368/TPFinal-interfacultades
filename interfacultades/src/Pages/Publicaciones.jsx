@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CartaPublicacion from "../components/CartaPublicacion";
 import PublicacionForm from "../components/PublicacionForm";
 import { toast } from "react-toastify";
+import Calendario from "../components/Calendario";
 
 const Publicaciones = () => {
   const [publicaciones, setPublicaciones] = useState([]);
@@ -56,7 +57,8 @@ const Publicaciones = () => {
       )}
       </div>
       <div className="w-full lg:w-96 bg-gray-100 p-6 rounded-2xl"> 
-        <h2  className="font-bold mb-4"> Espacio para futuras cosas (ej:tops - filtrado)</h2>
+        <h2  className="font-bold mb-4"> Fechas Convocatoria</h2>
+        <Calendario />
       </div>
     </div>
     </div>

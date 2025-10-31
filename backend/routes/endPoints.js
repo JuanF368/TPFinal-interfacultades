@@ -13,6 +13,7 @@ const { obtenerGaleria, subirFoto } = require('../controllers/galeriaController'
 const { obtenerResultados, actualizarResultados } = require('../controllers/partidocontroller');
 const convocatoriaRoutes = require('./convocatoriaRoutes'); 
 const { obtenerFacultades } = require('../controllers/facultadesController');
+const { eventos } = require('../controllers/calendarioController');
 
 router.get('/ping', ping);
 router.post('/login', login);
@@ -30,5 +31,7 @@ router.put('/resultados/:id', verificarToken, actualizarResultados);
 
 router.use('/convocatoria', convocatoriaRoutes); 
 router.get('/facultades', obtenerFacultades);
+
+router.get('/eventos', eventos);
 
 module.exports = router;
