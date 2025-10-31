@@ -14,7 +14,7 @@ app.use(express.json());
 app.use('/', routes); 
 
 const soapWrapper = require('./routes/soapWrapper');
-app.use('/api/soap', soapWrapper);
+app.use('/soap', soapWrapper);
 
 db.sequelize.sync({ alter: false })
   .then(() => {

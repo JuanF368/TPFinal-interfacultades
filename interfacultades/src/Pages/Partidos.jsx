@@ -21,7 +21,7 @@ const Partidos = () => {
                 if(filtros[key]) params.append(key, filtros[key]);
             });
 
-            const res = await fetch(`http://localhost:3001/api/soap/partidos?${params.toString()}`);
+            const res = await fetch(`http://localhost:3001/soap/partidos?${params.toString()}`);
             const data = await res.json();
 
             if(Array.isArray(data)) {
@@ -39,8 +39,8 @@ const Partidos = () => {
     const cargarOpciones = async () => {
         try {
             const [ facRes, disRes ] = await Promise.all([
-                fetch('http://localhost:3001/api/soap/facultades').then(r => r.json()),
-                fetch('http://localhost:3001/api/soap/disciplinas').then(r => r.json())
+                fetch('http://localhost:3001/soap/facultades').then(r => r.json()),
+                fetch('http://localhost:3001/soap/disciplinas').then(r => r.json())
             ]);
             setFacultades(Array.isArray(facRes) ? facRes : []);
             setDisciplinas(Array.isArray(disRes) ? disRes : []);
