@@ -11,6 +11,8 @@ Ingresa al menu
 →  Se muestra la opcion de filtrado (por universidad, deporte, fecha, horario) 
 
 */
+
+//agregar para que al pasar el estado de un partido a finalizado, se sume el puntaje a la facultad respectiva segun estos parametros: gano +3 puntos, empate +1 punto, perdio 0 puntos.
 const obtenerResultados = async (req, res) => {
     try {
         const { iddisciplina, fecha, idfacultad } = req.query;
@@ -103,6 +105,10 @@ const actualizarEstado = async (req, res) => {
             return res.status(400).json({ message: `Transición de estado inválida de ${partido.estado} a ${estado}` });
         }
 
+        if(estado === 'finalizado') {
+            await actualizarPuntaje(partido);
+        }
+
         partido.estado = estado;
         await partido.save();
 
@@ -110,6 +116,29 @@ const actualizarEstado = async (req, res) => {
     } catch (error) {
         console.error('Error al actualizar estado del partido:', error);
         res.status(500).json({ message: 'Error al actualizar estado del partido' });
+    }
+}
+
+const actualizarPuntaje = async (partido) => {
+    try {
+        const equipo1 = await Equipo.findByPk(partido.idequipo1);
+        const equipo2 = await Equipo.findByPk(partido.idequipo2);
+
+        const facultad1 = await Facultad.findByPk(equipo1.idfacultad);
+        const facultad2 = await Facultad.findByPk(equipo2.idfacultad);
+
+        if(partido.resequipo1 > partido.resequipo2) {
+            facultad1.puntos += 3;
+        } else if(partido.resequipo1 < partido.resequipo2) {
+            facultad2.puntos += 3;
+        } else {
+            facultad1.puntos += 1;
+            facultad2.puntos += 1;
+        }
+        await facultad1.save();
+        await facultad2.save();
+    } catch (error) {
+        console.error('Error al actualizar puntaje:', error);
     }
 }
 

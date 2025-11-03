@@ -3,7 +3,6 @@ import { usuarioActual, isAuthenticated } from "../utils/auth";
 
 const CartaPartido = ({ partido, onEditar, cambiarEstado }) => {
     const user = usuarioActual();
-    console.log(user);
     return (
         <div className="border rounded-lg p-4 shadow hover:shadow-lg transition relative bg-white">
             <div className="flex justify-between mb-2 text-gray-600">
