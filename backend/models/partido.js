@@ -38,6 +38,11 @@ module.exports = (sequelize, DataTypes) => {
         iddisciplina: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        estado: {
+            type: DataTypes.ENUM('pendiente', 'en_curso', 'finalizado'),
+            allowNull: false,
+            defaultValue: 'pendiente',
         }
     }, {
         tableName: 'partido',

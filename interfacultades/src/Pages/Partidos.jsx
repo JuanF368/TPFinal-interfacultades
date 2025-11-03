@@ -51,6 +51,22 @@ const Partidos = () => {
         }
     };
 
+    const cambiarEstado = async (partido) => {
+        const nextState = partido.estado === 'pendiente' ? 'en_curso' : 'finalizado';
+        const token = localStorage.getItem('token');
+        const res = await fetch(`http://localhost:3001/resultados/estado/${partido.idpartido}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ estado: nextState })
+        });
+        if(res.ok) {
+            cargarPartidos();
+        } else {
+            const data = await res.json();
+            console.error('Error al cambiar estado:', data);
+        }
+    }
+
     useEffect(() => {
         cargarOpciones();
         cargarPartidos();
@@ -114,7 +130,7 @@ const Partidos = () => {
                     <p>No hay partidos que mostrar.</p>
                 ) : (
                     partidos.map((p) => (
-                        <CartaPartido key={p.idpartido} partido={p} onEditar={setEditandoPartido} />
+                        <CartaPartido key={p.idpartido} partido={p} onEditar={setEditandoPartido} cambiarEstado={cambiarEstado} />
                     ))
                 )}
 

@@ -52,6 +52,11 @@ module.exports = {
           model: 'disciplina',
           key: 'iddisciplina'
         }
+      },
+      estado: {
+        type: Sequelize.ENUM('pendiente', 'en_curso', 'finalizado'),
+        allowNull: false,
+        defaultValue: 'pendiente'
       }
     });
   },

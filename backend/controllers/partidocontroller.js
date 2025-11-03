@@ -81,4 +81,36 @@ const actualizarResultados = async (req, res) => {
     }
 }
 
-module.exports = { obtenerResultados, actualizarResultados };
+const actualizarEstado = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { estado } = req.body;
+
+        const partido = await Partido.findByPk(id);
+        if(!partido) return res.status(404).json({ message: 'Partido no encontrado' });
+
+        if(partido.estado === 'finalizado') {
+            return res.status(400).json({ message: 'No se puede cambiar el estado de un partido finalizado' });
+        }
+
+        const validTransitions = {
+            pendiente: ['en_curso'],
+            en_curso: ['finalizado'],
+            finalizado: []
+        }
+
+        if(!validTransitions[partido.estado].includes(estado)) {
+            return res.status(400).json({ message: `Transición de estado inválida de ${partido.estado} a ${estado}` });
+        }
+
+        partido.estado = estado;
+        await partido.save();
+
+        res.json({ message: 'Estado del partido actualizado correctamente', partido });
+    } catch (error) {
+        console.error('Error al actualizar estado del partido:', error);
+        res.status(500).json({ message: 'Error al actualizar estado del partido' });
+    }
+}
+
+module.exports = { obtenerResultados, actualizarResultados, actualizarEstado };

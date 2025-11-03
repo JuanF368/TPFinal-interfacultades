@@ -11,7 +11,7 @@ const { publicaciones, crearPublicacion } = require('../controllers/publicacione
 const { obtenerDisciplinas, /*actualizarDisciplina */ } = require('../controllers/disciplinasController');
 const { perfilUsuario, editarPerfil, publicacionesUsuario, eliminarPublicacion, editarPublicacion } = require('../controllers/perfilController'); 
 const { obtenerGaleria, subirFoto } = require('../controllers/galeriaController');
-const { obtenerResultados, actualizarResultados } = require('../controllers/partidocontroller');
+const { obtenerResultados, actualizarResultados, actualizarEstado } = require('../controllers/partidocontroller');
 const convocatoriaRoutes = require('./convocatoriaRoutes'); 
 const { obtenerFacultades } = require('../controllers/facultadesController');
 const { listarUsuarios, actualizarRolUsuario} = require('../controllers/usuariosController'); 
@@ -34,6 +34,7 @@ router.put('/resultados/:id', verificarToken, verificarRol(['profesor']), actual
 router.get('/usuarios', verificarToken, verificarRol(['administrador', 'profesor']), listarUsuarios);
 router.put('/usuarios/actualizar/:id', verificarToken,  verificarRol(['administrador', 'profesor']), actualizarRolUsuario); 
 //router.put('/disciplina/:id', verificarToken, verificarRol(['administrador', 'profesor']), actualizarDisciplina)
+router.put('/resultados/estado/:id', verificarToken, verificarRol(['profesor']), actualizarEstado);
 
 router.use('/convocatoria',verificarToken, verificarRol(['administrador']), convocatoriaRoutes); 
 router.get('/facultades', obtenerFacultades);
