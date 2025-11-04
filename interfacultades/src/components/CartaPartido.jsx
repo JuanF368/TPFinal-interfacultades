@@ -3,10 +3,11 @@ import { usuarioActual, isAuthenticated } from "../utils/auth";
 
 const CartaPartido = ({ partido, onEditar, cambiarEstado }) => {
     const user = usuarioActual();
+    const fecha= new Date(`${partido.fecha}T00:00:00`);
     return (
         <div className="border rounded-lg p-4 shadow hover:shadow-lg transition relative bg-white">
             <div className="flex justify-between mb-2 text-gray-600">
-                <span>{new Date(partido.fecha).toLocaleDateString()}</span>
+                <span>{fecha.toLocaleDateString("es-AR")}</span>
                 <span className={`text-sm font-medium ${
                     partido.estado === "pendiente" ? "text-gray-500" :
                     partido.estado === "en_curso" ? "text-blue-600" : "text-green-600"
