@@ -142,4 +142,33 @@ const actualizarPuntaje = async (partido) => {
     }
 }
 
-module.exports = { obtenerResultados, actualizarResultados, actualizarEstado };
+const crearPartido = async (req, res) => {
+    try {
+        const { idequipo1, idequipo2, iddisciplina, fecha, hora, lugar } = req.body;
+        
+        if (!idequipo1 || !idequipo2 || !iddisciplina || !fecha || !hora || !lugar) {
+            return res.status(400).json({ message: 'Faltan datos obligatorios para crear el partido' });
+        }
+
+        if(idequipo1 === idequipo2) {
+            return res.status(400).json({ message: 'Los equipos no pueden ser iguales' });
+        }
+
+        const partido = await Partido.create({
+            idequipo1,
+            idequipo2,
+            iddisciplina,
+            fecha,
+            hora,
+            lugar,
+            estado: 'pendiente'
+        });
+
+        return res.json({ message: 'Partido creado correctamente', partido });
+    } catch (error) {
+        console.error('Error al crear partido:', error);
+        res.status(500).json({ message: 'Error al crear partido' });
+    }
+};
+
+module.exports = { obtenerResultados, actualizarResultados, actualizarEstado, crearPartido };

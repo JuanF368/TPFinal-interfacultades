@@ -1,18 +1,43 @@
 import React, { useState } from "react";
 
-const PartidoForm = ({ partido, exito, cancelar }) => {
-    const [resequipo1, setResequipo1] = useState(partido.resequipo1 ?? '');
-    const [resequipo2, setResequipo2] = useState(partido.resequipo2 ?? '');
+const PartidoForm = ({ partido, facultades, disciplinas, equipos, exito, cancelar }) => {
+    const crear = partido?.nuevo === true;
 
-    const actualizarResultados = async () => {
+    const [idequipo1, setEquipo1] = useState(partido?.equipo1?.idfacultad ?? '');
+    const [idequipo2, setEquipo2] = useState(partido?.equipo2?.idfacultad ?? '');
+    const [iddisciplina, setDisciplina] = useState(partido?.iddisciplina ?? '');
+    const [fecha, setFecha] = useState(partido?.fecha ?? '');
+    const [hora, setHora] = useState(partido?.hora ?? '');
+    const [lugar, setLugar] = useState(partido?.lugar ?? '');
+    const [resequipo1, setResequipo1] = useState(partido?.resequipo1 ?? '');
+    const [resequipo2, setResequipo2] = useState(partido?.resequipo2 ?? '');
+
+    const token = localStorage.getItem("token");
+
+    const handleSubmit = async () => {
         try {
-            const token = localStorage.getItem("token");
+            let res;
+            if (crear) {
+                res = await fetch('http://localhost:3001/resultados', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({
+                        idequipo1,
+                        idequipo2,
+                        iddisciplina,
+                        fecha,
+                        hora,
+                        lugar,
+                    }),
+                });
+            } else {
+                res = await fetch(`http://localhost:3001/resultados/${partido.idpartido}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify({ resequipo1, resequipo2 }),
+                });
+            }
 
-            const res = await fetch(`http://localhost:3001/resultados/${partido.idpartido}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-                body: JSON.stringify({ resequipo1, resequipo2 }),
-            });
             const data = await res.json();
             if (res.ok) {
                 console.log('Resultados actualizados:', data);
@@ -23,56 +48,109 @@ const PartidoForm = ({ partido, exito, cancelar }) => {
         } catch (error) {
             console.error('Error al actualizar resultados:', error);
         }
-    }
+    };
 
     return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black/50 z-50">
-        <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
-            <h2 className="text-xl font-semibold mb-4 text-center">Actualizar Resultados</h2>
-            <p className="text-center mb-4 text-gray-600">
-                {partido.equipo1.facultad.siglas} vs {partido.equipo2.facultad.siglas}
-            </p>
-            <div className="flex justify-around mb-6">
-                <div className="flex flex-col items-center">
-                    <span className="font-bold mb-1">{partido.equipo1.facultad.siglas}</span>
-                    <input 
-                        type="number"
-                        min="0"
-                        value={resequipo1}
-                        onChange={(e) => setResequipo1(e.target.value)}
-                        className="border rounded p-2 w-16 text-center"
-                    />
-                </div>
-                <div className="text-lg font-bold self-center">vs</div>
-                <div className="flex flex-col items-center">
-                    <span className="font-bold mb-1">{partido.equipo2.facultad.siglas}</span>
-                    <input 
-                        type="number"
-                        min="0"
-                        value={resequipo2}
-                        onChange={(e) => setResequipo2(e.target.value)}
-                        className="border rounded p-2 w-16 text-center"
-                    />
-                </div>
-            </div>
+        <div className="fixed inset-0 flex justify-center items-center bg-black/50 z-50">
+            <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
+                <h2 className="text-xl font-semibold mb-4 text-center">
+                    {crear ? "Crear Partido" : "Actualizar Resultados"}
+                </h2>
 
+                {crear && (
+                    <>
+                        <label>Equipo 1:</label>
+                        <select className="border p-2 w-full mb-2" value={idequipo1} onChange={(e) => setEquipo1(e.target.value)}>
+                            <option>Seleccione...</option>
+                            {equipos.map(eq => <option key={eq.idequipo} value={eq.idequipo}>{eq.facultad.siglas}</option>)}
+                        </select>
 
-            <div className="flex justify-between gap-3">
-                <button
-                    onClick={cancelar}
-                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 cursor-pointer"
-                >
-                    Cancelar
-                </button>
-                <button
-                    onClick={actualizarResultados}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer"
-                >
-                    Confirmar
-                </button>
+                        <label>Equipo 2:</label>
+                        <select className="border p-2 w-full mb-2" value={idequipo2} onChange={(e) => setEquipo2(e.target.value)}>
+                            <option>Seleccione...</option>
+                            {equipos.map(eq => <option key={eq.idequipo} value={eq.idequipo}>{eq.facultad.siglas}</option>)}
+                        </select>
+
+                        <label>Disciplina:</label>
+                        <select className="border p-2 w-full mb-2" value={iddisciplina} onChange={(e) => setDisciplina(e.target.value)}>
+                            <option>Seleccione...</option>
+                            {disciplinas.map(d => <option key={d.iddisciplina} value={d.iddisciplina}>{d.nombre}</option>)}
+                        </select>
+
+                        <label>Fecha:</label>
+                        <input
+                            type="date"
+                            className="border p-2 w-full mb-2"
+                            value={fecha}
+                            onChange={(e) => setFecha(e.target.value)}
+                        />
+
+                        <label>Hora:</label>
+                        <input
+                            type="time"
+                            className="border p-2 w-full mb-2"
+                            value={hora}
+                            onChange={(e) => setHora(e.target.value)}
+                        />
+
+                        <label>Lugar:</label>
+                        <input
+                            type="text"
+                            className="border p-2 w-full mb-2"
+                            value={lugar}
+                            onChange={(e) => setLugar(e.target.value)}
+                        />
+
+                    </>
+                )}
+
+                {!crear && (
+                    <>
+                        <p className="text-center mb-4 text-gray-600">
+                            {partido.equipo1.facultad.siglas} vs {partido.equipo2.facultad.siglas}
+                        </p>
+                        <div className="flex justify-around mb-6">
+                            <div className="flex flex-col items-center">
+                                <span className="font-bold mb-1">{partido.equipo1.facultad.siglas}</span>
+                                <input 
+                                    type="number"
+                                    min="0"
+                                    value={resequipo1}
+                                    onChange={(e) => setResequipo1(e.target.value)}
+                                    className="border rounded p-2 w-16 text-center"
+                                />
+                            </div>
+                            <div className="text-lg font-bold self-center">vs</div>
+                            <div className="flex flex-col items-center">
+                                <span className="font-bold mb-1">{partido.equipo2.facultad.siglas}</span>
+                                <input 
+                                    type="number"
+                                    min="0"
+                                    value={resequipo2}
+                                    onChange={(e) => setResequipo2(e.target.value)}
+                                    className="border rounded p-2 w-16 text-center"
+                                />
+                            </div>
+                        </div>
+                    </>
+                )}
+
+                <div className="flex justify-between gap-3">
+                    <button
+                        onClick={cancelar}
+                        className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 cursor-pointer"
+                    >
+                        Cancelar
+                    </button>
+                    <button
+                        onClick={handleSubmit}
+                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer"
+                    >
+                        Confirmar
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
     );
 };
 

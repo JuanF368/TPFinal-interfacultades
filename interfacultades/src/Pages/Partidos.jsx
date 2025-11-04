@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import CartaPartido from "../components/CartaPartido";
 import PartidoForm from "../components/PartidoForm";
+import { usuarioActual } from "../utils/auth";
 
 
 const Partidos = () => {
     const [partidos, setPartidos] = useState([]);
     const [facultades, setFacultades] = useState([]);
     const [disciplinas, setDisciplinas] = useState([]);
+    const [equipos, setEquipos] = useState([]);
     const [editandoPartido, setEditandoPartido] = useState(null);
     const [filtros, setFiltros] = useState({
         idfacultad: '',
         iddisciplina: '',
         fecha: ''
     });
+    const user = usuarioActual();
 
     const cargarPartidos = async () => {
         try {
@@ -38,16 +41,19 @@ const Partidos = () => {
 
     const cargarOpciones = async () => {
         try {
-            const [ facRes, disRes ] = await Promise.all([
+            const [ facRes, disRes, eqRes ] = await Promise.all([
                 fetch('http://localhost:3001/facultades').then(r => r.json()),
-                fetch('http://localhost:3001/disciplina').then(r => r.json())
+                fetch('http://localhost:3001/disciplina').then(r => r.json()),
+                fetch('http://localhost:3001/equipos').then(r => r.json())
             ]);
             setFacultades(Array.isArray(facRes) ? facRes : []);
             setDisciplinas(Array.isArray(disRes) ? disRes : []);
+            setEquipos(Array.isArray(eqRes) ? eqRes : []);
         } catch (error) {
             console.error('Error al cargando opciones:', error);
             setFacultades([]);
             setDisciplinas([]);
+            setEquipos([]);
         }
     };
 
@@ -125,6 +131,15 @@ const Partidos = () => {
                     Filtrar
                 </button>
             </div>
+            {user?.rodescripcion === "profesor" && (
+                <button
+                    onClick={() => setEditandoPartido({ nuevo: true })}
+                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mb-4 cursor-pointer"
+                >
+                    Nuevo Partido
+                </button>
+            )}
+            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {partidos.length === 0 ? (
                     <p>No hay partidos que mostrar.</p>
@@ -139,6 +154,9 @@ const Partidos = () => {
             {editandoPartido && (
                 <PartidoForm
                     partido={editandoPartido}
+                    facultades={facultades}
+                    disciplinas={disciplinas}
+                    equipos={equipos}
                     exito={() => {
                         setEditandoPartido(null);
                         cargarPartidos();
