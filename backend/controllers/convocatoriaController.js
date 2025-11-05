@@ -1,9 +1,16 @@
 const { where } = require('sequelize');
 const { Convocatoria, Usuario, Rol } = require('../models'); 
+const { Op } = require('sequelize');
 
 const crearConvocatoria = async(req, res) => {
     try{
-        const convocatoriaActiva = await Convocatoria.findOne();
+        const hoy = new Date(); 
+        const anio = hoy.getFullYear(); 
+
+        const convocatoriaActiva = await Convocatoria.findOne({
+            where: { inicioUnidades: {[Op.gte]: new Date(anio, 0, 1), [Op.lte]: new Date(anio, 11, 31)}}
+        });
+
         if (convocatoriaActiva){
             return res.status(400).json({ mensaje: 'Ya hay una convocatoria abierta' }); 
         }
@@ -33,11 +40,17 @@ const editarConvocatoria = async(req, res) => {
 
 const estadoConvocatoria = async(req, res) =>{
     try {
-        const convocatoria = await Convocatoria.findOne(); 
+        const hoy = new Date(); 
+        const anio = hoy.getFullYear(); 
+
+        const convocatoria = await Convocatoria.findOne({
+            where: { inicioUnidades: {[Op.gte]: new Date(anio, 0, 1), [Op.lte]: new Date(anio, 11, 31)}}
+        }); 
+
         if(!convocatoria){
             return res.status(200).json({ convocatoria: null, estado: null })
         }
-        const hoy = new Date();
+
         let estado = 'fuera de tiempo';
         const inicioUnidades = new Date(convocatoria.inicioUnidades);
         const finUnidades = new Date(convocatoria.finUnidades);
