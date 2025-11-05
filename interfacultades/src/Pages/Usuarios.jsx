@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { usuarioActual } from "../utils/auth";
 
 const Usuarios = () => {
     const [seccion, setSeccion] = useState("");
@@ -9,6 +10,7 @@ const Usuarios = () => {
     const [busqueda, setBusqueda] = useState(""); 
     const token = localStorage.getItem("token"); 
     const limite = 20; 
+    const user = usuarioActual(); 
 
     const cargarUsuarios = async() =>{ 
         try{
@@ -63,6 +65,8 @@ const Usuarios = () => {
                 onChange={(e) => setBusqueda(e.target.value)} className="border-[#E94D1A] border-2 rounded-md px-3 py-2 w-full max-w-lg"/>
             </div>
             <div className="flex font-bold space-x-6 mb-4 pb-2 text-gray-600 mt-10">
+                <button onClick={() =>{setSeccion(""); setPagina(1);}} className={`capitalize ${seccion==="" ? "text-[#E94D1A] border-b-2 border-[#E94D1A]" : "hover:text-[#E94D1A]" }`} >
+                Todos </button>
                 {["usuario", "jugador", "profesor", "administrador"].map((rol) => (
                     <button key={rol} onClick={() => { setSeccion(rol); setPagina(1)}} 
                     className={`capitalize ${seccion === rol ? "text-[#E94D1A] border-b-2 border-[#E94D1A]"
@@ -89,11 +93,13 @@ const Usuarios = () => {
                             
                             <div className="mt-2 md:mt-0 md:text-right">
                                 <select  value={u.rol?.idrol || ""} onChange={(e) => cambiarRol(u.idusuario, e.target.value)}
-                                className="border-2 border-[#E94D1A] rounded-lg px-3 py-1 text-sm md:text-base" disabled={u.rol?.rodescripcion === "administrador"}> 
+                                className="border-2 border-[#E94D1A] rounded-lg px-3 py-1 text-sm md:text-base"
+                                disabled={(u.rol?.rodescripcion === "administrador" && user.rodescripcion !== "administrador") || 
+                                (user.rodescripcion !== "administrador" && user.rodescripcion !== "profesor")} > 
                                     <option value="1">Usuario</option>
                                     <option value="2">Jugador</option>
                                     <option value="3">Profesor</option>
-                                    <option value="4">Admin</option>
+                                    <option value="4" disabled={user.rodescripcion === "profesor"}>Admin</option>
                                 </select>
                             </div>
                             <hr className="m-4 border border-[#ddd]"/>

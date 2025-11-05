@@ -38,7 +38,14 @@ const Convocatoria = () => {
         obtenerConvocatoria(); 
     }, []); 
 
-    const puedeEditar = convocatoria && estado !== "finalizado" && estado !== "fuera de tiempo";
+    const puedeEditar = (()=> {
+        if(!convocatoria){
+            return false; 
+        } 
+        const hoy = new Date(); 
+        const inicioUnidades = new Date(convocatoria.inicioUnidades); 
+        return hoy < inicioUnidades; 
+    })(); 
 
     return  (
         <div className="p-6 sm:p-10 min-h-screen text-center"> 

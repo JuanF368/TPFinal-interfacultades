@@ -48,11 +48,14 @@ const estadoConvocatoria = async(req, res) =>{
         
         if (hoy >= inicioUnidades && hoy <= finUnidades) {
             estado = 'inscripcion de unidades academicas';
-        } else if (hoy >= inicioInscripcion && hoy <= finInscripcion) {
+        } 
+        if (hoy >= inicioInscripcion && hoy <= finInscripcion) {
             estado = 'inscripcion de jugadores';
-        } else if (hoy >= inicioJuegos && hoy <= finJuegos) {
+        } 
+        if (hoy >= inicioJuegos && hoy <= finJuegos) {
             estado = 'juegos en curso';
-        } else if (hoy > finJuegos) {
+        } 
+        if (hoy > finJuegos) {
             estado = 'finalizado';
         }
 
