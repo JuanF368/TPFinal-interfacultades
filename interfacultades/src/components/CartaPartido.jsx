@@ -1,57 +1,93 @@
 import React from "react";
-import { usuarioActual, isAuthenticated } from "../utils/auth";
+import { usuarioActual } from "../utils/auth";
+import { FaCalendarAlt, FaRegClock, FaMapMarkerAlt } from "react-icons/fa";
 
 const CartaPartido = ({ partido, onEditar, cambiarEstado }) => {
     const user = usuarioActual();
     const fecha= new Date(`${partido.fecha}T00:00:00`);
+
+    const estadoColor = {
+        pendiente: "bg-gray-100 text-gray-600 border-gray-300",
+        en_curso: "bg-blue-100 text-blue-700 border-blue-300",
+        finalizado: "bg-green-100 text-green-700 border-green-300"
+    }[partido.estado];
+
     return (
-        <div className="border rounded-lg p-4 shadow hover:shadow-lg transition relative bg-white">
-            <div className="flex justify-between mb-2 text-gray-600">
-                <span>{fecha.toLocaleDateString("es-AR")}</span>
-                <span className={`text-sm font-medium ${
-                    partido.estado === "pendiente" ? "text-gray-500" :
-                    partido.estado === "en_curso" ? "text-blue-600" : "text-green-600"
-                }`}>
+        <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-md hover:shadow-xl transition-all relative">
+            <div className="flex justify-between mb-4">
+                <div className="flex items-center gap-2 text-gray-600 text-sm">
+                    <FaCalendarAlt size={16}/>
+                    <span>{fecha.toLocaleDateString("es-AR")}</span>
+                </div>
+                <span
+                    className={`px-3 py-1 rounded-full text-sm font-semibold border ${estadoColor}`}
+                >
                     {partido.estado === "pendiente" && "Pendiente"}
                     {partido.estado === "en_curso" && "En Curso"}
                     {partido.estado === "finalizado" && "Finalizado"}
                 </span>
-                <span>{partido.hora}</span>
+                <div className="flex items-center gap-2 text-gray-600 text-sm">
+                    <FaRegClock size={16}/>
+                    <span>{partido.hora}</span>
+                </div>
             </div>
-            <h2 className="text-xl font-semibold mb-2 text-gray-800">{partido.disciplina.nombre}</h2>
-            <div className="text-gray-900 mb-2">{partido.lugar}</div>
 
-            <div className="flex justify-between items-center mb-4">
-                <div className="text-center">
-                    <span className="block text-lg font-bold">{partido.equipo1.facultad.siglas}</span>
-                    <span className="text-2xl font-extrabold">{partido.resequipo1 !== null ? partido.resequipo1 : '-'}</span>
-                </div>
-                <span className="text-gray-500">vs</span>
-                <div className="text-center">
-                    <span className="block text-lg font-bold">{partido.equipo2.facultad.siglas}</span>
-                    <span className="text-2xl font-extrabold">{partido.resequipo2 !== null ? partido.resequipo2 : '-'}</span>
+            <div className="mb-3">
+                <h2 className="text-xl font-bold text-gray-800">
+                    {partido.disciplina.nombre}
+                </h2>
+                <div className="flex items-center gap-2 text-gray-500 text-sm mt-1">
+                    <FaMapMarkerAlt size={16}/>
+                    <span>{partido.lugar}</span>
                 </div>
             </div>
-            {user?.rodescripcion === "profesor" && partido.estado === "en_curso" && (
-                <button
-                    onClick={() => onEditar(partido)}
-                    className="bg-orange-500 text-white px-3 py-1 rounded hover:bg-orange-600 cursor-pointer"
-                >
-                    Actualizar resultados
-                </button>
-            )}
-            {user?.rodescripcion === "profesor" && partido.estado !== "finalizado" && (
-                <button
-                    onClick={() => cambiarEstado(partido)}
-                    className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 cursor-pointer ml-2"
-                >
-                    {partido.estado === "pendiente" && "Iniciar Partido"}
-                    {partido.estado === "en_curso" && "Finalizar Partido"}
-                </button>
-            )}
+
+            <div className="flex justify-between items-center my-5">
+                <div className="text-center flex-1">
+                    <span className="block text-lg font-semibold text-gray-800">
+                        {partido.equipo1.facultad.siglas}
+                    </span>
+                    <span className="block text-3xl font-extrabold text-gray-900 mt-1">
+                        {partido.resequipo1 ?? '-'}
+                    </span>
+                </div>
+
+                <span className="mx-6 text-gray-400 font-bold text-lg">VS</span>
+
+                <div className="text-center flex-1">
+                    <span className="block text-lg font-semibold text-gray-800">
+                        {partido.equipo2.facultad.siglas}
+                    </span>
+                    <span className="block text-3xl font-extrabold text-gray-900 mt-1">
+                        {partido.resequipo2 ?? '-'}
+                    </span>
+                </div>
+            </div>
             
+            {user?.rodescripcion === "profesor" && (
+                <div className="flex justify-end gap-2">
+                    {partido.estado === "en_curso" && (
+                        <button
+                            onClick={() => onEditar(partido)}
+                            className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 font-medium transition cursor-pointer"
+                        >
+                            Actualizar resultados
+                        </button>
+                    )}
+                    {partido.estado !== "finalizado" && (
+                        <button
+                            onClick={() => cambiarEstado(partido)}
+                            className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 font-medium transition cursor-pointer"
+                        >
+                            {partido.estado === "pendiente"
+                                ? "Iniciar Partido"
+                                : "Finalizar Partido"}
+                        </button>
+                    )}
+                </div>
+            )}
         </div>
-    )
-}
+    );
+};
 
 export default CartaPartido;

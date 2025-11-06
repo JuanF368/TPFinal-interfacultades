@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import CartaPartido from "../components/CartaPartido";
 import PartidoForm from "../components/PartidoForm";
 import { usuarioActual } from "../utils/auth";
+import { FaCalendar } from "react-icons/fa";
 
 
 const Partidos = () => {
@@ -96,11 +97,11 @@ const Partidos = () => {
                     name="idfacultad"
                     value={filtros.idfacultad}
                     onChange={handleFiltroChange}
-                    className="border rounded p-2 cursor-pointer"
+                    className="border p-3 bg-[#112349] text-white font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#243E73] focus:outline-none focus:ring-[#4a90e2] focus:ring-2 scrollbar-thin scrollbar-thumb-[#4a90e2] scrollbar-track-gray-200"
                 >
-                    <option value="">Todas las facultades</option>
+                    <option value="" className="bg-[#1b2b48] text-white">Todas las facultades</option>
                     {facultades.map(fac => (
-                        <option key={fac.idfacultad} value={fac.idfacultad}>{fac.siglas}</option>
+                        <option key={fac.idfacultad} value={fac.idfacultad} className="bg-[#1b2b48] text-white">{fac.siglas}</option>
                     ))}
                 </select>
 
@@ -108,25 +109,29 @@ const Partidos = () => {
                     name="iddisciplina"
                     value={filtros.iddisciplina}
                     onChange={handleFiltroChange}
-                    className="border rounded p-2 cursor-pointer"
+                    className="border p-3 bg-[#112349] text-white font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#243E73] focus:outline-none focus:ring-[#4a90e2] focus:ring-2 scrollbar-thin scrollbar-thumb-[#4a90e2] scrollbar-track-gray-200"
                 >
-                    <option value="">Todas las disciplinas</option>
+                    <option value="" className="bg-[#1b2b48] text-white">Todas las disciplinas</option>
                     {disciplinas.map(dis => (
-                        <option key={dis.iddisciplina} value={dis.iddisciplina}>{dis.nombre}</option>
+                        <option key={dis.iddisciplina} value={dis.iddisciplina} className="bg-[#1b2b48] text-white">{dis.nombre}</option>
                     ))}
                 </select>
+                <div className="relative flex items-center border bg-[#112349] text-white font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#243E73] focus-within:ring-[#4a90e2] focus-within:ring-2">
+                    <input
+                        type="date"
+                        id="date-calendario-custom"
+                        name="fecha"
+                        value={filtros.fecha}
+                        onChange={handleFiltroChange}
+                        className="bg-transparent outline-none p-3 appearance-none cursor-pointer"
+                    />
+                    <FaCalendar className="absolute right-3 text-white pointer-events-none"/>
+                </div>
 
-                <input
-                    type="date"
-                    name="fecha"
-                    value={filtros.fecha}
-                    onChange={handleFiltroChange}
-                    className="border rounded p-2 cursor-pointer"
-                />
 
                 <button
                     onClick={handleFiltrar}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+                    className="w-30 bg-[#E94D1A] text-white px-4 py-2 rounded hover:bg-[#d53500] cursor-pointer"
                 >
                     Filtrar
                 </button>
