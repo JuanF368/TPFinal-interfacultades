@@ -45,7 +45,7 @@ const Header = ({abierto, setAbierto}) => {
                          <FaUserCircle size={28} className="text-white cursor-pointer" onClick={() => navigate("/perfil")}/> 
                         <button
                             onClick={() => setMostrarConfirmacion(true)} 
-                            className="text-white hover:text-red-500"
+                            className="text-white hover:text-red-500 cursor-pointer"
                             title="Cerrar Sesión"
                         >
                             <FaSignOutAlt size={24} />
