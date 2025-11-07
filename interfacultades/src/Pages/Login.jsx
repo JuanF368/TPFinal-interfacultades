@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import Input from '../components/Input';
+import { toast } from "react-toastify";
 
 const Login = () => {
      
@@ -29,9 +30,12 @@ const Login = () => {
         .then(result =>{
             if(result.token){
                 localStorage.setItem('token', result.token)
-                navigate('/', { state: { mensaje: '¡Bienvenido!' } });
+                toast.success('¡Bienvenido!', { autoClose: 2000 });
+                setTimeout(() => {
+                navigate('/');
+                }, 300);
             } else {
-                setError('Correo o contraseña incorrectos. Intentalo de nuevo.');
+                toast.error('Correo o contraseña incorrectos. Intentalo de nuevo.');
             }
         })
         .catch(error=>{
