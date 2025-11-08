@@ -109,6 +109,11 @@ const actualizarEstado = async (req, res) => {
             await actualizarPuntaje(partido);
         }
 
+        if(estado === 'en_curso' && (partido.resequipo1 === null || partido.resequipo2 === null)) {
+            partido.resequipo1 = 0;
+            partido.resequipo2 = 0;
+        }
+
         partido.estado = estado;
         await partido.save();
 

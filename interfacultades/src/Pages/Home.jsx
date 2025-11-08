@@ -15,11 +15,54 @@ const Home = () => {
     "/logos/colaboradores/vistaa.png"
   ]
 
+  const [ranking, setRanking] = useState([]);
+
+  useEffect(() => {
+    const fetchRanking = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/facultades/ranking');
+        const data = await response.json();
+        setRanking(data);
+      } catch (error) {
+        console.error('Error al obtener el ranking de facultades:', error);
+      }
+    };
+    fetchRanking();
+  }, []);
+
   return (
     <div className='flex flex-col min-h-screen mx-auto'>
-      <main className='flex-1 container mx-auto px-4 py-6'>
-        <h1 className="text-4xl font-bold">Página Principal</h1>
-        <p className="mt-4 text-lg">Esta es la página principal de nuestra aplicación.</p>
+      <main className='flex-1 container mx-auto px-4 py-6 flex gap-8'>
+        <div className="flex-1">
+          <h1 className="text-4xl font-bold">Página Principal</h1>
+          <p className="mt-4 text-lg">
+            Esta es la página principal de nuestra aplicación.
+          </p>
+        </div>
+        <aside className='w-full lg:w-80 bg-[#1E293B] text-white border border-white/10 rounded-2xl shadow-xl p-6'>
+          <h2 className='text-2xl font-semibold text-[#E94D1A] mb-6 text-center'>
+            Ranking de Facultades
+          </h2>
+          {ranking.length > 0 ? (
+            <ul className='space-y-3'>
+              {ranking.map((facultad, index) => (
+                <li key={facultad.idfacultad} className='flex justify-between items-center bg-[#0F172A] rounded-lg px-4 py-3 hover:bg-[#243E73]/40 transition-all duration-200 shadow-sm'>
+                  <div className='flex items-center gap-3'>
+                    <span className='text-lg font-bold text-[#E94D1A]'>{index + 1}</span>
+                    <span className='font-medium text-gray-100'>{facultad.siglas}</span>
+                  </div>
+                  <span className='text-sm font-semibold text-blue-400'>
+                    {facultad.puntos ?? 0} pts
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ):(
+            <p className='text-gray-400 text-center text-sm italic'>
+              Cargando ranking...
+            </p>
+          )}
+        </aside>
       </main>
 
       <div className='bg-white py-8 shadow-inner mt-16'> 
