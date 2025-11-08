@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaTimes } from "react-icons/fa";
 
 const PartidoForm = ({ partido, facultades, disciplinas, equipos, exito, cancelar }) => {
     const crear = partido?.nuevo === true;
@@ -51,100 +52,117 @@ const PartidoForm = ({ partido, facultades, disciplinas, equipos, exito, cancela
     };
 
     return (
-        <div className="fixed inset-0 flex justify-center items-center bg-black/50 z-50">
-            <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
-                <h2 className="text-xl font-semibold mb-4 text-center">
+        <div className="fixed inset-0 flex justify-center items-center bg-black/60 z-50">
+            <div className="relative bg-[#0F172A] text-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-white/10">
+                
+                <button
+                    onClick={cancelar}
+                    className="absolute top-4 right-4 text-gray-300 hover:text-white transition cursor-pointer"
+                >
+                    <FaTimes size={18}/>
+                </button>
+
+                <h2 className="text-2xl font-bold mb-6 text-center text-[#E94D1A] tracking-wide">
                     {crear ? "Crear Partido" : "Actualizar Resultados"}
                 </h2>
 
                 {crear && (
-                    <>
-                        <label>Equipo 1:</label>
-                        <select className="border p-2 w-full mb-2" value={idequipo1} onChange={(e) => setEquipo1(e.target.value)}>
-                            <option>Seleccione...</option>
-                            {equipos.map(eq => <option key={eq.idequipo} value={eq.idequipo}>{eq.facultad.siglas}</option>)}
-                        </select>
-
-                        <label>Equipo 2:</label>
-                        <select className="border p-2 w-full mb-2" value={idequipo2} onChange={(e) => setEquipo2(e.target.value)}>
-                            <option>Seleccione...</option>
-                            {equipos.map(eq => <option key={eq.idequipo} value={eq.idequipo}>{eq.facultad.siglas}</option>)}
-                        </select>
-
-                        <label>Disciplina:</label>
-                        <select className="border p-2 w-full mb-2" value={iddisciplina} onChange={(e) => setDisciplina(e.target.value)}>
-                            <option>Seleccione...</option>
-                            {disciplinas.map(d => <option key={d.iddisciplina} value={d.iddisciplina}>{d.nombre}</option>)}
-                        </select>
-
-                        <label>Fecha:</label>
-                        <input
-                            type="date"
-                            className="border p-2 w-full mb-2"
-                            value={fecha}
-                            onChange={(e) => setFecha(e.target.value)}
-                        />
-
-                        <label>Hora:</label>
-                        <input
-                            type="time"
-                            className="border p-2 w-full mb-2"
-                            value={hora}
-                            onChange={(e) => setHora(e.target.value)}
-                        />
-
-                        <label>Lugar:</label>
-                        <input
-                            type="text"
-                            className="border p-2 w-full mb-2"
-                            value={lugar}
-                            onChange={(e) => setLugar(e.target.value)}
-                        />
-
-                    </>
+                    <div className="space-y-4">
+                        <div>
+                            <label className="block text-sm text-gray-300 mb-1">Equipo 1:</label>
+                            <select className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none" value={idequipo1} onChange={(e) => setEquipo1(e.target.value)}>
+                                <option value="">Seleccione...</option>
+                                {equipos.map(eq => <option key={eq.idequipo} value={eq.idequipo}>{eq.facultad.siglas}</option>)}
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm text-gray-300 mb-1">Equipo 2:</label>
+                            <select className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none" value={idequipo2} onChange={(e) => setEquipo2(e.target.value)}>
+                                <option>Seleccione...</option>
+                                {equipos.map(eq => <option key={eq.idequipo} value={eq.idequipo}>{eq.facultad.siglas}</option>)}
+                            </select>
+                        </div>
+                        <div>
+                           <label className="block text-sm text-gray-300 mb-1">Disciplina:</label>
+                            <select className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none" value={iddisciplina} onChange={(e) => setDisciplina(e.target.value)}>
+                                <option>Seleccione...</option>
+                                {disciplinas.map(d => <option key={d.iddisciplina} value={d.iddisciplina}>{d.nombre}</option>)}
+                            </select> 
+                        </div>
+                        <div className="flex gap-3">
+                            <div className="flex-1">
+                                <label className="block text-sm text-gray-300 mb-1">Fecha:</label>
+                                <input
+                                    type="date"
+                                    className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none"
+                                    value={fecha}
+                                    onChange={(e) => setFecha(e.target.value)}
+                                />
+                            </div>
+                            <div className="flex-1">
+                                <label className="block text-sm text-gray-300 mb-1">Hora:</label>
+                                <input
+                                    type="time"
+                                    className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none"
+                                    value={hora}
+                                    onChange={(e) => setHora(e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-sm text-gray-300 mb-1">Lugar:</label>
+                            <input
+                                type="text"
+                                className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none"
+                                value={lugar}
+                                onChange={(e) => setLugar(e.target.value)}
+                            />
+                        </div>
+                    </div>
                 )}
 
                 {!crear && (
                     <>
-                        <p className="text-center mb-4 text-gray-600">
-                            {partido.equipo1.facultad.siglas} vs {partido.equipo2.facultad.siglas}
+                        <p className="text-center mb-4 text-gray-300">
+                            <span className="font-bold text-white">{partido.equipo1.facultad.siglas}</span> vs{" "}
+                            <span className="font-bold text-white">{partido.equipo2.facultad.siglas}</span>
                         </p>
-                        <div className="flex justify-around mb-6">
+                        <div className="flex justify-around mb-8">
                             <div className="flex flex-col items-center">
-                                <span className="font-bold mb-1">{partido.equipo1.facultad.siglas}</span>
+                                <span className="font-semibold text-sm mb-1">{partido.equipo1.facultad.siglas}</span>
                                 <input 
                                     type="number"
                                     min="0"
                                     value={resequipo1}
                                     onChange={(e) => setResequipo1(e.target.value)}
-                                    className="border rounded p-2 w-16 text-center"
+                                    className="border border-gray-600 rounded p-2 w-16 text-center bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none"
                                 />
                             </div>
-                            <div className="text-lg font-bold self-center">vs</div>
+                            <div className="text-lg font-bold self-center text-gray-400">VS</div>
                             <div className="flex flex-col items-center">
-                                <span className="font-bold mb-1">{partido.equipo2.facultad.siglas}</span>
+                                <span className="font-semibold text-sm mb-1">{partido.equipo2.facultad.siglas}</span>
                                 <input 
                                     type="number"
                                     min="0"
                                     value={resequipo2}
                                     onChange={(e) => setResequipo2(e.target.value)}
-                                    className="border rounded p-2 w-16 text-center"
+                                    className="border border-gray-600 rounded p-2 w-16 text-center bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none"
                                 />
                             </div>
                         </div>
                     </>
                 )}
 
-                <div className="flex justify-between gap-3">
+                <div className="flex justify-between gap-3 mt-6">
                     <button
                         onClick={cancelar}
-                        className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400 cursor-pointer"
+                        className="w-1/2 bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-500 transition cursor-pointer"
                     >
                         Cancelar
                     </button>
                     <button
                         onClick={handleSubmit}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer"
+                        className="w-1/2 bg-[#E94D1A] text-white py-2 rounded-lg hover:bg-[#ff7043] transition cursor-pointer"
                     >
                         Confirmar
                     </button>

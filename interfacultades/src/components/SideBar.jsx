@@ -13,7 +13,7 @@ const SideBar = ({abierto}) => {
     };
 
     return (
-            <div className={`fixed top-16 left-0 bottom-0 bg-[#ffffff] z-10 transition-all duration-300 text-white shadow-md rounded-r-2xl h-[90%]
+            <div className={`fixed top-16 left-0 bottom-0 bg-[#ffffff] z-21 transition-all duration-300 text-white shadow-md rounded-r-2xl h-[90%]
             ${abierto ? "w-64" : "w-16"}  overflow-y-auto pt-4 flex flex-col`}> 
                 <nav className="flex flex-col flex-grow justify-between" >
                     <ul className="flex flex-col">
@@ -69,7 +69,7 @@ const SideBar = ({abierto}) => {
                         )}
                         </ul>
                         <ul>
-                        <li onClick={() => irAPagina("/reglamentos")} className="flex items-center p-3 text-gray-700 hover:bg-gray-100 hover:text-[#243E73] rounded-lg mx-2 my-1 transition-colorscursor-pointer">
+                        <li onClick={() => irAPagina("/reglamentos")} className="flex items-center p-3 text-gray-700 hover:bg-gray-100 hover:text-[#243E73] rounded-lg mx-2 my-1 transition-colors cursor-pointer">
                             <FaClipboardCheck size={24}/>
                             {abierto && <span className={`ml-3`}> 
                                 Reglamentos

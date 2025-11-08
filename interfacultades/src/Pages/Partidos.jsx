@@ -97,7 +97,7 @@ const Partidos = () => {
                     name="idfacultad"
                     value={filtros.idfacultad}
                     onChange={handleFiltroChange}
-                    className="border p-3 bg-[#112349] text-white font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#243E73] focus:outline-none focus:ring-[#4a90e2] focus:ring-2 scrollbar-thin scrollbar-thumb-[#4a90e2] scrollbar-track-gray-200"
+                    className="rounded-2xl border p-3 bg-[#112349] text-white font-semibold shadow-md cursor-pointer transition-all duration-100 hover:bg-[#243E73] focus:outline-none focus:ring-[#4a90e2] focus:ring-2 scrollbar-thin scrollbar-thumb-[#4a90e2] scrollbar-track-gray-200 focus:rounded-b-none"
                 >
                     <option value="" className="bg-[#1b2b48] text-white">Todas las facultades</option>
                     {facultades.map(fac => (
@@ -109,14 +109,14 @@ const Partidos = () => {
                     name="iddisciplina"
                     value={filtros.iddisciplina}
                     onChange={handleFiltroChange}
-                    className="border p-3 bg-[#112349] text-white font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#243E73] focus:outline-none focus:ring-[#4a90e2] focus:ring-2 scrollbar-thin scrollbar-thumb-[#4a90e2] scrollbar-track-gray-200"
+                    className="rounded-2xl border p-3 bg-[#112349] text-white font-semibold shadow-md cursor-pointer transition-all duration-100 hover:bg-[#243E73] focus:outline-none focus:ring-[#4a90e2] focus:ring-2 scrollbar-thin scrollbar-thumb-[#4a90e2] scrollbar-track-gray-200 focus:rounded-b-none"
                 >
                     <option value="" className="bg-[#1b2b48] text-white">Todas las disciplinas</option>
                     {disciplinas.map(dis => (
                         <option key={dis.iddisciplina} value={dis.iddisciplina} className="bg-[#1b2b48] text-white">{dis.nombre}</option>
                     ))}
                 </select>
-                <div className="relative flex items-center border bg-[#112349] text-white font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#243E73] focus-within:ring-[#4a90e2] focus-within:ring-2">
+                <div className="rounded-2xl relative flex items-center border bg-[#112349] text-white font-semibold shadow-md cursor-pointer transition-all duration-200 hover:bg-[#243E73] focus-within:ring-[#4a90e2] focus-within:ring-2 focus-within:rounded-b-none">
                     <input
                         type="date"
                         id="date-calendario-custom"
@@ -131,7 +131,7 @@ const Partidos = () => {
 
                 <button
                     onClick={handleFiltrar}
-                    className="w-30 bg-[#E94D1A] text-white px-4 py-2 rounded hover:bg-[#d53500] cursor-pointer"
+                    className="w-30 bg-[#E94D1A] text-white px-4 py-2 rounded-2xl hover:bg-[#d53500] cursor-pointer"
                 >
                     Filtrar
                 </button>
@@ -139,7 +139,7 @@ const Partidos = () => {
             {user?.rodescripcion === "profesor" && (
                 <button
                     onClick={() => setEditandoPartido({ nuevo: true })}
-                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mb-4 cursor-pointer"
+                    className="bg-green-600 text-white px-4 py-2 rounded-2xl hover:bg-green-700 mb-4 cursor-pointer"
                 >
                     Nuevo Partido
                 </button>
