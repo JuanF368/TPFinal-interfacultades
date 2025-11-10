@@ -1,4 +1,4 @@
-const { Partido, Equipo, Facultad, Disciplina, Sequelize } = require('../models');
+const { Partido, Facultad, Disciplina, Sequelize } = require('../models');
 const { Op, col, where } = Sequelize;
 
 
@@ -24,8 +24,8 @@ const obtenerResultados = async (req, res) => {
         if(idfacultad) {
             const idFac = parseInt(idfacultad, 10);
             wherePartido[Op.or] = [
-                where(col('equipo1.idfacultad'), idFac),
-                where(col('equipo2.idfacultad'), idFac)
+                { idfacultad1: idFac },
+                { idfacultad2: idFac }
             ];
         }
 
@@ -33,14 +33,12 @@ const obtenerResultados = async (req, res) => {
             where: wherePartido,
             include: [
                 {
-                    model: Equipo,
-                    as: 'equipo1',
-                    include: [{ model: Facultad, as: 'facultad' }]
+                    model: Facultad,
+                    as: 'facultad1'
                 },
                 {
-                    model: Equipo,
-                    as: 'equipo2',
-                    include: [{ model: Facultad, as: 'facultad' }]
+                    model: Facultad,
+                    as: 'facultad2'
                 },
                 {
                     model: Disciplina,
@@ -126,11 +124,8 @@ const actualizarEstado = async (req, res) => {
 
 const actualizarPuntaje = async (partido) => {
     try {
-        const equipo1 = await Equipo.findByPk(partido.idequipo1);
-        const equipo2 = await Equipo.findByPk(partido.idequipo2);
-
-        const facultad1 = await Facultad.findByPk(equipo1.idfacultad);
-        const facultad2 = await Facultad.findByPk(equipo2.idfacultad);
+        const facultad1 = await Facultad.findByPk(partido.idfacultad1);
+        const facultad2 = await Facultad.findByPk(partido.idfacultad2);
 
         if(partido.resequipo1 > partido.resequipo2) {
             facultad1.puntos += 3;
@@ -149,19 +144,19 @@ const actualizarPuntaje = async (partido) => {
 
 const crearPartido = async (req, res) => {
     try {
-        const { idequipo1, idequipo2, iddisciplina, fecha, hora, lugar } = req.body;
-        
-        if (!idequipo1 || !idequipo2 || !iddisciplina || !fecha || !hora || !lugar) {
+        const { idfacultad1, idfacultad2, iddisciplina, fecha, hora, lugar } = req.body;
+
+        if (!idfacultad1 || !idfacultad2 || !iddisciplina || !fecha || !hora || !lugar) {
             return res.status(400).json({ message: 'Faltan datos obligatorios para crear el partido' });
         }
 
-        if(idequipo1 === idequipo2) {
-            return res.status(400).json({ message: 'Los equipos no pueden ser iguales' });
+        if(idfacultad1 === idfacultad2) {
+            return res.status(400).json({ message: 'Las facultades no pueden ser iguales' });
         }
 
         const partido = await Partido.create({
-            idequipo1,
-            idequipo2,
+            idfacultad1,
+            idfacultad2,
             iddisciplina,
             fecha,
             hora,

@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Equipo.associate = (models) => {
-        Equipo.belongsTo(models.Facultad, { foreignKey: 'idfacultad', as: 'facultad' });
-        Equipo.hasMany(models.Partido, { foreignKey: 'idequipo1', as: 'partidosLocal' });
-        Equipo.hasMany(models.Partido, { foreignKey: 'idequipo2', as: 'partidosVisitante'});
+        //Equipo.belongsTo(models.Facultad, { foreignKey: 'idfacultad', as: 'facultad' });
+        //Equipo.hasMany(models.Partido, { foreignKey: 'idequipo1', as: 'partidosLocal' });
+        //Equipo.hasMany(models.Partido, { foreignKey: 'idequipo2', as: 'partidosVisitante'});
     }
 
     return Equipo;

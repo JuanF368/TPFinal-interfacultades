@@ -28,6 +28,8 @@ const Home = () => {
       }
     };
     fetchRanking();
+    const interval = setInterval(fetchRanking, 10000); // Actualiza cada 10 segundos
+    return () => clearInterval(interval);
   }, []);
 
   return (

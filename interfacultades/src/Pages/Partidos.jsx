@@ -9,7 +9,6 @@ const Partidos = () => {
     const [partidos, setPartidos] = useState([]);
     const [facultades, setFacultades] = useState([]);
     const [disciplinas, setDisciplinas] = useState([]);
-    const [equipos, setEquipos] = useState([]);
     const [editandoPartido, setEditandoPartido] = useState(null);
     const [filtros, setFiltros] = useState({
         idfacultad: '',
@@ -42,19 +41,16 @@ const Partidos = () => {
 
     const cargarOpciones = async () => {
         try {
-            const [ facRes, disRes, eqRes ] = await Promise.all([
+            const [ facRes, disRes ] = await Promise.all([
                 fetch('http://localhost:3001/facultades').then(r => r.json()),
                 fetch('http://localhost:3001/disciplina').then(r => r.json()),
-                fetch('http://localhost:3001/equipos').then(r => r.json())
             ]);
             setFacultades(Array.isArray(facRes) ? facRes : []);
             setDisciplinas(Array.isArray(disRes) ? disRes : []);
-            setEquipos(Array.isArray(eqRes) ? eqRes : []);
         } catch (error) {
             console.error('Error al cargando opciones:', error);
             setFacultades([]);
             setDisciplinas([]);
-            setEquipos([]);
         }
     };
 
@@ -77,6 +73,9 @@ const Partidos = () => {
     useEffect(() => {
         cargarOpciones();
         cargarPartidos();
+
+        const interval = setInterval(cargarPartidos, 10000); // Actualiza cada 10 segundos
+        return () => clearInterval(interval);
     }, []);
 
     const handleFiltroChange = (e) => {
@@ -161,7 +160,6 @@ const Partidos = () => {
                     partido={editandoPartido}
                     facultades={facultades}
                     disciplinas={disciplinas}
-                    equipos={equipos}
                     exito={() => {
                         setEditandoPartido(null);
                         cargarPartidos();

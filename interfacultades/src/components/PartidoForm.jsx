@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 
-const PartidoForm = ({ partido, facultades, disciplinas, equipos, exito, cancelar }) => {
+const PartidoForm = ({ partido, facultades, disciplinas, exito, cancelar }) => {
     const crear = partido?.nuevo === true;
 
-    const [idequipo1, setEquipo1] = useState(partido?.equipo1?.idfacultad ?? '');
-    const [idequipo2, setEquipo2] = useState(partido?.equipo2?.idfacultad ?? '');
+    const [idfacultad1, setFacultad1] = useState(partido?.facultad1?.idfacultad ?? '');
+    const [idfacultad2, setFacultad2] = useState(partido?.facultad2?.idfacultad ?? '');
     const [iddisciplina, setDisciplina] = useState(partido?.iddisciplina ?? '');
     const [fecha, setFecha] = useState(partido?.fecha ?? '');
     const [hora, setHora] = useState(partido?.hora ?? '');
@@ -23,8 +23,8 @@ const PartidoForm = ({ partido, facultades, disciplinas, equipos, exito, cancela
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify({
-                        idequipo1,
-                        idequipo2,
+                        idfacultad1,
+                        idfacultad2,
                         iddisciplina,
                         fecha,
                         hora,
@@ -70,16 +70,16 @@ const PartidoForm = ({ partido, facultades, disciplinas, equipos, exito, cancela
                     <div className="space-y-4">
                         <div>
                             <label className="block text-sm text-gray-300 mb-1">Equipo 1:</label>
-                            <select className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none" value={idequipo1} onChange={(e) => setEquipo1(e.target.value)}>
+                            <select className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none" value={idfacultad1} onChange={(e) => setFacultad1(e.target.value)}>
                                 <option value="">Seleccione...</option>
-                                {equipos.map(eq => <option key={eq.idequipo} value={eq.idequipo}>{eq.facultad.siglas}</option>)}
+                                {facultades.map(fac => <option key={fac.idfacultad} value={fac.idfacultad}>{fac.siglas}</option>)}
                             </select>
                         </div>
                         <div>
                             <label className="block text-sm text-gray-300 mb-1">Equipo 2:</label>
-                            <select className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none" value={idequipo2} onChange={(e) => setEquipo2(e.target.value)}>
+                            <select className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none" value={idfacultad2} onChange={(e) => setFacultad2(e.target.value)}>
                                 <option>Seleccione...</option>
-                                {equipos.map(eq => <option key={eq.idequipo} value={eq.idequipo}>{eq.facultad.siglas}</option>)}
+                                {facultades.map(fac => <option key={fac.idfacultad} value={fac.idfacultad}>{fac.siglas}</option>)}
                             </select>
                         </div>
                         <div>
@@ -124,12 +124,12 @@ const PartidoForm = ({ partido, facultades, disciplinas, equipos, exito, cancela
                 {!crear && (
                     <>
                         <p className="text-center mb-4 text-gray-300">
-                            <span className="font-bold text-white">{partido.equipo1.facultad.siglas}</span> vs{" "}
-                            <span className="font-bold text-white">{partido.equipo2.facultad.siglas}</span>
+                            <span className="font-bold text-white">{partido.facultad1.siglas}</span> vs{" "}
+                            <span className="font-bold text-white">{partido.facultad2.siglas}</span>
                         </p>
                         <div className="flex justify-around mb-8">
                             <div className="flex flex-col items-center">
-                                <span className="font-semibold text-sm mb-1">{partido.equipo1.facultad.siglas}</span>
+                                <span className="font-semibold text-sm mb-1">{partido.facultad1.siglas}</span>
                                 <input 
                                     type="number"
                                     min="0"
@@ -140,7 +140,7 @@ const PartidoForm = ({ partido, facultades, disciplinas, equipos, exito, cancela
                             </div>
                             <div className="text-lg font-bold self-center text-gray-400">VS</div>
                             <div className="flex flex-col items-center">
-                                <span className="font-semibold text-sm mb-1">{partido.equipo2.facultad.siglas}</span>
+                                <span className="font-semibold text-sm mb-1">{partido.facultad2.siglas}</span>
                                 <input 
                                     type="number"
                                     min="0"

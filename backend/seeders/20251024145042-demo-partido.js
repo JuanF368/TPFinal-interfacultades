@@ -5,8 +5,8 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('partido', [
       {
-        idequipo1: 2, //superior ciencias marinas
-        idequipo2: 5, //asentamiento universitario zapala
+        idfacultad1: 1, //CRUB
+        idfacultad2: 2, //FAIN
         resequipo1: 1,
         resequipo2: 0,
         fecha: '2025-10-12',
@@ -15,8 +15,8 @@ module.exports = {
         iddisciplina: 6, //futsal
       },
       {
-        idequipo1: 4, //regional zona atlantica
-        idequipo2: 6, //universitario san martin de los andes
+        idfacultad1: 3, //FAI
+        idfacultad2: 4, //FAEA
         resequipo1: 1,
         resequipo2: 1, //tablas supongo
         fecha: '2025-10-05',
@@ -25,8 +25,8 @@ module.exports = {
         iddisciplina: 11, //ajedrez
       },
       {
-        idequipo1: 1, //informatica
-        idequipo2: 3, //ciencias medicas
+        idfacultad1: 5, //FACIMAR
+        idfacultad2: 6, //FACEP
         resequipo1: 3,
         resequipo2: 5,
         fecha: '2025-10-22',

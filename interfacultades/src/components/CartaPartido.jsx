@@ -53,7 +53,7 @@ const CartaPartido = ({ partido, onEditar, cambiarEstado }) => {
             <div className="flex justify-between items-center my-5">
                 <div className="text-center flex-1">
                     <span className="block text-lg font-semibold text-gray-800">
-                        {partido.equipo1.facultad.siglas}
+                        {partido.facultad1.siglas}
                     </span>
                     <span className="block text-3xl font-extrabold text-gray-900 mt-1">
                         {partido.resequipo1 ?? '-'}
@@ -64,7 +64,7 @@ const CartaPartido = ({ partido, onEditar, cambiarEstado }) => {
 
                 <div className="text-center flex-1">
                     <span className="block text-lg font-semibold text-gray-800">
-                        {partido.equipo2.facultad.siglas}
+                        {partido.facultad2.siglas}
                     </span>
                     <span className="block text-3xl font-extrabold text-gray-900 mt-1">
                         {partido.resequipo2 ?? '-'}

@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             primaryKey: true
         },
-        idequipo1: {
+        idfacultad1: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        idequipo2: {
+        idfacultad2: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
@@ -50,8 +50,8 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Partido.associate = (models) => {
-        Partido.belongsTo(models.Equipo, { foreignKey: 'idequipo1', as: 'equipo1' });
-        Partido.belongsTo(models.Equipo, { foreignKey: 'idequipo2', as: 'equipo2' });
+        Partido.belongsTo(models.Facultad, { foreignKey: 'idfacultad1', as: 'facultad1' });
+        Partido.belongsTo(models.Facultad, { foreignKey: 'idfacultad2', as: 'facultad2' });
         Partido.belongsTo(models.Disciplina, { foreignKey: 'iddisciplina', as: 'disciplina' });
     }
 

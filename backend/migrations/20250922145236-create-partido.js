@@ -9,20 +9,20 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
       },
-      idequipo1: {
+      idfacultad1: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'equipo',
-          key: 'idequipo'
+          model: 'facultad',
+          key: 'idfacultad'
         }
       },
-      idequipo2: {
+      idfacultad2: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'equipo',
-          key: 'idequipo'
+          model: 'facultad',
+          key: 'idfacultad'
         }
       },
       resequipo1: {
