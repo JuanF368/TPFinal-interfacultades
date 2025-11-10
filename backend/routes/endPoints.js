@@ -39,7 +39,7 @@ router.put('/resultados/estado/:id', verificarToken, verificarRol(['profesor']),
 router.post('/resultados', verificarToken, verificarRol(['profesor']), crearPartido);
 router.get('/equipos', obtenerEquipos);
 
-router.use('/convocatoria',verificarToken, verificarRol(['administrador']), convocatoriaRoutes); 
+router.use('/convocatoria', convocatoriaRoutes); 
 router.get('/facultades', obtenerFacultades);
 router.get('/facultades/ranking', obtenerRankingFacultades);
 

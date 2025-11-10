@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { motion } from "motion/react";
+import CartaCostado from '../components/CartaCostado';
 
 const Home = () => {
   const upper = [ 
@@ -15,57 +16,44 @@ const Home = () => {
     "/logos/colaboradores/vistaa.png"
   ]
 
-  const [ranking, setRanking] = useState([]);
-
-  useEffect(() => {
-    const fetchRanking = async () => {
-      try {
-        const response = await fetch('http://localhost:3001/facultades/ranking');
-        const data = await response.json();
-        setRanking(data);
-      } catch (error) {
-        console.error('Error al obtener el ranking de facultades:', error);
-      }
-    };
-    fetchRanking();
-    const interval = setInterval(fetchRanking, 10000); // Actualiza cada 10 segundos
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div className='flex flex-col min-h-screen mx-auto'>
-      <main className='flex-1 container mx-auto px-4 py-6 flex gap-8'>
-        <div className="flex-1">
-          <h1 className="text-4xl font-bold">Página Principal</h1>
-          <p className="mt-4 text-lg">
-            Esta es la página principal de nuestra aplicación.
-          </p>
-        </div>
-        <aside className='w-full lg:w-80 bg-[#1E293B] text-white border border-white/10 rounded-2xl shadow-xl p-6'>
-          <h2 className='text-2xl font-semibold text-[#E94D1A] mb-6 text-center'>
-            Ranking de Facultades
-          </h2>
-          {ranking.length > 0 ? (
-            <ul className='space-y-3'>
-              {ranking.map((facultad, index) => (
-                <li key={facultad.idfacultad} className='flex justify-between items-center bg-[#0F172A] rounded-lg px-4 py-3 hover:bg-[#243E73]/40 transition-all duration-200 shadow-sm'>
-                  <div className='flex items-center gap-3'>
-                    <span className='text-lg font-bold text-[#E94D1A]'>{index + 1}</span>
-                    <span className='font-medium text-gray-100'>{facultad.siglas}</span>
-                  </div>
-                  <span className='text-sm font-semibold text-blue-400'>
-                    {facultad.puntos ?? 0} pts
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ):(
-            <p className='text-gray-400 text-center text-sm italic'>
-              Cargando ranking...
+    <div className='flex flex-col min-h-screen mx-auto '>
+      <section className='w-full relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden shadow-xl'> 
+          <img  src="/fondoHome.jpeg" alt="Interfacultades" className='object-cover w-full h-full brightness-75'/>
+          <div className='absolute inset-0 flex flex-col justify-center items-start text-white text-left px-10 md:px-20'>
+            <h1 className='text-5xl md:text-6xl font-bold mb-3 drop-shadow-lg'>Interfacultades UNCO</h1>
+            <p className='text-lg max-w-xl drop-shadow-md mb-6'>
+              Esta es la página principal de nuestra aplicación.
             </p>
-          )}
+            <div className='flex gap-4'> 
+              <a className='bg-[#E94D1A] hover:bg-[#c23c0f] text-white font-semibold px-6 py-3 rounded-xl shadow-lg' href='#deportes'>
+                Ver deportes
+              </a>
+              <a className='bg-white/80 hover:bg-white text-[#243E73] font-semibold px-6 py-3 rounded-xl shadow-lg' href='#facultades'> 
+                Facultades que participan
+              </a>
+            </div>
+          </div>
+      </section>
+      <section className='container mx-auto px-0 py-10 flex flex-col lg:flex-row gap-8'> 
+        <div className='flex-1 flex flex-col gap-8'> 
+          <section id="galeria" > 
+            <p> galeria </p>
+          </section>
+          <section id="deportes" > 
+            <p> deportes </p>
+          </section>
+          <section id="facultades" > 
+            <p> facultades </p>
+          </section>
+          <section id="publicaciones" > 
+            <p> publicaciones </p>
+          </section>
+        </div>
+        <aside className="w-full lg:w-80 lg:sticky lg:top-10 self-start h-fit">
+          <CartaCostado />
         </aside>
-      </main>
+      </section>
 
       <div className='bg-white py-8 shadow-inner mt-16'> 
         <h2 className="text-center text-gray-800 text-xl font-semibold mb-6"> Colaboradores que nos acompañan</h2>
