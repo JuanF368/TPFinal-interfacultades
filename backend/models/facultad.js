@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         puntos: {
             type: DataTypes.INTEGER,
             allowNull: true
+        },
+        logo: {
+            type: DataTypes.STRING(255),
+            allowNull: true
         }
     }, {
         tableName: 'facultad',

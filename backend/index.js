@@ -23,3 +23,4 @@ db.sequelize.sync({ alter: false })
   })
 
 app.use('/uploads', express.static('uploads'));
+app.use(express.static('public'));

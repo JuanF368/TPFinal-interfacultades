@@ -20,6 +20,10 @@ module.exports = {
       puntos: {
         type: Sequelize.INTEGER,
         allowNull: true
+      }, 
+      logo: {
+        type: Sequelize.STRING(255),
+        allowNull: true
       }
     });
   },
