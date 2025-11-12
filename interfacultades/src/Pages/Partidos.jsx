@@ -3,7 +3,7 @@ import CartaPartido from "../components/CartaPartido";
 import PartidoForm from "../components/PartidoForm";
 import { usuarioActual } from "../utils/auth";
 import { FaCalendar } from "react-icons/fa";
-import { io } from "socket.io-client";
+import socket from "../utils/socket";
 
 
 const Partidos = () => {
@@ -72,17 +72,13 @@ const Partidos = () => {
     }
 
     useEffect(() => {
-        const socket = io("http://localhost:3001");
-
         cargarOpciones();
         cargarPartidos();
 
-        socket.on('partidoActualizado', (nuevosPartidos) => {
-            setPartidos(nuevosPartidos);
-        });
+        socket.on('actualizarPartidos', cargarPartidos);
 
         return () => {
-            socket.disconnect();
+            socket.off('actualizarPartidos', cargarPartidos);
         }
     }, []);
 

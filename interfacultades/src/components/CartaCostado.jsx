@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import socket from '../utils/socket';
 
 const CartaCostado = () => {
 
@@ -16,9 +17,14 @@ const CartaCostado = () => {
         console.error('Error al obtener el ranking de facultades:', error);
       }
     };
+
     fetchRanking();
-    const interval = setInterval(fetchRanking, 10000); // Actualiza cada 10 segundos
-    return () => clearInterval(interval);
+
+    socket.on('actualizarRanking', fetchRanking);
+
+    return () => {
+      socket.off('actualizarRanking', fetchRanking);
+    };
   }, []);
 
   useEffect(()=>{ 

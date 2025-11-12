@@ -63,15 +63,7 @@ const actualizarResultados = async (req, res) => {
         await partido.save();
 
         const io = req.app.get('io');
-        const partidos = await Partido.findAll({
-            include: [
-                {model:Facultad, as: 'facultad1'}, 
-                {model: Facultad, as: 'facultad2'}, 
-                {model: Disciplina, as: 'disciplina'}
-            ],
-            order: [['fecha', 'DESC'], ['hora', 'DESC']]
-        });
-        io.emit('partidoActualizado', partidos);
+        io.emit('actualizarPartidos');
 
         res.json({ message: 'Resultados actualizados correctamente', partido });
 
@@ -104,7 +96,7 @@ const actualizarEstado = async (req, res) => {
         }
 
         if(estado === 'finalizado') {
-            await actualizarPuntaje(partido);
+            await actualizarPuntaje(partido, req);
         }
 
         if(estado === 'en_curso' && (partido.resequipo1 === null || partido.resequipo2 === null)) {
@@ -116,15 +108,7 @@ const actualizarEstado = async (req, res) => {
         await partido.save();
 
         const io = req.app.get('io');
-        const partidos = await Partido.findAll({
-            include: [
-                {model:Facultad, as: 'facultad1'}, 
-                {model: Facultad, as: 'facultad2'}, 
-                {model: Disciplina, as: 'disciplina'}
-            ],
-            order: [['fecha', 'DESC'], ['hora', 'DESC']]
-        });
-        io.emit('partidoActualizado', partidos);
+        io.emit('actualizarPartidos');
 
         res.json({ message: 'Estado del partido actualizado correctamente', partido });
     } catch (error) {
@@ -133,7 +117,7 @@ const actualizarEstado = async (req, res) => {
     }
 }
 
-const actualizarPuntaje = async (partido) => {
+const actualizarPuntaje = async (partido, req) => {
     try {
         const facultad1 = await Facultad.findByPk(partido.idfacultad1);
         const facultad2 = await Facultad.findByPk(partido.idfacultad2);
@@ -148,6 +132,9 @@ const actualizarPuntaje = async (partido) => {
         }
         await facultad1.save();
         await facultad2.save();
+
+        const io = req.app.get('io');
+        io.emit('actualizarRanking');
     } catch (error) {
         console.error('Error al actualizar puntaje:', error);
     }
@@ -176,14 +163,7 @@ const crearPartido = async (req, res) => {
         });
 
         const io = req.app.get('io');
-        const partidos = await Partido.findAll({
-            include: [
-                {model:Facultad, as: 'facultad1'}, 
-                {model: Facultad, as: 'facultad2'}, 
-                {model: Disciplina, as: 'disciplina'}
-            ]
-        });
-        io.emit('partidoCreado', partidos);
+        io.emit('actualizarPartidos');
 
         return res.json({ message: 'Partido creado correctamente', partido });
     } catch (error) {
