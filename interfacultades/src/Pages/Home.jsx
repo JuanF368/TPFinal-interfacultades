@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import CartaCostado from '../components/CartaCostado';
 import CartaDisciplina from '../components/CartaDisciplina';
 import CartaFacultad from '../components/CartaFacultad';
+import SeccionPublicaciones from '../components/SeccionPublicaciones';
 
 const Home = () => {
   const upper = [ 
@@ -19,6 +20,8 @@ const Home = () => {
   ]
   const [disciplinas, setDisciplinas] = useState([]);
   const [facultades, setFacultades] = useState([]);
+  const [partidos, setPartidos] = useState([]); 
+  const navigate = useNavigate();
 
    useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +44,19 @@ const Home = () => {
     };
 
     fetchData();
+  }, []);
+
+  useEffect(()=>{
+    const fetchPartidos = async () => {
+      try { 
+        const response = await fetch("http://localhost:3001/partidos"); 
+        const data = await response.json(); 
+        setPartidos(data); 
+      } catch(error){
+        console.error("Error al obtener los partidos:", error);
+      }
+    }; 
+    fetchPartidos(); 
   }, []);
 
   return (
@@ -78,7 +94,72 @@ const Home = () => {
                 </motion.div>
             </div>
           </section>
-          <section id="facultades" className='py-6 overflow-hidden relative w-full'> 
+          <section id="partidos" className='text-white py-10 px-6 md:px-12 bg-[#1E293B] rounded-2xl' > 
+            <h2 className='text-3xl font-bold text-white text-center mb-8'> Proximos Partidos</h2>
+            <div className='space-y-8 max-w-5xl mx-auto'> 
+              {partidos.length > 0 && (
+                <div className='text-center mb-10'>
+                  <h3 className='text-2xl md:text-3xl font-semibold mt-2'>
+                    ¡No te pierdas los proximos encuentros!
+                  </h3>
+                </div>
+              )}
+              { partidos.length > 0 ? (
+                partidos.map((partido) => (
+                  <div key={partido.idpartido} className='flex flex-col md:flex-row items-center overflow-hidden '> 
+                    <div className='flex flex-col justify-between md:w-1/3 px-4 py-5 '>
+                      <div className='bg-[#E94D1A] rounded-full px-4 py-1 inline-block self-start'>
+                        <p className='text-[#1E293B] font-bold'>
+                          {new Date(partido.fecha).toLocaleDateString("es-AR", {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          })}
+                        </p>
+                      </div>
+                      <p className='text-sm text-right text-gray-200 mt-2 mr-10'>
+                        {partido.lugar}
+                      </p>
+                    </div>
+
+                    <div className='w-full md:w-1/3'> 
+                      <img src={ partido.disciplina.imagen} alt={partido.disciplina.nombre} className='w-full h-40 object-cover rounded-3xl' />
+                    </div>
+
+                    <div className='flex flex-col justify-center p-6 md:w-1/2'>
+                      <h3 className='text-2xl font-bold text-white'>
+                        {partido.disciplina.nombre}
+                      </h3>
+                      <p className='text-gray-300 mt-2'>
+                        <strong>{partido.facultad1.siglas}</strong> vs 
+                        <strong> {partido.facultad2.siglas}</strong>
+                      </p>
+
+                      <div className='flex items-center gap-6 mt-4 text-sm text-gray-300'>
+                        <div>
+                          <p className='font-semibold'>Hora:</p>
+                          <p><strong> {partido.hora?.slice(0, 5)}</strong></p>
+                        </div>
+                        <div>
+                          <p className='font-semibold'>Estado:</p>
+                          <p className='capitalize'><strong>{partido.estado} </strong></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  ))
+                  ) : ( 
+                    <h2 className='text-center'> No hay partidos cerca </h2>
+                  )}
+            </div>
+
+            <div className='flex justify-end'>
+            <button onClick={() => navigate("/partidos")} className='bg-[#E94D1A] hover:bg-[#c23c0f] text-white font-semibold px-6 py-3 rounded-full'>
+              Ver todos los partidos
+            </button>
+          </div>
+          </section>
+          <section id="facultades" className='py-6 overflow-hidden relative w-full '> 
             <h2 className='text-3xl font-bold text-[#243E73] text-center mb-6'> Participantes </h2>
             <div className='overflow-hidden  w-full  h-[280px] relative'> 
               <motion.div className='flex gap-6 absolute top-0 left-0'
@@ -89,8 +170,9 @@ const Home = () => {
               </motion.div>
             </div>
           </section>
-          <section id="publicaciones" > 
-            <p> publicaciones </p>
+          <section id="publicaciones" className='py-6 overflow-hidden relative w-full' > 
+            <h2 className='text-3xl font-bold text-[#243E73] text-left'> Ultimas publicaciones </h2>
+            <SeccionPublicaciones />
           </section>
         </div>
         <aside className="w-full lg:w-80 lg:sticky lg:top-10 self-start h-fit">

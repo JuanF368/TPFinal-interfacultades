@@ -39,7 +39,7 @@ const CartaCostado = () => {
   return (
     <>
         {convocatoria ? (
-                <div className='backdrop-blur-md bg-white/50 rounded-2xl shadow-xl px-6 py-4 text-gray-900 border border-white/30  mb-3.5'> 
+                <div className='backdrop-blur-md bg-white/50 rounded-2xl shadow-xl px-6 py-4 text-gray-900 border border-white/30  mb-3.5 mt-10'> 
                   <h2 className='text-2xl font-bold mb-2 text-[#243E73]'>Convocatoria</h2>
                   <hr className='border-white/50 mb-3'/>
                   <p className='text-base capitalize mb-4'>

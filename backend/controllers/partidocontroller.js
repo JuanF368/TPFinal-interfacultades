@@ -171,4 +171,29 @@ const crearPartido = async (req, res) => {
     }
 };
 
-module.exports = { obtenerResultados, actualizarResultados, actualizarEstado, crearPartido };
+const proximosPartidos= async (req, res) => {
+    try {
+        const hoy = new Date(); 
+        const partidos = await Partido.findAll({
+            where: {
+                [Op.and]: [
+                    { fecha: {[Op.gte]: hoy}},
+                    { estado: { [Op.in]: ['pendiente', 'en_curso'] } }
+                ]
+            }, 
+            include: [
+                {model:Facultad, as: 'facultad1'}, 
+                {model: Facultad, as: 'facultad2'}, 
+                {model: Disciplina, as: 'disciplina'}
+            ], 
+            order: [['fecha', 'ASC'], ['hora', 'ASC']], 
+            limit: 3
+        }); 
+        res.json(partidos)
+    }catch(error){ 
+        console.error('Error al obtener partidos:', error);
+        res.status(500).json({ message: 'Error al obtener partidos' });
+    }
+}
+
+module.exports = { obtenerResultados, actualizarResultados, actualizarEstado, crearPartido, proximosPartidos };

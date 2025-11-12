@@ -11,7 +11,7 @@ const { publicaciones, crearPublicacion } = require('../controllers/publicacione
 const { obtenerDisciplinas, /*actualizarDisciplina */ } = require('../controllers/disciplinasController');
 const { perfilUsuario, editarPerfil, publicacionesUsuario, eliminarPublicacion, editarPublicacion } = require('../controllers/perfilController'); 
 const { obtenerGaleria, subirFoto } = require('../controllers/galeriaController');
-const { obtenerResultados, actualizarResultados, actualizarEstado, crearPartido } = require('../controllers/partidocontroller');
+const { obtenerResultados, actualizarResultados, actualizarEstado, crearPartido, proximosPartidos } = require('../controllers/partidocontroller');
 const convocatoriaRoutes = require('./convocatoriaRoutes'); 
 const { obtenerFacultades, obtenerRankingFacultades } = require('../controllers/facultadesController');
 const { listarUsuarios, actualizarRolUsuario} = require('../controllers/usuariosController'); 
@@ -42,5 +42,6 @@ router.get('/equipos', obtenerEquipos);
 router.use('/convocatoria', convocatoriaRoutes); 
 router.get('/facultades', obtenerFacultades);
 router.get('/facultades/ranking', obtenerRankingFacultades);
+router.get('/partidos', proximosPartidos); 
 
 module.exports = router;
