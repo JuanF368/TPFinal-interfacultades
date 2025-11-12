@@ -3,6 +3,7 @@ import CartaPartido from "../components/CartaPartido";
 import PartidoForm from "../components/PartidoForm";
 import { usuarioActual } from "../utils/auth";
 import { FaCalendar } from "react-icons/fa";
+import { io } from "socket.io-client";
 
 
 const Partidos = () => {
@@ -63,7 +64,7 @@ const Partidos = () => {
             body: JSON.stringify({ estado: nextState })
         });
         if(res.ok) {
-            cargarPartidos();
+            console.log('Estado cambiado correctamente');
         } else {
             const data = await res.json();
             console.error('Error al cambiar estado:', data);
@@ -71,11 +72,18 @@ const Partidos = () => {
     }
 
     useEffect(() => {
+        const socket = io("http://localhost:3001");
+
         cargarOpciones();
         cargarPartidos();
 
-        const interval = setInterval(cargarPartidos, 10000); // Actualiza cada 10 segundos
-        return () => clearInterval(interval);
+        socket.on('partidoActualizado', (nuevosPartidos) => {
+            setPartidos(nuevosPartidos);
+        });
+
+        return () => {
+            socket.disconnect();
+        }
     }, []);
 
     const handleFiltroChange = (e) => {
@@ -162,7 +170,6 @@ const Partidos = () => {
                     disciplinas={disciplinas}
                     exito={() => {
                         setEditandoPartido(null);
-                        cargarPartidos();
                     }}
                     cancelar={() => setEditandoPartido(null)}
                 />

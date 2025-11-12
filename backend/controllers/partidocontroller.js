@@ -2,17 +2,6 @@ const { Partido, Facultad, Disciplina, Sequelize } = require('../models');
 const { Op, col, where } = Sequelize;
 
 
-/*
-
-Ingresa al menu 
-→ Selecciona "Partidos" 
-→ Selecciona el dia de la interfacultad  
-→  se ven los ultimos resultados de las ultimas partidas 
-→  Se muestra la opcion de filtrado (por universidad, deporte, fecha, horario) 
-
-*/
-
-//agregar para que al pasar el estado de un partido a finalizado, se sume el puntaje a la facultad respectiva segun estos parametros: gano +3 puntos, empate +1 punto, perdio 0 puntos.
 const obtenerResultados = async (req, res) => {
     try {
         const { iddisciplina, fecha, idfacultad } = req.query;
@@ -73,6 +62,17 @@ const actualizarResultados = async (req, res) => {
         partido.resequipo2 = resequipo2;
         await partido.save();
 
+        const io = req.app.get('io');
+        const partidos = await Partido.findAll({
+            include: [
+                {model:Facultad, as: 'facultad1'}, 
+                {model: Facultad, as: 'facultad2'}, 
+                {model: Disciplina, as: 'disciplina'}
+            ],
+            order: [['fecha', 'DESC'], ['hora', 'DESC']]
+        });
+        io.emit('partidoActualizado', partidos);
+
         res.json({ message: 'Resultados actualizados correctamente', partido });
 
     }catch (error) {
@@ -114,6 +114,17 @@ const actualizarEstado = async (req, res) => {
 
         partido.estado = estado;
         await partido.save();
+
+        const io = req.app.get('io');
+        const partidos = await Partido.findAll({
+            include: [
+                {model:Facultad, as: 'facultad1'}, 
+                {model: Facultad, as: 'facultad2'}, 
+                {model: Disciplina, as: 'disciplina'}
+            ],
+            order: [['fecha', 'DESC'], ['hora', 'DESC']]
+        });
+        io.emit('partidoActualizado', partidos);
 
         res.json({ message: 'Estado del partido actualizado correctamente', partido });
     } catch (error) {
@@ -163,6 +174,16 @@ const crearPartido = async (req, res) => {
             lugar,
             estado: 'pendiente'
         });
+
+        const io = req.app.get('io');
+        const partidos = await Partido.findAll({
+            include: [
+                {model:Facultad, as: 'facultad1'}, 
+                {model: Facultad, as: 'facultad2'}, 
+                {model: Disciplina, as: 'disciplina'}
+            ]
+        });
+        io.emit('partidoCreado', partidos);
 
         return res.json({ message: 'Partido creado correctamente', partido });
     } catch (error) {
