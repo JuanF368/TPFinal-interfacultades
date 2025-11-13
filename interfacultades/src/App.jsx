@@ -18,6 +18,7 @@ import Convocatoria from './Pages/Convocatoria';
 import './App.css'
 import RutaProtegida from './components/RutaProtegida';
 import { ToastContainer } from 'react-toastify';
+import Inscripcion from './Pages/Inscripcion';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -51,6 +52,9 @@ function App() {
         </Route>
         <Route element={<RutaProtegida roles={['administrador', 'profesor']}/>} >  
           <Route path={ROUTES.usuarios} element={<Usuarios/>} />
+        </Route>
+        <Route element={<RutaProtegida roles={['usuario', 'jugador']}/>} >  
+          <Route path={ROUTES.inscripcion} element={<Inscripcion/>} />
         </Route>
         </Route>
       </Routes>

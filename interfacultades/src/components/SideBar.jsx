@@ -2,6 +2,7 @@ import React, { useState }  from "react";
 import { useNavigate } from "react-router";
 import { FaHome, FaFutbol, FaNewspaper, FaClipboardCheck, FaUsers, FaBullhorn} from 'react-icons/fa';
 import { IoMdPhotos } from 'react-icons/io';
+import { FaWpforms } from "react-icons/fa6";
 import { isAuthenticated, usuarioActual } from "../utils/auth";
 const SideBar = ({abierto}) => {
     const navigate = useNavigate(); 
@@ -64,7 +65,16 @@ const SideBar = ({abierto}) => {
                                 </li>
                                 </>
                             )}
-                            
+                            {(usuario?.rodescripcion === "usuario" || usuario?.rodescripcion ==="jugador") && (
+                                <>
+                                <li onClick={() => irAPagina("/inscripcion")} className="flex items-center p-3 text-[#E94D1A] hover:bg-gray-100 hover:text-[#c23c0f] rounded-lg mx-2 my-1 transition-colors  cursor-pointer">
+                                    <FaWpforms size={24}/>
+                                     {abierto && <span className="ml-3">
+                                        Inscripcion
+                                    </span>}
+                                </li>
+                                </>
+                            )}
                             </>
                         )}
                         </ul>

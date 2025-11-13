@@ -39,6 +39,16 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       },
+      idfacultad: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'facultad',
+          key: 'idfacultad'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT'
+      },
       legajo: {
         type: Sequelize.STRING(15),
         allowNull: false
@@ -58,7 +68,11 @@ module.exports = {
       fechaNac: {
         type: Sequelize.DATE,
         allowNull: false
-      }
+      },
+      restriccionAlimentaria: {
+        type: Sequelize.STRING(100),
+        allowNull: true
+      },
     });
   },
   async down(queryInterface, Sequelize) {
