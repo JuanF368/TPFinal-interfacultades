@@ -28,4 +28,18 @@ const inscribirse = async(req, res) => {
     }
 } 
 
-module.exports = { inscribirse }; 
+const estadoInscripcion = async(req, res) => {
+    try { 
+        const {idusuario, idconvocatoria} = req.params; 
+        const esta = await Inscripcion.findOne({where: {idusuario, idconvocatoria}});
+        if(esta){ 
+            return res.json({inscripto: true});
+        }
+        return res.json({inscripto: false});
+    } catch (error){ 
+        console.log('Error al verificar inscripcion: ' , error);
+        return res.json(500).json({error: 'Error al verificar incripcion'});
+    }
+}
+
+module.exports = { inscribirse, estadoInscripcion }; 

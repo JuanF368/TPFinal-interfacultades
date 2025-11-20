@@ -48,7 +48,7 @@ const estadoConvocatoria = async(req, res) =>{
         }); 
 
         if(!convocatoria){
-            return res.status(200).json({ convocatoria: null, estado: null })
+            return res.status(200).json({ convocatoria: null, estado: "fuera de tiempo" })
         }
 
         let estado = 'fuera de tiempo';
@@ -79,7 +79,7 @@ const estadoConvocatoria = async(req, res) =>{
                 await  Usuario.update({idrol:rolUsuario.idrol}, {where: {idrol: rolJugador.idrol}}); 
                 console.log("Cambio de roles realizado"); 
             } 
-
+            estado = "fuera de tiempo";
         }
 
         return res.status(200).json({estado, convocatoria}); 

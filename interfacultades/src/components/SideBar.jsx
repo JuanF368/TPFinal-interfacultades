@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useState, useEffect }  from "react";
 import { useNavigate } from "react-router";
 import { FaHome, FaFutbol, FaNewspaper, FaClipboardCheck, FaUsers, FaBullhorn} from 'react-icons/fa';
 import { IoMdPhotos } from 'react-icons/io';
@@ -8,11 +8,25 @@ const SideBar = ({abierto}) => {
     const navigate = useNavigate(); 
     const logueado = isAuthenticated();
     const usuario = usuarioActual();
-
+    const [estado, setEstado] = useState("");
+ 
     const irAPagina = (path) => {
         navigate(path);
     };
 
+    useEffect(()=>{ 
+    const fetchConvocatoria = async () => {
+      try { 
+        const response = await fetch("http://localhost:3001/convocatoria/estado"); 
+        const data = await response.json(); 
+        setEstado(data.estado); 
+      } catch(error){
+        console.error("Error al obtener la convocatoria:", error);
+      }
+    }; 
+    fetchConvocatoria(); 
+  }, []); 
+ 
     return (
             <div className={`fixed top-16 left-0 bottom-0 bg-[#ffffff] z-21 transition-all duration-300 text-white shadow-md rounded-r-2xl h-[90%]
             ${abierto ? "w-64" : "w-16"}  overflow-y-auto pt-4 flex flex-col`}> 
@@ -65,7 +79,8 @@ const SideBar = ({abierto}) => {
                                 </li>
                                 </>
                             )}
-                            {(usuario?.rodescripcion === "usuario" || usuario?.rodescripcion ==="jugador") && (
+                            { estado !== 'fuera de tiempo' && 
+                            (usuario?.rodescripcion === "usuario" || usuario?.rodescripcion ==="jugador") && (
                                 <>
                                 <li onClick={() => irAPagina("/inscripcion")} className="flex items-center p-3 text-[#E94D1A] hover:bg-gray-100 hover:text-[#c23c0f] rounded-lg mx-2 my-1 transition-colors  cursor-pointer">
                                     <FaWpforms size={24}/>
@@ -76,7 +91,7 @@ const SideBar = ({abierto}) => {
                                 </>
                             )}
                             </>
-                        )}
+                            )}
                         </ul>
                         <ul>
                         <li onClick={() => irAPagina("/reglamentos")} className="flex items-center p-3 text-gray-700 hover:bg-gray-100 hover:text-[#243E73] rounded-lg mx-2 my-1 transition-colors cursor-pointer">

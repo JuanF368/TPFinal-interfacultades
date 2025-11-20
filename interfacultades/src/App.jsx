@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router";
 import { ROUTES } from './const/routes';
 import Home from './Pages/Home';
@@ -19,6 +19,17 @@ import './App.css'
 import RutaProtegida from './components/RutaProtegida';
 import { ToastContainer } from 'react-toastify';
 import Inscripcion from './Pages/Inscripcion';
+import { useLocation } from 'react-router';
+
+function ScrollToTop() { 
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 function App() {
   const [count, setCount] = useState(0)
@@ -27,6 +38,7 @@ function App() {
     <>
   
     <BrowserRouter>
+    <ScrollToTop/>
       <Routes>
         <Route element={<AuthLayout/>}>
           <Route path={ROUTES.register} element={<Register />} />

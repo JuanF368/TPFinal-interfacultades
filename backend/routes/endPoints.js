@@ -16,7 +16,7 @@ const convocatoriaRoutes = require('./convocatoriaRoutes');
 const { obtenerFacultades, obtenerRankingFacultades } = require('../controllers/facultadesController');
 const { listarUsuarios, actualizarRolUsuario} = require('../controllers/usuariosController'); 
 const { obtenerEquipos } = require('../controllers/equipoController');
-const { inscribirse} = require('../controllers/inscripcionController');
+const { inscribirse, estadoInscripcion} = require('../controllers/inscripcionController');
 
 router.get('/ping', ping);
 router.post('/login', login);
@@ -40,6 +40,7 @@ router.put('/resultados/estado/:id', verificarToken, verificarRol(['profesor']),
 router.post('/resultados', verificarToken, verificarRol(['profesor']), crearPartido);
 router.get('/equipos', obtenerEquipos);
 router.post('/inscripcion', verificarToken, verificarRol(['usuario', 'jugador']), inscribirse)
+router.get('/inscripcion/estado/:idusuario/:idconvocatoria', verificarToken , verificarRol(['usuario', 'jugador']), estadoInscripcion ); 
 
 router.use('/convocatoria', convocatoriaRoutes); 
 router.get('/facultades', obtenerFacultades);
