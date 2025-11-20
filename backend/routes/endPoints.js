@@ -17,6 +17,7 @@ const { obtenerFacultades, obtenerRankingFacultades } = require('../controllers/
 const { listarUsuarios, actualizarRolUsuario} = require('../controllers/usuariosController'); 
 const { obtenerEquipos } = require('../controllers/equipoController');
 const { inscribirse, estadoInscripcion} = require('../controllers/inscripcionController');
+const { crearNotificacion, notificacionesUsuario, notiLeida } = require('../controllers/notificacionController');
 
 router.get('/ping', ping);
 router.post('/login', login);
@@ -39,8 +40,11 @@ router.put('/usuarios/actualizar/:id', verificarToken,  verificarRol(['administr
 router.put('/resultados/estado/:id', verificarToken, verificarRol(['profesor']), actualizarEstado);
 router.post('/resultados', verificarToken, verificarRol(['profesor']), crearPartido);
 router.get('/equipos', obtenerEquipos);
-router.post('/inscripcion', verificarToken, verificarRol(['usuario', 'jugador']), inscribirse)
-router.get('/inscripcion/estado/:idusuario/:idconvocatoria', verificarToken , verificarRol(['usuario', 'jugador']), estadoInscripcion ); 
+router.post('/inscripcion', verificarToken, verificarRol(['usuario', 'inscripto', 'jugador']), inscribirse)
+router.get('/inscripcion/estado/:idusuario/:idconvocatoria', verificarToken , verificarRol(['usuario', 'inscripto', 'jugador']), estadoInscripcion ); 
+router.get('/notificaciones/:idusuario', verificarToken, notificacionesUsuario);
+router.post('/notificaciones/nuevo', verificarToken, crearNotificacion);
+router.put('/notificaciones/leida/:idusuario', verificarToken, notiLeida);
 
 router.use('/convocatoria', convocatoriaRoutes); 
 router.get('/facultades', obtenerFacultades);

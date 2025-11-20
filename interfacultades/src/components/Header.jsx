@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import CartelConfirmacion from "./CartelConfirmacion";
 import { IoCloseSharp } from 'react-icons/io5';
 
-const Header = ({abierto, setAbierto}) => {
+const Header = ({abierto, setAbierto, notiCount}) => {
     const [estaLogueado, setEstaLogueado] = useState(false);
     const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
     const navigate = useNavigate();
@@ -44,7 +44,14 @@ const Header = ({abierto, setAbierto}) => {
                         </>
                     ) : (
                         <>
-                         <FaUserCircle size={28} className="text-white cursor-pointer" onClick={() => navigate("/perfil")}/> 
+                        <div className="relative cursor-pointer" onClick={() => navigate("/perfil")}>
+                            <FaUserCircle size={28} className="text-white" />
+                            {notiCount > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-[#E94D1A] text-white text-xs font-bold px-1 rounded-full">
+                                {notiCount}
+                                </span>
+                            )}
+                        </div>
                         <button
                             onClick={() => setMostrarConfirmacion(true)} 
                             className="text-white hover:text-red-500 cursor-pointer"

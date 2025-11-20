@@ -16,21 +16,21 @@ module.exports = {
         usapellido: 'jugador',
         usmail: 'jugador@gmail.com',
         uspass: '$2b$10$/MDzui3PsNXouXB/4pCD7.9YiVSZ9Igypvcgu4vmlzRiKaMDWrdRa',
-        idrol: 2
+        idrol: 3
       },
       {
         usnombre: 'profesor',
         usapellido: 'profesor',
         usmail: 'profesor@gmail.com',
         uspass: '$2b$10$7AUZt8ZGiscgfhPJPeyVp.tQQViDQ0qvO3rH10408hv3JKW9m7SN6',
-        idrol: 3
+        idrol: 4
       },
       {
         usnombre: 'administrador',
         usapellido: 'administrador',
         usmail: 'administrador@gmail.com',
         uspass: '$2b$10$s1UVT2yMTBhM6IH/ECGK0ewi/Bnlj4IACgBR./ukvJ5waWGKDe1D2',
-        idrol: 4
+        idrol: 6
       }
     ], {});
   },

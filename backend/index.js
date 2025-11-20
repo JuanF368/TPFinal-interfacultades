@@ -29,6 +29,10 @@ app.set('io', io);
 io.on('connection', (socket) => {
   console.log('Cliente conectado:', socket.id);
 
+   socket.on("registerUser", (idusuario) => {
+      socket.join(`user_${idusuario}`);
+  }); 
+
   socket.on('disconnect', () => {
     console.log('Cliente desconectado:', socket.id);
   });

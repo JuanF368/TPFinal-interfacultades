@@ -3,10 +3,12 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert('rol', [
-      { rodescripcion: 'alumno' },
+      { rodescripcion: 'usuario' },
+      { rodescripcion: 'inscripto' },
       { rodescripcion: 'jugador' },
       { rodescripcion: 'profesor' },
-      { rodescripcion: 'admin' },
+      { rodescripcion: 'secretario' },
+      { rodescripcion: 'administrador' },
     ], {});
   },
 

@@ -64,12 +64,12 @@ const Usuarios = () => {
                 <input type="text" placeholder="Buscar por nombre o apellido" value={busqueda} 
                 onChange={(e) => setBusqueda(e.target.value)} className="border-[#E94D1A] border-2 rounded-md px-3 py-2 w-full max-w-lg"/>
             </div>
-            <div className="flex font-bold space-x-6 mb-4 pb-2 text-gray-600 mt-10">
-                <button onClick={() =>{setSeccion(""); setPagina(1);}} className={`capitalize ${seccion==="" ? "text-[#E94D1A] border-b-2 border-[#E94D1A]" : "hover:text-[#E94D1A]" }`} >
+            <div className="flex flex-wrap font-bold space-x-6 mb-4 pb-2  text-gray-600 mt-10">
+                <button onClick={() =>{setSeccion(""); setPagina(1);}} className={`  cursor-pointer capitalize ${seccion==="" ? "text-[#E94D1A] border-b-2 border-[#E94D1A]" : "hover:text-[#E94D1A]" }`} >
                 Todos </button>
-                {["usuario", "jugador", "profesor", "administrador"].map((rol) => (
+                {["usuario", "inscripto" , "jugador", "profesor", "secretario", "administrador"].map((rol) => (
                     <button key={rol} onClick={() => { setSeccion(rol); setPagina(1)}} 
-                    className={`capitalize ${seccion === rol ? "text-[#E94D1A] border-b-2 border-[#E94D1A]"
+                    className={`  cursor-pointer capitalize ${seccion === rol ? "text-[#E94D1A] border-b-2 border-[#E94D1A]"
                     : "hover:text-[#E94D1A]"}`}> 
                         {rol}
                     </button>
@@ -83,23 +83,25 @@ const Usuarios = () => {
                         <>
                         <div key={u.idusuario} className="flex flex-col md:flex-row  p-3 space-y-2 ">
                             <div className="flex flex-col md:grid md:grid-cols-3 w-full md:items-center">
-                               <div className="text-sm md:text-base">
+                               <div className="cursor-default text-sm md:text-base">
                                     <p><strong>{u.usnombre} {u.usapellido}</strong></p>
                                 </div>
-                                <div className="text-sm md:text-base text-gray-700 text-left md:text-center mt-1 md:mt-0">
+                                <div className="cursor-default text-sm md:text-base text-gray-700 text-left md:text-center mt-1 md:mt-0">
                                     <p>{u.usmail}</p>
                                 </div>
                             </div>
                             
                             <div className="mt-2 md:mt-0 md:text-right">
                                 <select  value={u.rol?.idrol || ""} onChange={(e) => cambiarRol(u.idusuario, e.target.value)}
-                                className="border-2 border-[#E94D1A] rounded-lg px-3 py-1 text-sm md:text-base"
+                                className=" cursor-pointer border-2 border-[#E94D1A] rounded-lg px-3 py-1 text-sm md:text-base"
                                 disabled={(u.rol?.rodescripcion === "administrador" && user.rodescripcion !== "administrador") || 
                                 (user.rodescripcion !== "administrador" && user.rodescripcion !== "profesor")} > 
                                     <option value="1">Usuario</option>
-                                    <option value="2">Jugador</option>
-                                    <option value="3">Profesor</option>
-                                    <option value="4" disabled={user.rodescripcion === "profesor"}>Admin</option>
+                                    <option value="2">Inscripto</option>
+                                    <option value="3">Jugador</option>
+                                    <option value="4">Profesor</option>
+                                    <option value="5">Secretario</option>
+                                    <option value="6" disabled={user.rodescripcion === "profesor"}>Admin</option>
                                 </select>
                             </div>
                             <hr className="m-4 border border-[#ddd]"/>

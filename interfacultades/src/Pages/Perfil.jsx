@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {usuarioActual} from "../utils/auth";
 import CartaPublicacion from "../components/CartaPublicacion";
 import { toast } from "react-toastify";
+import Notificaciones from "../components/Notificaciones";
 
 const Perfil = () => {
   const [seccion, setSeccion] = useState("perfil");
@@ -9,14 +10,46 @@ const Perfil = () => {
   const usuario = usuarioActual();
   const [datosUsuario, setDatosUsuario] = useState({ usnombre: "", usapellido:"", usmail:"", rol:""});
   const token = localStorage.getItem("token");
+  const [notificaciones, setNotificaciones] = useState([]);
 
   useEffect(() => {
+    cargarNotificaciones();
     if (seccion === "publicaciones") {
       obtenerPublicaciones();
     } else if(seccion === "perfil"){
       obtenerDatosPerfil(); 
+    }  else if (seccion === "notificaciones") {
+      cargarNotificaciones();
+      marcarTodasComoLeidas();
+      setNotificaciones(prev => prev.map(n => ({ ...n, leida: true })));
+      window.dispatchEvent(new Event("notificacionesLeidas"));
     }
   }, [seccion]);
+
+  const cargarNotificaciones = async () => {
+    try { 
+      const res = await fetch(`http://localhost:3001/notificaciones/${usuario.idusuario}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const data = await res.json();
+      setNotificaciones(data);
+    } catch (error){
+       console.error("Error al cargar notificaciones", error);
+    }
+    
+  };
+
+  const marcarTodasComoLeidas = async () => {
+    try {
+      await fetch(`http://localhost:3001/notificaciones/leida/${usuario.idusuario}`,
+        { method: "PUT", headers: { Authorization: `Bearer ${token}` } }
+      );
+    } catch (error) {
+      console.error("Error al leerlas", error);
+    }
+  };
+
 
   const obtenerDatosPerfil = async() =>{
     try{
@@ -75,6 +108,14 @@ const Perfil = () => {
         </button>
         <button onClick={() => {setSeccion("publicaciones")}}
           className={`${seccion === "publicaciones" ? "font-bold  text-[#E94D1A] border-b-2" : ""}`}> Mis publicaciones
+        </button>
+        <button onClick={() => setSeccion("notificaciones")}
+          className={`${seccion === "notificaciones" ? "font-bold  text-[#E94D1A] border-b-2" : ""}`}> Notificaciones 
+          {notificaciones.filter(n => !n.leida).length > 0 && (
+            <span className="ml-1 bg-[#E94D1A] text-white text-xs font-bold px-1.5 py-0.5 rounded-full">
+              {notificaciones.filter(n => !n.leida).length}
+            </span>
+          )}
         </button>
       </div>
 
@@ -136,6 +177,9 @@ const Perfil = () => {
               ))
             )}
           </div>
+        )}
+        {seccion === "notificaciones" && (
+          <Notificaciones notificaciones={notificaciones} />
         )}
       </div>
     </div>

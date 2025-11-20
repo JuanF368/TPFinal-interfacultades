@@ -65,7 +65,7 @@ function App() {
         <Route element={<RutaProtegida roles={['administrador', 'profesor']}/>} >  
           <Route path={ROUTES.usuarios} element={<Usuarios/>} />
         </Route>
-        <Route element={<RutaProtegida roles={['usuario', 'jugador']}/>} >  
+        <Route element={<RutaProtegida roles={['usuario', 'inscripto', 'jugador']}/>} >  
           <Route path={ROUTES.inscripcion} element={<Inscripcion/>} />
         </Route>
         </Route>

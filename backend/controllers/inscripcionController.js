@@ -1,4 +1,4 @@
-const { Inscripcion, Convocatoria } = require('../models');
+const { Inscripcion, Convocatoria, Usuario } = require('../models');
 
 const inscribirse = async(req, res) => {
     try { 
@@ -21,7 +21,8 @@ const inscribirse = async(req, res) => {
         }
 
         const inscripcion = await Inscripcion.create({idusuario, iddisciplina, idconvocatoria, idfacultad, legajo, fechaNac, talleRemera, DNI, carrera, restriccionAlimentaria}); 
-        res.json({inscripcion});
+        await Usuario.update({ idrol: 2}, {where: { idusuario }}); 
+        res.json({mensaje:"Inscripcion realizada", inscripcion});
     } catch(error){ 
         console.error('Error al crear la inscripcion:', error);
         res.status(500).json({ error: 'Error al crear la inscripcion' });

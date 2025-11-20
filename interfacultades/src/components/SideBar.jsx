@@ -80,7 +80,7 @@ const SideBar = ({abierto}) => {
                                 </>
                             )}
                             { estado !== 'fuera de tiempo' && 
-                            (usuario?.rodescripcion === "usuario" || usuario?.rodescripcion ==="jugador") && (
+                            (usuario?.rodescripcion === "usuario" || usuario?.rodescripcion ==="jugador" ||  usuario?.rodescripcion ==="inscripto" ) && (
                                 <>
                                 <li onClick={() => irAPagina("/inscripcion")} className="flex items-center p-3 text-[#E94D1A] hover:bg-gray-100 hover:text-[#c23c0f] rounded-lg mx-2 my-1 transition-colors  cursor-pointer">
                                     <FaWpforms size={24}/>

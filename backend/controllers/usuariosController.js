@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { Usuario, Rol } = require('../models'); 
+const { Usuario, Rol, Notificacion } = require('../models'); 
 
 const listarUsuarios = async(req, res) => {
     try{
@@ -47,8 +47,15 @@ const actualizarRolUsuario = async(req,res) =>{
             return res.status(400).json({ error: 'Rol no valido' });
         }
 
+        const rolViejo = usuario.idrol; 
         usuario.idrol = nuevoRolId;
         await usuario.save();
+        const io = req.app.get('io');
+        if(rolViejo === 2 && nuevoRolId === 3){
+            const mensaje = "Fuiste seleccionado para representar como jugador a tu facultad en las Interfacultades!"; 
+            await Notificacion.create({idusuario: id, mensaje, tipo: "aceptacion", leida:false});
+            io.to(`user_${usuario.idusuario}`).emit("rolActualizado", { mensaje});       
+        }
         return res.status(200).json({ mensaje: 'Rol actualizado correctamente', usuario });
     } catch(error){ 
         console.error('Error al cambiar rol del usuario: ', error); 
