@@ -87,7 +87,7 @@ const Home = () => {
             <h2 className='text-3xl font-bold text-[#243E73] text-center mb-6'> Disciplinas </h2>
             <div className='overflow-hidden w-full h-[280px] relative'> 
                 <motion.div className='flex gap-6 absolute top-0 left-0'
-                animate={{ x: ["0%", "-50%"] }} transition={{ duration: 25, repeat: Infinity, ease: "linear"}} whileHover={{ animationPlayState: "paused" }}> 
+                animate={{ x: ["0%", "-50%"] }} transition={{ duration: 35, repeat: Infinity, ease: "linear"}} whileHover={{ animationPlayState: "paused" }}> 
                   {[...disciplinas, ...disciplinas].map((disc, i) => (
                     <CartaDisciplina key={`${disc.iddisciplina}-${i}`} titulo={disc.nombre} imagen={disc.imagen} reglamento={disc.reglamento} tipo={disc.tipo} />
                   ))}
@@ -154,7 +154,7 @@ const Home = () => {
             </div>
 
             <div className='flex justify-end'>
-            <button onClick={() => navigate("/partidos")} className='bg-[#E94D1A] hover:bg-[#c23c0f] text-white font-semibold px-6 py-3 rounded-full'>
+            <button onClick={() => navigate("/partidos")} className='bg-[#E94D1A] hover:bg-[#c23c0f] text-white font-semibold px-6 py-3 rounded-full cursor-pointer'>
               Ver todos los partidos
             </button>
           </div>
@@ -163,7 +163,7 @@ const Home = () => {
             <h2 className='text-3xl font-bold text-[#243E73] text-center mb-6'> Participantes </h2>
             <div className='overflow-hidden  w-full  h-[280px] relative'> 
               <motion.div className='flex gap-6 absolute top-0 left-0'
-               animate={{ x: ["-50%", "0%"] }} transition={{ duration: 30, repeat: Infinity, ease: "linear"}} whileHover={{ animationPlayState: "paused" }}> 
+               animate={{ x: ["-50%", "0%"] }} transition={{ duration: 42, repeat: Infinity, ease: "linear"}} whileHover={{ animationPlayState: "paused" }}> 
                 {[...facultades, ...facultades].map((fac, i) => (
                   <CartaFacultad key={`${fac.idfacultad}-${i}`} titulo={fac.siglas} descripcion={fac.nombre} imagen={fac.logo} />
                 ))}
@@ -183,7 +183,7 @@ const Home = () => {
       <div className='bg-white py-8 shadow-inner mt-16'> 
         <h2 className="text-center text-gray-800 text-xl font-semibold mb-6"> Colaboradores que nos acompañan</h2>
         <div className='overflow-hidden'> 
-          <motion.div initial={{x:0}} animate={{ x: "-100%"}} transition={{ duration:10, repeat:Infinity, ease:"linear" }} className='flex flex-shrink-0' > 
+          <motion.div initial={{x:0}} animate={{ x: "-100%"}} transition={{ duration:15, repeat:Infinity, ease:"linear" }} className='flex flex-shrink-0' > 
             {[...upper, ...upper].map((image, index) => {
               return <img className="h-14 object-contain mx-10" src={image} key={index}  alt={`colaborador-${index}`}/>;
             })}

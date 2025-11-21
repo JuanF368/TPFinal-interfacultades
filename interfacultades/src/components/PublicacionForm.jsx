@@ -72,7 +72,7 @@ const PublicacionForm = ({publicacion =null, modo = 'crear', exito, setNuevo}) =
             </div>
             )}
             <label className="text-left block mb-3 font-medium text-gray-700"> Imagenes </label>
-            <input type='file' className="w-full text-gray-600" multiple onChange={e => {const files = Array.from(e.target.files);
+            <input type='file' className="w-full text-gray-600 cursor-pointer file:cursor-pointer" multiple onChange={e => {const files = Array.from(e.target.files);
             setImagenes(files) }}/>
             <div className="flex justify-between mt-6">
                 <button

@@ -56,11 +56,11 @@ const SeccionPublicaciones = () => {
                 className='relative p-6 md:p-10 flex flex-col md:flex-row items-center gap-6 w-full max-w-4xl' > 
                     <div className='absolute top-4 right-4 flex gap-2 z-20'> 
                         <button onClick={prev} disabled={ index === 0}
-                        className={`transition ${index === 0 ? "opacity-30 cursor-not-allowed" : "hover:scale-110"}`} >
+                        className={`transition ${index === 0 ? "opacity-30 cursor-not-allowed" : "hover:scale-110 cursor-pointer"}`} >
                             <IoIosArrowDropleft size={30} color="#E94D1A"/>
                         </button>
                         <button onClick={next} disabled= {index === publicaciones.length - 1}
-                         className={`transition ${index === publicaciones.length - 1 ? "opacity-30 cursor-not-allowed" : "hover:scale-110"}`} > 
+                         className={`transition ${index === publicaciones.length - 1 ? "opacity-30 cursor-not-allowed" : "hover:scale-110 cursor-pointer"}`} > 
                             <IoIosArrowDroprightCircle size={30} color="#E94D1A"/>
                         </button>
                     </div>
@@ -91,7 +91,7 @@ const SeccionPublicaciones = () => {
             )}
            </AnimatePresence>
            {index === publicaciones.length - 1 && publicaciones.length > 0 && ( 
-            <button onClick={handleVerMas} className='mt-4 bg-[#E94D1A] text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-[#c23c0f]'> Ver mas publicaciones </button>
+            <button onClick={handleVerMas} className='mt-4 bg-[#E94D1A] text-white font-semibold px-6 py-3 rounded-xl shadow-md hover:bg-[#c23c0f] cursor-pointer'> Ver mas publicaciones </button>
            )}
         </div>
         

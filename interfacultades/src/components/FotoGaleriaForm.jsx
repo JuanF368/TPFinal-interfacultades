@@ -43,9 +43,10 @@ const FotoGaleriaForm = ({ setNuevo, exito }) => {
                     onChange={(e) => setNombre(e.target.value)}
                     placeHolder="Nombre de la imagen"
                 />
-                <Input
+                <input
                     name="archivo"
                     type="file"
+                    className="w-full text-gray-600 cursor-pointer file:cursor-pointer"
                     onChange={(e) => setArchivo(e.target.files[0])}
                     placeHolder="Seleccionar imagen"
                 />
