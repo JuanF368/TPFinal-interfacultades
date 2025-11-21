@@ -12,4 +12,5 @@ export const ROUTES = {
     misPartidos: "/misPartidos", //jugador   rutas de prueba
     convocatoria: "/convocatoria",
     inscripcion: "/inscripcion", 
+    disciplinasYFacultades: "/disciplinasYfacultades", 
 };

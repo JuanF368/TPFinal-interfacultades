@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from "react";
 import { useNavigate } from "react-router";
 import { FaHome, FaFutbol, FaNewspaper, FaClipboardCheck, FaUsers, FaBullhorn} from 'react-icons/fa';
-import { IoMdPhotos } from 'react-icons/io';
+import { IoMdPhotos, IoMdSettings } from 'react-icons/io';
 import { FaWpforms } from "react-icons/fa6";
 import { isAuthenticated, usuarioActual } from "../utils/auth";
 const SideBar = ({abierto}) => {
@@ -65,6 +65,16 @@ const SideBar = ({abierto}) => {
                                     <FaUsers size={24}/>
                                      {abierto && <span className="ml-3">
                                         Administrar Usuarios
+                                    </span>}
+                                </li>
+                                </>
+                            )}
+                            { usuario?.rodescripcion === "secretario" || usuario?.rodescripcion === "administrador" && (
+                                <>
+                                <li onClick={() => irAPagina("/disciplinasYfacultades")} className="flex items-center p-3 text-gray-700 hover:bg-gray-100 hover:text-[#243E73] rounded-lg mx-2 my-1 transition-colors cursor-pointer">
+                                    <IoMdSettings size={24}/>
+                                     {abierto && <span className="ml-3">
+                                        Disciplinas y Facultades
                                     </span>}
                                 </li>
                                 </>

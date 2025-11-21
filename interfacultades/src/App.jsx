@@ -20,6 +20,7 @@ import RutaProtegida from './components/RutaProtegida';
 import { ToastContainer } from 'react-toastify';
 import Inscripcion from './Pages/Inscripcion';
 import { useLocation } from 'react-router';
+import DisciplinasYFacultades from './Pages/DisciplinasYFacultades'; 
 
 function ScrollToTop() { 
   const { pathname } = useLocation();
@@ -61,6 +62,9 @@ function App() {
         </Route>
          <Route element={<RutaProtegida roles={['administrador']}/>} >  
           <Route path={ROUTES.convocatoria} element={<Convocatoria/>}/>
+        </Route>
+        <Route element={<RutaProtegida roles={['administrador', 'secretario']}/>} >  
+          <Route path={ROUTES.disciplinasYFacultades} element={<DisciplinasYFacultades/>} />
         </Route>
         <Route element={<RutaProtegida roles={['administrador', 'profesor']}/>} >  
           <Route path={ROUTES.usuarios} element={<Usuarios/>} />
