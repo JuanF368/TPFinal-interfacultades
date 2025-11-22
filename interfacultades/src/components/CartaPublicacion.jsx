@@ -69,14 +69,16 @@ const CartaPublicacion = ({ publicacion, cambio}) => {
               <div className="w-full sm:w-[90%] lg:w-[70%]">
                 <ImageGallery items={itemsGaleria} showNav={false} autoPlay={true} showBullets={true} showPlayButton={false} showThumbnails={window.innerWidth >= 640} showFullscreenButton={false} thumbnailPosition="left"
                   renderItem={(item) => ( 
-                  <div className="w-full flex justify-center items-cente rounded-xl
+                  <div className="w-full flex justify-center items-center rounded-xl
                   overflow-hidden h-[400px] sm:h-[500px] lg:h-[350px]">
                     <img src={item.original} alt={item.originalAlt} className="object-contain w-full h-full"/>
                   </div>
                   )}
                   renderThumbInner={(item) => ( 
-                  <img src={item.thumbnail} alt={item.thumbnailAlt} className="rounded-md object-cover
-                  w-20 h-20 sm:w-24 sm:h-24 lg:w-16 lg:h-16"/>
+                    <div className="flex justify-center items-center w-full h-full">
+                      <img src={item.thumbnail} alt={item.thumbnailAlt} className="rounded-md object-cover
+                      w-20 h-20 sm:w-24 sm:h-24 lg:w-16 lg:h-16"/>
+                    </div>
                 )}/>
               </div>
             </div>

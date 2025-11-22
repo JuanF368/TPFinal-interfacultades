@@ -40,7 +40,7 @@ const SideBar = ({abierto, setAbierto }) => {
                 />
             )}
             <div className={`fixed left-0 bottom-0 bg-[#26375f] z-50 transition-all duration-300 ease-in-out text-white shadow-md h-full
-            ${abierto ? "w-64 translate-x-0" : "w-16 -translate-x-full"}  overflow-y-auto pt-4 flex flex-col md:translate-x-0 md:w-25`}> 
+            ${abierto ? "w-64 translate-x-0" : "w-16 -translate-x-full"}  overflow-y-auto pt-4 flex flex-col md:translate-x-0 md:w-25 scrollbar-thin scrollbar-thumb-[#4a90e2] scrollbar-track-gray-200`}> 
                 <nav className="flex flex-col flex-grow justify-between" >
                     <ul className="flex flex-col">
                         <li onClick={() => {irAPagina('/'); setAbierto(false);}} className="flex md:flex-col items-center p-3 hover:bg-gray-100 hover:text-[#243E73] rounded-lg mx-2 my-1 transition-colors cursor-pointer">

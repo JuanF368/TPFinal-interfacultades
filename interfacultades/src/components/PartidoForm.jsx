@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const PartidoForm = ({ partido, facultades, disciplinas, exito, cancelar }) => {
     const crear = partido?.nuevo === true;
@@ -40,14 +41,18 @@ const PartidoForm = ({ partido, facultades, disciplinas, exito, cancelar }) => {
             }
 
             const data = await res.json();
-            if (res.ok) {
-                console.log('Resultados actualizados:', data);
-                exito();
-            } else {
-                console.error('Error al actualizar resultados:', data.error);
+
+            if(!res.ok) {
+                toast.error(data.message || 'Error al procesar la solicitud.');
+                return;
             }
+
+            toast.success(crear ? 'Partido creado con éxito.' : 'Resultados actualizados con éxito.');
+            exito();
+
         } catch (error) {
             console.error('Error al actualizar resultados:', error);
+            toast.error('Error al procesar la solicitud.');
         }
     };
 
@@ -72,14 +77,30 @@ const PartidoForm = ({ partido, facultades, disciplinas, exito, cancelar }) => {
                             <label className="block text-sm text-gray-300 mb-1">Equipo 1:</label>
                             <select className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none" value={idfacultad1} onChange={(e) => setFacultad1(e.target.value)}>
                                 <option value="">Seleccione...</option>
-                                {facultades.map(fac => <option key={fac.idfacultad} value={fac.idfacultad}>{fac.siglas}</option>)}
+                                {facultades.map(fac => (
+                                    <option 
+                                        key={fac.idfacultad}
+                                        value={String(fac.idfacultad)}
+                                        disabled={idfacultad2 === String(fac.idfacultad)}
+                                    >
+                                        {fac.siglas}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <div>
                             <label className="block text-sm text-gray-300 mb-1">Equipo 2:</label>
                             <select className="border border-gray-600 p-2 w-full mb-2 rounded bg-[#1E293B] focus:ring-2 focus:ring-[#E94D1A] outline-none" value={idfacultad2} onChange={(e) => setFacultad2(e.target.value)}>
-                                <option>Seleccione...</option>
-                                {facultades.map(fac => <option key={fac.idfacultad} value={fac.idfacultad}>{fac.siglas}</option>)}
+                                <option value="">Seleccione...</option>
+                                {facultades.map(fac => (
+                                    <option 
+                                        key={fac.idfacultad}
+                                        value={String(fac.idfacultad)}
+                                        disabled={idfacultad1 === String(fac.idfacultad)}
+                                    >
+                                        {fac.siglas}
+                                    </option>
+                                    ))}
                             </select>
                         </div>
                         <div>
