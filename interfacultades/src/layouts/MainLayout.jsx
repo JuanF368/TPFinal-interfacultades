@@ -57,15 +57,17 @@ const MainLayout = () => {
 
 
   return (
-     <div className="min-h-screen relative ">
-      <Header abierto={abierto} setAbierto={setAbierto} notiCount={notiCount}/>
-      <SideBar abierto={abierto} />
-        <div className={`pt-16 pl-[4rem] ${abierto ? 'pl-[16rem]' : ''} transition-all duration-300 pb-[100px]`}>
-          <main className="min-h-screen p-4">
-            <Outlet />
-          </main>
-        </div>
+    <div className="min-h-screen">
+      <SideBar abierto={abierto} setAbierto={setAbierto}/>
+      <div className={`transition-all duration-300 fixed top-0 right-0 z-30 ${abierto ? "md:left-25" : "left-0 md:left-25"} `}>
+        <Header abierto={abierto} setAbierto={setAbierto} notiCount={notiCount}/>
+      </div>
+      <div className={`pt-20 transition-all duration-300 ${abierto ? "md:pl-25" : "pl-0 md:pl-25"}`}>
+        <main className='min-h-screen p-4'>
+          <Outlet />
+        </main>
         <Footer />
+      </div>
     </div>
   );
 };
